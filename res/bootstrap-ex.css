@@ -1,0 +1,10 @@
+/* bootstrap enhancements */
+
+ul.dropdown-menu > li { width:100%; }
+.navbar-collapse.in { overflow-y: visible; }
+
+.progress-bar.fill { width: 100%; } 
+.progress { height: auto; min-height: 20px; }
+.progress a { color: #fff; cursor: pointer; }
+
+textarea.vresize { resize: vertical; }
