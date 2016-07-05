@@ -6,26 +6,25 @@ class Shared
 {
     //CONNECTION
 
-    const CONN_VAR_NAME = 'DBedit-conn';
+    const VAR_NAME = 'DBedit-conn';
 
     //if not already connected, connects to database, returning the pdo object
     public static function connect()
     {
         //returns previous connection if already connected
-        if (isset($GLOBALS[CONN_VAR_NAME])) return $GLOBALS[CONN_VAR_NAME];
+        if (isset($GLOBALS[self::VAR_NAME])) return $GLOBALS[self::VAR_NAME];
 
-        //reads configuration from config.ini if needed
-        $conf = Config::get();
+        //reads configuration from config.xml if needed
+        $conf = Config::get()['DB'];
 
         //connects to database
-        $GLOBALS[CONN_VAR_NAME] = new PDO("mysql:". 
-            "host=".$conf['DB']['host'].(isset($conf['DB']['port']) ? $conf['DB']['port'] : "")
-            .";dbname=".$conf['DB']['name'].";charset=utf8", 
-            $conf['DB']['user'], $conf['DB']['pwd']);
+        return $GLOBALS[self::VAR_NAME] = new PDO("mysql:". 
+            "host=" . $conf['host'] . (isset($conf['port']) ? $conf['port'] : "")
+            .";dbname=". $conf['name'] . ";charset=utf8", 
+            $conf['user'], $conf['pwd'],
 
-        $GLOBALS[CONN_VAR_NAME]->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        return $GLOBALS[CONN_VAR_NAME];      
+            array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+        );    
     }
 
     //OUTPUT
@@ -33,12 +32,32 @@ class Shared
     //redirects to some page
     public static function redirect($url){ echo "<script>window.location = '".$url."'</script>"; exit(); }
 
+    //sends script tag
+    public static function loadJS($url) { echo "<script src='$url'></script>"; }
+
     //sends json to client
     public static function sendJSON($obj)
     {
-        header("Content-Type: application/json");
+        header("Content-Type: application/json; charset:utf-8;");
         echo json_encode($obj);
         exit();
+    }
+
+    //MISC
+
+    //casts passed string into correct type
+    public static function smartCast($s)
+    {
+        if (is_numeric($s))
+        {
+            if (strpos($s, '.') === FALSE) return intval($s);
+            return floatval($s);
+        }
+        else if (strtolower(trim($s)) == "true") return TRUE;
+        else if (strtolower(trim($s)) == "false") return FALSE;
+        else if (strtolower(trim($s)) == "null") return NULL;
+        
+        return $s; //string
     }
 }
 

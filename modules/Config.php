@@ -2,13 +2,13 @@
 
 //MODULE Config (configuration read/write)
 
-class Config extends INIhelper
+class Config extends XMLhelper
 {
-    public static $INI_FILE = __DIR__."/../config/config.ini";
+    public static $XML_FILE = __DIR__."/../config/config.xml";
     public static $VAR_NAME = "DBedit-config";
 
     //ini data prototype
-    protected static $proto = array('DB' => array('host', 'name', 'user', 'pwd'), array('Macro' => array('prefix', 'suffix')));
+    public static $proto = array('DB' => array('host', 'name', 'user', 'pwd'), array('global' => array('appname')));
 
     //used to store last db modification time
     public static function lastMod() { return filemtime(self::$INI_FILE); }

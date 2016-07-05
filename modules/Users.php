@@ -2,9 +2,9 @@
 
 //MODULE Users
 
-class Users extends INIhelper
+class Users extends XMLhelper
 {
-    public static $INI_FILE = __DIR__."/../config/users.ini";
+    public static $XML_FILE = __DIR__."/../config/users.xml";
     public static $VAR_NAME = "DBedit-users";
 }
 

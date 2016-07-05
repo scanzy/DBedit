@@ -10,13 +10,13 @@ body { font-family: Verdana; }
 
 .page > .box:first-child { border-top:solid 1px #ccc;}
 .title { color: #4ad; }
-.title-grey { color: #aaa; }
+.txt-grey { color: #aaa; }
 
 .center, .title, .center-p p { text-align:center; }
 .inline { vertical-align:middle; display:inline-block; }
 
 td.right, div.right { text-align: right; }
-button.right { float: right; }
+button.right, span.right { float: right; }
 button.left, span.left { float: left; }
 
 .row { margin-bottom: 1em; }
@@ -39,6 +39,7 @@ button.left, span.left { float: left; }
     #topbar li.right { float: right; }
     body { background-color: #eee; }      
     .box, .box.title { padding: 1.5em; background-color:#fff; border-radius: 0.5em; box-shadow: 0px 0px 1em #ccc; border: none; }
+    .box > :last-child { margin-bottom: 0; } 
 }
 
 .nav li a { transition: background-color .4s ease, color .4s ease; color:#49b; font-size: 1.2em; }
@@ -46,4 +47,6 @@ button.left, span.left { float: left; }
 .nav li a.active { background-color:#eaeaea; }
 .nav li a:hover { background-color:#6bf; color:#fff; }
 
-.CodeMirror { border: 1px solid #ccc; border-radius: 4px; }
+.table tr.hover { background-color: #eee; }
+.table tr { transition: background-color .5s; }
+.table tr.clickable { cursor: pointer; }

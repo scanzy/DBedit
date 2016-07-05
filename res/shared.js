@@ -6,6 +6,7 @@ function GetParam(p) {
     for (var i = 0; i < params.length; i++)
         if (p == params[i].split('=')[0])
             return params[i].split('=')[1];
+    return null;
 }
 
 //shows error popup (using messages.js)
@@ -19,14 +20,13 @@ function ajax(url, data, callback) {
 //logout button
 $("#logout").click(function () { ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); });
 
-//$("#topbarcontent").removeClass('in'); //collapses nav (if mobile mode)
-
-$("a").each(function () //highlights navigation buttons elements
-{ $(this).attr('href') == window.location.href.split("/").pop() ? $(this).addClass("active") : $(this).removeClass("active"); }); 
-
 //enables bootstrap tooltip
 $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
 
 //call this if you are the button you are clicking
 function hideAllTooltips() { $('[data-toggle="tooltip"]').tooltip('hide'); }
+
+//builds topbar with path
+var el = $("#topbar .nav").prepend('<li><a href="./">' + document.title + '</a></li>');
+
       

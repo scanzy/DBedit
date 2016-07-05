@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <admins>
+        <bob>bob's password</bob>
+    </admins>
+    <editors>
+        <al>al's password</al>
+    </editors>
+    <viewers>
+        <joe>joe's password</joe>
+    </viewers>
+</root>

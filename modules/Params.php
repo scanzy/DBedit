@@ -7,14 +7,14 @@ class Params
     //gets value (error if not found)
     public static function requiredInt($name)
     {
-        if (!isset($_REQUEST[$name])) Errors::send(400, "Required int param $name");
+        if (!isset($_REQUEST[$name])) Errors::send(400, "Required int param '$name'");
         return intval($_REQUEST[$name]);
     }
 
     //gets value (error if not found)
     public static function requiredString($name)
     {
-        if (!isset($_REQUEST[$name])) Errors::send(400, "Required string param $name");
+        if (!isset($_REQUEST[$name])) Errors::send(400, "Required string param '$name'");
         return strval($_REQUEST[$name]);
     }
 

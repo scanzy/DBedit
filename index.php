@@ -8,13 +8,15 @@ Errors::setModeHtml();
 //redirects to login page if no login 
 if (!Auth::isLogged()) Shared::redirect("./login.php");
 
-//default page
-$url = Params::optionalString('url', "");
-if ($url == "") Shared::redirect("./dashboard");
+//gets data from page url
+$type = Params::optionalString('type', NULL);
+$id = Params::optionalInt('id', NULL); 
+$action = Params::optionalString('action', NULL); 
+$link = Params::optionalString('link', NULL);
 
 //gets configuration
 $conf = Config::get();
-$appname = $conf['Global']['appname'];
+$appname = $conf['global']['appname'];
 
 ?>
 
@@ -51,18 +53,7 @@ $appname = $conf['Global']['appname'];
             </div>
             <div class="collapse navbar-collapse" id="topbarcontent">
                 <ul class="nav">
-
-<?php 
-
-//sfanfani
-
-?>
-
-                    <li><a href="dashboard"><span>Dashboard</span></a></li>
-                    </li><li><a href="files">Files</a>
-                    </li><li><a href="templates">Templates</a>
-                    </li><li><a href="settings">Settings</a>
-                    </li><li class="right"><a href="#" id="logout">Logout</a>
+                    <li class="right"><a href="#" id="logout">Logout</a>
                     </li><li class="right"><a href="help">Help</a>
                     </li>
                 </ul>
@@ -74,28 +65,47 @@ $appname = $conf['Global']['appname'];
             <h2 class="inline">admin</h2>
         </div>
 
-        <?php switch ($url) { case "dashboard": ?>
+        <?php switch($action) { case NULL: if ($type === NULL) { ?>
         <div class="container page">
             <div class="box title"><h1>Dashboard</h1></div>
 
             <div class="box">
-                <h2>Heading</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et ipsum sed dolor vehicula congue quis egestas risus. Cras tortor felis, convallis eget euismod et, varius nec sapien. Pellentesque quis augue sit amet justo faucibus condimentum id non metus. Nullam maximus molestie ex sit amet sagittis. Vivamus non neque tellus. Phasellus tincidunt tellus sit amet nulla pellentesque feugiat. In augue metus, dignissim at egestas vel, ornare sed nibh. Aliquam elementum, purus ut consectetur accumsan, ex nibh efficitur orci, quis maximus augue elit quis libero. Vestibulum feugiat, purus id volutpat sodales, lacus arcu varius neque, ut rutrum mauris magna a leo. </p>                
+                <div id="entitytypes" class="row"></div>
+                <div id="entities-load-error" style="display:none"><p class="grey">Error</p></div>
             </div>
         </div>
 
-        <?php break; case "entity": ?>
+        <?php } else if ($id === NULL){ ?>
 
         <div class="container page">
-            <div class="box title"><h1>Entity</h1></div>
+            <div class="box title"><h1></h1></div>
 
             <div class="box">
-                <h2>Heading</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et ipsum sed dolor vehicula congue quis egestas risus. Cras tortor felis, convallis eget euismod et, varius nec sapien. Pellentesque quis augue sit amet justo faucibus condimentum id non metus. Nullam maximus molestie ex sit amet sagittis. Vivamus non neque tellus. Phasellus tincidunt tellus sit amet nulla pellentesque feugiat. In augue metus, dignissim at egestas vel, ornare sed nibh. Aliquam elementum, purus ut consectetur accumsan, ex nibh efficitur orci, quis maximus augue elit quis libero. Vestibulum feugiat, purus id volutpat sodales, lacus arcu varius neque, ut rutrum mauris magna a leo. </p>                
+                <div id="entities-table"></div>                
             </div>
         </div>
 
-        <?php break; default: ?><script>window.location.href = "./";</script><?php echo "</body></html>"; exit(); break; } ?>
+        <?php } else if ($link === NULL) { ?>
+
+        <div class="container page">
+            <div class="box title"><h1>Details</h1></div>
+
+            <div class="box">
+                        
+            </div>
+        </div>
+
+        <?php } break; case "new": ?>
+
+        <div class="container page">
+            <div class="box title"><h1>New</h1></div>
+
+            <div class="box">
+                        
+            </div>
+        </div>
+
+        <?php break; } ?>
 
         <div id="footer">
             <span>Powered by <b>ScanzySoftware</b></span>
@@ -104,8 +114,20 @@ $appname = $conf['Global']['appname'];
         <script src="res/libs/messages.js"></script>
         <script src="res/libs/confirm.js"></script>
         <script src="res/libs/scanzytable.js"></script>
+        <script src="res/libs/scanzyload.js"></script>
         <script src="res/shared.js"></script>
-        
-        <script src="res/pages-<?php echo $url; ?>.js"></script>
+
+        <?php switch($action) { 
+
+            case NULL: 
+                if ($type === NULL) { Shared::loadJS("res/entitytypes.js"); } 
+                else if ($id === NULL) { Shared::loadJS("res/entities.js"); } 
+                else if ($link === NULL) {  } 
+            break; 
+            
+            case "new":  
+                                              
+            break;
+        } ?>
     </body>
 </html>

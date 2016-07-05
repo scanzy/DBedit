@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <DB>
+        <host>localhost</host>
+        <name>DBedit</name>
+        <user>root</user>
+        <pwd>root</pwd>
+    </DB>
+    <global>
+        <appname>Super cool DB!</appname>
+    </global>
+</root>

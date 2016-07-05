@@ -7,7 +7,7 @@ Errors::setModeHtml();
 
 //gets configuration
 $conf = Config::get();
-$appname = $conf['Global']['appname'];
+$appname = $conf['global']['appname'];
 
 ?>
 

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <people>
+        <displayname>People</displayname>
+        <alias>%name% %surname%</alias>
+        <table>People</table>
+        <columns>
+            <name>
+                <displayname>Name</displayname>
+                <type>varchar</type>
+                <length>20</length>
+            </name>
+            <surname>
+                <displayname>Surname</displayname>
+                <type>varchar</type>
+                <length>20</length>
+            </surname>
+        </columns>
+        <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <add>Add person</add>
+    </people>
+    <payments>
+        <displayname>Payments</displayname>
+        <alias>%subject%</alias>
+        <table>Payments</table>
+        <columns>
+            <subject>
+                <displayname>Subject</displayname>
+                <type>varchar</type>
+                <length>100</length>
+            </subject>
+        </columns>
+        <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <add>Add payment</add>
+    </payments>
+    <certificates>
+        <displayname>Certificates</displayname>
+        <alias>%name%</alias>
+        <table>Certificates</table>
+        <columns>
+            <name>
+                <displayname>Subject</displayname>
+                <type>varchar</type>
+                <length>100</length>
+            </name>
+        </columns>
+        <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <add>Add certificate</add>
+    </certificates>
+</root>
