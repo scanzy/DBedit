@@ -10,7 +10,7 @@ $.fn.extend({
             },
             button: { show: false, text: "New", click: function () { } },
             search: { show: false, text: "Search..." }
-        });       
+        });
 
         //adds html for searchbar and new item btn
         if (options.search.show || options.button.show) {
@@ -24,7 +24,7 @@ $.fn.extend({
                 html += '<div class="col-xs-4 col-md-6 col-lg-8 right"> \
                     <button class="btn btn-sm btn-success new-item" type="button"> \
                     <span class="glyphicon glyphicon-plus"></span> <span>' + options.button.text + '</span></button> </div>';
-            
+
             this.append(html + '</div>');
         }
 
@@ -35,14 +35,15 @@ $.fn.extend({
         //adds hidden texts for hints
         this.append('<div class="center-p grey"><p class="no-items" style="display:none;">There are currently no elements</p><p class="loading-items" style="display:none;">Loading data...</p> \
             <p class="loading-items-error" style="display:none;"><span>Error while loading files data</span> <a href="" class="items-load-retry">Retry</a></p> \
-            <p class="no-items-results" style="display:none;"><span>No rows matching searched string</span> <a href="" class="items-clear-search">Reset search</a></p></div>');     
+            <p class="no-items-results" style="display:none;"><span>No rows matching searched string</span> <a href="" class="items-clear-search">Reset search</a></p></div>');
 
         //saves root, options and load items function
         var t = { root: this, options: options, loadItems: function (requestdata) {
-                        
+
             this.loader.loadItems(requestdata); //loads items
             this.root.find(".items-search").focus(); //focuses search
-        }};
+        } 
+        };
 
         //inits loader
         t.loader = this.find("tbody").scanzyload({ request: options.request, fetch: function (i, data) {
@@ -50,9 +51,17 @@ $.fn.extend({
             //fetches row
             html = options.fetch.row.start(i, data);
             for (var col in options.columns) {
-                html += (col in options.fetch.cell) ? options.fetch.cell[col].start(col, data[col], i) : "<td>"; //opens tag
-                html += (col in options.fetch.content) ? options.fetch.content[col](col, data[col], i) : data[col]; //puts content
-                html += (col in options.fetch.cell) ? options.fetch.cell[col].end(col, data[col], i) : "</td>"; //closes tag
+
+                if (col in options.fetch.cell) { //opens tag
+                    if ('start' in options.fetch.cell[col]) html += options.fetch.cell[col].start(col, data[col], i, data);
+                } else html += "<td>";
+
+                //puts content
+                html += (col in options.fetch.content) ? options.fetch.content[col](col, data[col], i, data) : data[col]; 
+
+                if (col in options.fetch.cell) { //closes tag
+                    if('end' in options.fetch.cell[col]) html += options.fetch.cell[col].end(col, data[col], i, data);
+                } else html += "</td>"; 
             }
             return html + options.fetch.row.end(i, data);
         },
@@ -79,7 +88,7 @@ $.fn.extend({
             });
             (t.root.find("tbody tr:visible").length == 0) ? // controls "no items found" visibility 
             t.root.find(".no-items-results").show() : t.root.find(".no-items-results").hide();
-        }); 
+        });
 
         return t; //returns table object ref
     }

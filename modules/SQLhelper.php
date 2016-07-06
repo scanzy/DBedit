@@ -13,14 +13,21 @@ class SQLhelper
     public function get()
     {
         $stmt = Shared::connect()->query("SELECT * FROM ".$this->table.";");
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    //gets one element in table
+    public function one($id)
+    {
+        $stmt = Shared::connect()->query("SELECT * FROM ".$this->table." WHERE id=$id LIMIT 1;");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     //gets random elements in table
     public function getRandom($count = 3)
     {
         $stmt = Shared::connect()->query("SELECT * FROM ".$this->table." ORDER BY RAND() LIMIT $count;");
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //counts elements

@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
     <admins>
-        <bob>bob's password</bob>
+        <bob>
+            <name>Bob</name>
+            <surname>White</surname>
+            <pwd>bob's password</pwd>
+        </bob>
     </admins>
     <editors>
-        <al>al's password</al>
+        <al>
+            <name>Al</name>
+            <surname>Green</surname>
+            <pwd>al's password</pwd>
+        </al>
     </editors>
     <viewers>
-        <joe>joe's password</joe>
+        <al>
+            <name>Joe</name>
+            <surname>Black</surname>
+            <pwd>joe's password</pwd>
+        </al>
     </viewers>
 </root>

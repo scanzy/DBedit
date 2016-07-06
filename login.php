@@ -17,11 +17,17 @@ $appname = $conf['global']['appname'];
         <meta charset="utf-8" />
         <title><?php echo $appname; ?> - Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
         <link rel="stylesheet" type="text/css" href="res/bootstrap-ex.css" />
         <link rel="stylesheet" type="text/css" href="res/style.css" />
+
+        <script src="res/libs/requiredata.js"></script>
+        <script src="res/libs/translate.js"></script>
+        <script src="res/libs/shake.js"></script>
     </head>
     <body>
 
@@ -51,9 +57,7 @@ $appname = $conf['global']['appname'];
             </div>
         </div>
 
-        <script src="res/libs/translate.js"></script>
-        <script src="res/libs/shake.js"></script>
-        <script>   
+        <script>
             //disables login button if empty fields
             function checkEmptyFields() {
                 if ($("#username").val().trim() != "" && $("#password").val().trim() != "")
@@ -67,9 +71,15 @@ $appname = $conf['global']['appname'];
             $("#login").on('submit', function (e) {
                 e.preventDefault();
                 if ($("#submit").hasClass('disabled')) return false;
-                $.post("../apis/auth/login.php", { username: $("#username").val(), password: $("#password").val() }, function (data) {
-                    if (data == "true") window.location.href = "./"; //redirects on success
-                    else { $("#wrongpassword").removeClass('hidden'); shake($("#login")); } //shakes error
+
+                $.post("../apis/auth/login.php", { username: $("#username").val(), password: $("#password").val() }, 
+                function (data) {
+
+                    //shakes on error
+                    if (data == null) { $("#wrongpassword").removeClass('hidden'); shake($("#login")); } 
+
+                    //saves userdata and redirects on success
+                    else { sessionStorage.setObject('userdata', data); window.location.href = "./"; } 
                 });
             });
         </script>

@@ -7,9 +7,6 @@ class XMLhelper
     public static $XML_FILE = __DIR__."/file.xml";
     public static $VAR_NAME = "";
 
-    //xml data prototype
-    public static $proto = array();
-
     //loads configuration in $_SESSION[$VAR_NAME] reading from xml file
     public static function load()
     {

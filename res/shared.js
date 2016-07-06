@@ -1,4 +1,3 @@
-//shared js code for admin framework
 
 //gets GET param from url
 function GetParam(p) {                 
@@ -18,7 +17,8 @@ function ajax(url, data, callback) {
 }
 
 //logout button
-$("#logout").click(function () { ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); });
+$("#logout").click(function () { sessionStorage.clear(); //erases session data
+    ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); });
 
 //enables bootstrap tooltip
 $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
@@ -26,7 +26,15 @@ $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
 //call this if you are the button you are clicking
 function hideAllTooltips() { $('[data-toggle="tooltip"]').tooltip('hide'); }
 
-//builds topbar with path
-var el = $("#topbar .nav").prepend('<li><a href="./">' + document.title + '</a></li>');
+//gets data about entities
+requiredata.options.useSessionStorage = true;
+requiredata.load('typesdata', function () {
+    ajax("./apis/entitytype/get.php", null, function(data) { requiredata.set('typesdata', data); }).fail(errorPopup);
+});
 
-      
+//sets title in topbar
+$("#topbar-title").text(document.title).removeClass('hidden');
+
+//sets userdata in topbar
+var userdata = sessionStorage.getObject('userdata');
+$("#topbar-user").text(userdata.name + ' ' + userdata.surname);

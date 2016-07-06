@@ -14,6 +14,23 @@ $id = Params::optionalInt('id', NULL);
 $action = Params::optionalString('action', NULL); 
 $link = Params::optionalString('link', NULL);
 
+//selects page
+switch($action) {
+    case NULL:
+        if ($type === NULL) $page = "entitytypes";
+        else if ($id === NULL) $page = "entities";
+        else if ($link === NULL) $page = "entitydetails"; 
+        else $page = "links";
+    break;
+
+    case "new": case "edit":
+        if ($type === NULL) $page = "newentitytype";
+        else if ($id === NULL) $page = "newentity";
+    break;
+
+    case "user": case "help": $page = $action; break;
+}
+
 //gets configuration
 $conf = Config::get();
 $appname = $conf['global']['appname'];
@@ -38,8 +55,11 @@ $appname = $conf['global']['appname'];
         <link rel="stylesheet" type="text/css" href="res/bootstrap-ex.css" />
         <link rel="stylesheet" type="text/css" href="res/style.css" />
 
-        <script src="res/libs/translate.js"></script>
         <script src="res/libs/shake.js"></script>
+        <script src="res/libs/requiredata.js"></script>
+        <script src="res/libs/translate.js"></script>
+        <script src="res/libs/scanzyload.js"></script>
+        <script src="res/libs/scanzytable.js"></script>        
     </head>
     <body>
 
@@ -53,8 +73,13 @@ $appname = $conf['global']['appname'];
             </div>
             <div class="collapse navbar-collapse" id="topbarcontent">
                 <ul class="nav">
+                    <li><a id="topbar-title" href="./" class="hidden"></a></li>
+                    <li><a id="topbar-type" class="hidden"></a></li>
+                    <li><a id="topbar-entity" class="hidden"></a></li>
+                    <li><a id="topbar-link" class="hidden"></a></li>
                     <li class="right"><a href="#" id="logout">Logout</a>
-                    </li><li class="right"><a href="help">Help</a>
+                    </li><li class="right"><a id="topbar-user" href="./?action=user"></a>
+                    </li><li class="right"><a id="topbar-help" href="./?action=help">Help</a>
                     </li>
                 </ul>
             </div>
@@ -65,40 +90,86 @@ $appname = $conf['global']['appname'];
             <h2 class="inline">admin</h2>
         </div>
 
-        <?php switch($action) { case NULL: if ($type === NULL) { ?>
+        <?php switch($page) { case "entitytypes": ?>
         <div class="container page">
             <div class="box title"><h1>Dashboard</h1></div>
 
             <div class="box">
                 <div id="entitytypes" class="row"></div>
-                <div id="entities-load-error" style="display:none"><p class="grey">Error</p></div>
+                <div id="entities-load-error" style="display:none" class="center"><p class="grey">Error</p></div>
             </div>
         </div>
 
-        <?php } else if ($id === NULL){ ?>
+        <?php break; case "entities": ?>
+
+        <div class="container page">
+            <div class="box title"><h1></h1></div>
+            <div class="box"><div id="entities-table"></div></div>
+        </div>
+
+        <?php break; case "entitydetails": ?>
 
         <div class="container page">
             <div class="box title"><h1></h1></div>
 
-            <div class="box">
-                <div id="entities-table"></div>                
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="box">
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="box">
+
+                    </div>
+                </div>
             </div>
         </div>
 
-        <?php } else if ($link === NULL) { ?>
+        <?php break; case "links": ?>
 
         <div class="container page">
-            <div class="box title"><h1>Details</h1></div>
+            <div class="box title"><h1>Links</h1></div>
 
             <div class="box">
                         
             </div>
         </div>
 
-        <?php } break; case "new": ?>
+        <?php break; case "newentitytype": ?>
 
         <div class="container page">
-            <div class="box title"><h1>New</h1></div>
+            <div class="box title"><h1>New entity type</h1></div>
+
+            <div class="box">
+                        
+            </div>
+        </div>
+
+        <?php break; case "newentity": ?>
+
+        <div class="container page">
+            <div class="box title"><h1>New entity</h1></div>
+
+            <div class="box">
+                        
+            </div>
+        </div>
+
+        <?php break; case "user": ?>
+
+        <div class="container page">
+            <div class="box title"><h1>User</h1></div>
+
+            <div class="box">
+                        
+            </div>
+        </div>
+
+        <?php break; case "help": ?>
+
+        <div class="container page">
+            <div class="box title"><h1>Help</h1></div>
 
             <div class="box">
                         
@@ -113,21 +184,18 @@ $appname = $conf['global']['appname'];
 
         <script src="res/libs/messages.js"></script>
         <script src="res/libs/confirm.js"></script>
-        <script src="res/libs/scanzytable.js"></script>
-        <script src="res/libs/scanzyload.js"></script>
         <script src="res/shared.js"></script>
 
-        <?php switch($action) { 
+        <?php switch($page) { 
 
-            case NULL: 
-                if ($type === NULL) { Shared::loadJS("res/entitytypes.js"); } 
-                else if ($id === NULL) { Shared::loadJS("res/entities.js"); } 
-                else if ($link === NULL) {  } 
-            break; 
-            
-            case "new":  
-                                              
-            break;
+            case "entitytypes": Shared::loadJS("res/entitytypes.js"); break; 
+            case "entities": Shared::loadJS("res/entities.js"); break; 
+            case "entitydetails": Shared::loadJS("res/entitydetails.js"); break;
+            case "links": break;
+            case "newentitytype": break;
+            case "newentity": break;
+            case "user": break;
+            case "help": break;                                            
         } ?>
     </body>
 </html>

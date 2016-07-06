@@ -17,12 +17,8 @@ class Auth
     );
 
     //tries login from post parameters
-    public static function login() 
+    public static function login($username, $password) 
     {
-        //check parameters
-        $username = Params::requiredString('username');
-        $password = Params::requiredString('password');
-        
         $users = Users::get(); //gets users data
         
         //checks if finds user
@@ -32,19 +28,17 @@ class Auth
             if(isset($usergroup[$username])) 
 
                 //checks password
-                if ($usergroup[$username] == $password) 
+                if ($usergroup[$username]['pwd'] == $password) 
                 {
                     //saves username, usertype and level
                     $_SESSION['username'] = $username;
                     $_SESSION['usergroup'] = $type;
                     $_SESSION['userlevel'] = self::$userlevels[$type];
 
-                    echo "true"; //success!
-                    exit();
+                    return TRUE; //success!
                 }
 
-        echo "false"; //login failed
-        exit();
+        return FALSE; //login failed
     }
 
     //checks if there was login

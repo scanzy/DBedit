@@ -3,7 +3,7 @@
     <people>
         <displayname>People</displayname>
         <alias>%name% %surname%</alias>
-        <table>People</table>
+        <table>People</table>   
         <columns>
             <name>
                 <displayname>Name</displayname>

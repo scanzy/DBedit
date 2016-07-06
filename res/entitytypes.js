@@ -14,3 +14,6 @@ entitytypes = $("#entitytypes").scanzyload({
 
 //loads items
 entitytypes.loadItems();
+
+//selects title in topbar
+$("#topbar-title").addClass('active');
