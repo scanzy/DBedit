@@ -18,5 +18,17 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
         $("#topbar-entity").text(alias).attr('href', './?type=' + encodeURIComponent(type) + "&id=" + encodeURIComponent(id))
         .removeClass('hidden').addClass('active');
 
+        //fetches details table
+        var columns = typesdata[type].columns; var html = "";
+        for (var col in columns) html += "<tr><td>" + columns[col].displayname + "</td><td><b>" + data[col] + "</b></td></tr>";
+        $("#details-table tbody").append(html);
+    })
+    .fail(function() { $("#details-load-error").removeClass('hidden'); });
+
+    //gets links info
+    var loader = scanzyload({
+        request: {},
+        fetch: {},
+        error: $("#linktypes-load-error")
     });
 });

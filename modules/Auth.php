@@ -55,4 +55,7 @@ class Auth
         }
         Errors::send($code, "Required user level $level (".array_search($level, self::$userlevels).")"); 
     }
+
+    //gets data about current user
+    public static function username() { return $_SESSION['username']; }
 }

@@ -63,6 +63,7 @@ var requiredata = {
         if (this.options.useLocalStorage) localStorage.setObject(name, data);
 
         //and triggers all callbacks
-        for (var func in this.entries[name].callbacks) func(this.entries[name].data);
+        for (var i = 0; i < this.entries[name].callbacks.length; i++)
+            this.entries[name].callbacks[i](this.entries[name].data);
     }    
 }

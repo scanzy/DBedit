@@ -115,12 +115,17 @@ $appname = $conf['global']['appname'];
             <div class="row">
                 <div class="col-lg-4">
                     <div class="box">
-
+                        <table id="details-table" class="table">
+                            <tbody></tbody>
+                        </table>
+                        <p id="details-load-error" class="grey hidden">Error</p>
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="box">
-
+                        <div id="linktypes" class="row">
+                        </div>
+                        <p id="linktypes-load-error" style="display:none">Error</p>
                     </div>
                 </div>
             </div>
