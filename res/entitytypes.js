@@ -1,6 +1,6 @@
 //setups load
-entitytypes = $("#entitytypes").scanzyload({
-    request: { url: "./apis/entitytype/info.php", method: "GET", data: null, error: errorPopup,
+var entitytypes = $("#entitytypes").scanzyload({
+    request: { url: "./apis/entitytypes/info.php", data: null,
         complete: function () { translate(document.getElementById("entities")); } //translates
     },
     fetch: function(name, data) {
@@ -11,6 +11,9 @@ entitytypes = $("#entitytypes").scanzyload({
     },
     error: $("#entities-load-error")
 });
+
+//binds retry link
+$("#entities-load-retry").click(function (e) { e.preventDefault(); entitytypes.loadItems(); return false; });
 
 //loads items
 entitytypes.loadItems();

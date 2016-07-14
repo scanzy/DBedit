@@ -2,7 +2,7 @@
 
 require_once "../../autoload.php";
 
-//API auth/login (tries log in)
+//API auth/info (gets data for this user)
 
 Errors::setModeAjax();
 

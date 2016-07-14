@@ -18,6 +18,7 @@
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add person</add>
+        <new>New person</new>
     </people>
     <payments>
         <displayname>Payments</displayname>
@@ -32,6 +33,7 @@
         </columns>
         <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add payment</add>
+        <new>New payment</new>
     </payments>
     <certificates>
         <displayname>Certificates</displayname>
@@ -46,5 +48,6 @@
         </columns>
         <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add certificate</add>
+        <new>New certificate</new>
     </certificates>
 </root>

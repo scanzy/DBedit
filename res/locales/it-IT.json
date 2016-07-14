@@ -2,6 +2,10 @@
     "Username:" : "Nome utente:",
     "Password:" : "Password:",
     "Login" : "Accedi",
-    "Wrong username or password" : "Nome utente o password non corretti"
-
+    "Wrong username or password" : "Nome utente o password non corretti",
+    "Edit" : "Modifica",
+    "Delete" : "Elimina",
+    "Save" : "Salva",
+    "Saving..." : "Salvataggio...",
+    "Cancel" : "Annulla"
 }

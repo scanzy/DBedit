@@ -23,12 +23,15 @@ switch($action) {
         else $page = "links";
     break;
 
-    case "new": case "edit":
-        if ($type === NULL) $page = "newentitytype";
-        else if ($id === NULL) $page = "newentity";
+    case "edit":
+        if ($type === NULL) $page = "editentitytype";
+        else $page = "editentity";
     break;
 
     case "user": case "help": $page = $action; break;
+
+    //default page if not found action
+    default: $page = "entitytypes"; break; 
 }
 
 //gets configuration
@@ -96,7 +99,9 @@ $appname = $conf['global']['appname'];
 
             <div class="box">
                 <div id="entitytypes" class="row"></div>
-                <div id="entities-load-error" style="display:none" class="center"><p class="grey">Error</p></div>
+                <div id="entities-load-error" style="display:none" class="center">
+                    <p class="grey">Error while loading types <a id ="entities-load-retry" href="#">Retry</a></p>
+                </div>
             </div>
         </div>
 
@@ -113,19 +118,22 @@ $appname = $conf['global']['appname'];
             <div class="box title"><h1></h1></div>
 
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-8">
                     <div class="box">
-                        <table id="details-table" class="table">
-                            <tbody></tbody>
-                        </table>
-                        <p id="details-load-error" class="grey hidden">Error</p>
+                        <div id="details-table"></div>
+                        <button id="entity-edit" class="btn btn-info hidden"><span class="glyphicon glyphicon-edit"></span> <span>Edit</span></button>
+                        <button id="entity-delete" class="btn btn-danger hidden right"><span class="glyphicon glyphicon-trash"></span> <span>Delete</span></button>
                     </div>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-md-4">
                     <div class="box">
-                        <div id="linktypes" class="row">
+                        <div id="linktypes-loading" class="center"><p class="grey">Loading links...</p></div>
+                        <div id="linktypes-load-error" class="center" style="display:none">
+                            <p class="grey"><span>Error while loading links</span><br/></p>
+                            <button class="btn-sm btn btn-default" id="linktypes-load-retry"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button>                 
                         </div>
-                        <p id="linktypes-load-error" style="display:none">Error</p>
+                        <div id="linktypes" class="row"></div>
+                        <div id="linktypes-empty" class="center"><p class="grey">No links for this type</p></div>
                     </div>
                 </div>
             </div>
@@ -141,23 +149,27 @@ $appname = $conf['global']['appname'];
             </div>
         </div>
 
-        <?php break; case "newentitytype": ?>
+        <?php break; case "editentitytype": ?>
 
         <div class="container page">
-            <div class="box title"><h1>New entity type</h1></div>
+            <div class="box title"><h1>Edit entity type</h1></div>
 
             <div class="box">
                         
             </div>
         </div>
 
-        <?php break; case "newentity": ?>
+        <?php break; case "editentity": ?>
 
         <div class="container page">
-            <div class="box title"><h1>New entity</h1></div>
+            <div class="box title"><h1>Edit entity</h1></div>
 
             <div class="box">
-                        
+                <form class="form-horizontal" id="entity-details" role="form"></form>
+                <div class="right">
+                    <button id="details-cancel" class="btn btn-lg btn-default">Cancel</button>
+                    <button id="details-save" class="btn btn-lg btn-success disabled">Save</button>
+                </div>
             </div>
         </div>
 
@@ -197,8 +209,8 @@ $appname = $conf['global']['appname'];
             case "entities": Shared::loadJS("res/entities.js"); break; 
             case "entitydetails": Shared::loadJS("res/entitydetails.js"); break;
             case "links": break;
-            case "newentitytype": break;
-            case "newentity": break;
+            case "editentitytype": break;
+            case "editentity": Shared::loadJS("res/editentity.js"); break;
             case "user": break;
             case "help": break;                                            
         } ?>

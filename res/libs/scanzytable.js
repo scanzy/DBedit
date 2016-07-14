@@ -2,7 +2,7 @@ $.fn.extend({
     scanzytable: function (options) {
 
         //options default setup
-        options = defaultValues(options, {
+        var options = defaultValues(options, {
             request: { data: {} }, columns: {},
             fetch: {
                 row: { start: function () { return "<tr>"; }, end: function () { return "</tr>"; } },
@@ -14,7 +14,7 @@ $.fn.extend({
 
         //adds html for searchbar and new item btn
         if (options.search.show || options.button.show) {
-            html = '<div class="row">';
+            var html = '<div class="row">';
 
             if (options.search.show) //searchbar
                 html += '<div class="col-xs-8 col-md-6 col-lg-4"> \
@@ -33,23 +33,26 @@ $.fn.extend({
         this.append('<div class="table-responsive"><table class="table"><thead><tr>' + thead + '</tr></thead><tbody></tbody></table></div>');
 
         //adds hidden texts for hints
-        this.append('<div class="center-p grey"><p class="no-items" style="display:none;">There are currently no elements</p><p class="loading-items" style="display:none;">Loading data...</p> \
-            <p class="loading-items-error" style="display:none;"><span>Error while loading files data</span> <a href="" class="items-load-retry">Retry</a></p> \
-            <p class="no-items-results" style="display:none;"><span>No rows matching searched string</span> <a href="" class="items-clear-search">Reset search</a></p></div>');
+        this.append('<div><p class="no-items grey" style="display:none;">There are currently no elements</p>\
+            <p class="loading-items center grey" style="display:none;">Loading data...</p> \
+            <div class="loading-items-error center" style="display:none;"><p class="grey">Error while loading data</p>\
+                <button class="items-load-retry btn btn-default btn-sm"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button></div> \
+            <div class="no-items-results center" style="display:none;"><p class="grey">No rows matching searched string</p>\
+                <button class="btn btn-default btn-sm items-clear-search"><span class="glyphicon glyphicon-repeat"></span> <span>Reset search</span></button></div></div>');
 
         //saves root, options and load items function
         var t = { root: this, options: options, loadItems: function (requestdata) {
 
-            this.loader.loadItems(requestdata); //loads items
-            this.root.find(".items-search").focus(); //focuses search
-        } 
+                this.loader.loadItems(requestdata); //loads items
+                this.root.find(".items-search").focus(); //focuses search
+            } 
         };
 
         //inits loader
         t.loader = this.find("tbody").scanzyload({ request: options.request, fetch: function (i, data) {
 
             //fetches row
-            html = options.fetch.row.start(i, data);
+            var html = options.fetch.row.start(i, data);
             for (var col in options.columns) {
 
                 if (col in options.fetch.cell) { //opens tag

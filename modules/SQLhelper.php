@@ -36,4 +36,11 @@ class SQLhelper
         $stmt = Shared::connect()->query("SELECT COUNT(*) FROM ".$this->table.";");
         return $stmt->fetch()[0];
     }
+
+    //inserts element
+    public function insert($data)
+    {
+        
+    }
+
 }

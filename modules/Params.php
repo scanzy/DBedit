@@ -18,6 +18,14 @@ class Params
         return strval($_REQUEST[$name]);
     }
 
+    //gets value (error if not found)
+    public static function requiredArray($name)
+    {
+        if (!isset($_REQUEST[$name])) Errors::send(400, "Required object/array param '$name'");
+        if (!is_array($_REQUEST[$name])) Errors::send(400, "Required object/array param '$name' is not object/array");
+        return $_REQUEST[$name];
+    }
+
     //gets value (default if not found)
     public static function optionalInt($name, $default)
     {

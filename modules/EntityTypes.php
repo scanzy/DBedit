@@ -1,8 +1,8 @@
 <?php
 
-//MODULE EntityType (manages entity types)
+//MODULE EntityTypes (manages entity types)
 
-class EntityType extends XMLhelper
+class EntityTypes extends XMLhelper
 {
     public static $XML_FILE = __DIR__."/../config/entities.xml";
     public static $VAR_NAME = "DBedit-entities";
@@ -11,9 +11,9 @@ class EntityType extends XMLhelper
     public static function one($type)
     {
         //gets all types
-        $entitytypes = EntityType::get();
+        $entitytypes = static::get();
 
-        if(!isset($entitytypes[$type])) Errors::send(400, "Unknown entity type");
+        if(!isset($entitytypes[$type])) return NULL;
         return $entitytypes[$type]; //gets desired type
     }
 
@@ -25,7 +25,7 @@ class EntityType extends XMLhelper
         $data = array(); //gets additional data
         foreach($types as $type => $typedata)
         {
-            $h = Entity::helper($type); //gets helper
+            $h = Entities::helper($type); //gets helper
 
             $data[$type] = array(
                 'displayname' => $typedata['displayname'],
@@ -35,6 +35,6 @@ class EntityType extends XMLhelper
             );
         }
 
-        Shared::sendJSON($data);
+        return $data;
     }
 }

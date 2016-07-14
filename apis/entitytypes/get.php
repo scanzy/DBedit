@@ -2,8 +2,8 @@
 
 require_once "../../autoload.php";
 
-//API entitytype/info (gets entity types with additional info)
+//API entitytypes/get (gets entity types)
 
 Errors::setModeAjax();
 Auth::requireLevel(Auth::VIEWER);
-Shared::sendJSON(EntityType::info());
+Shared::sendJSON(EntityTypes::get());
