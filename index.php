@@ -100,7 +100,10 @@ $appname = $conf['global']['appname'];
             <div class="box">
                 <div id="entitytypes" class="row"></div>
                 <div id="entities-load-error" style="display:none" class="center">
-                    <p class="grey">Error while loading types <a id ="entities-load-retry" href="#">Retry</a></p>
+                    <p class="grey">Error while loading types</p><br/>
+                    <button class="btn-sm btn btn-default" id="entites-load-retry">
+                        <span class="glyphicon glyphicon-repeat"></span> <span>Retry</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -129,8 +132,10 @@ $appname = $conf['global']['appname'];
                     <div class="box">
                         <div id="linktypes-loading" class="center"><p class="grey">Loading links...</p></div>
                         <div id="linktypes-load-error" class="center" style="display:none">
-                            <p class="grey"><span>Error while loading links</span><br/></p>
-                            <button class="btn-sm btn btn-default" id="linktypes-load-retry"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button>                 
+                            <p class="grey">Error while loading links</p><br/>
+                            <button class="btn-sm btn btn-default" id="linktypes-load-retry">
+                                <span class="glyphicon glyphicon-repeat"></span> <span>Retry</span>
+                            </button>                 
                         </div>
                         <div id="linktypes" class="row"></div>
                         <div id="linktypes-empty" class="center"><p class="grey">No links for this type</p></div>

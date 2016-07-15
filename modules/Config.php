@@ -16,6 +16,7 @@ class Config extends XMLhelper
     //called to touch config file (so we know last modification)
     public static function touch() { touch(self::$INI_FILE); }
 
+    //MOVE THIS TO SOME API
     //test config
     public static function test($host, $name, $user, $pwd)
     {

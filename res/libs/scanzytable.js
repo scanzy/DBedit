@@ -3,13 +3,15 @@ $.fn.extend({
 
         //options default setup
         var options = defaultValues(options, {
-            request: { data: {} }, columns: {},
+            requiredata: { options: { }, name: 'scanzytable-' + this.attr('id') },
+            request: { url:'', data: {} }, columns: {},
             fetch: {
                 row: { start: function () { return "<tr>"; }, end: function () { return "</tr>"; } },
                 cell: {}, content: {}
             },
             button: { show: false, text: "New", click: function () { } },
-            search: { show: false, text: "Search..." }
+            search: { show: false, text: "Search..." },
+            done: function() {}, fail: function() {}, always: function() {}
         });
 
         //adds html for searchbar and new item btn
@@ -49,25 +51,26 @@ $.fn.extend({
         };
 
         //inits loader
-        t.loader = this.find("tbody").scanzyload({ request: options.request, fetch: function (i, data) {
+        t.loader = this.find("tbody").scanzyload({ request: options.request, requiredata: options.requiredata,
+            fetch: function (i, data) {
 
-            //fetches row
-            var html = options.fetch.row.start(i, data);
-            for (var col in options.columns) {
+                //fetches row
+                var html = options.fetch.row.start(i, data);
+                for (var col in options.columns) {
 
-                if (col in options.fetch.cell) { //opens tag
-                    if ('start' in options.fetch.cell[col]) html += options.fetch.cell[col].start(col, data[col], i, data);
-                } else html += "<td>";
+                    if (col in options.fetch.cell) { //opens tag
+                        if ('start' in options.fetch.cell[col]) html += options.fetch.cell[col].start(col, data[col], i, data);
+                    } else html += "<td>";
 
-                //puts content
-                html += (col in options.fetch.content) ? options.fetch.content[col](col, data[col], i, data) : data[col]; 
+                    //puts content
+                    html += (col in options.fetch.content) ? options.fetch.content[col](col, data[col], i, data) : data[col]; 
 
-                if (col in options.fetch.cell) { //closes tag
-                    if('end' in options.fetch.cell[col]) html += options.fetch.cell[col].end(col, data[col], i, data);
-                } else html += "</td>"; 
-            }
-            return html + options.fetch.row.end(i, data);
-        },
+                    if (col in options.fetch.cell) { //closes tag
+                        if('end' in options.fetch.cell[col]) html += options.fetch.cell[col].end(col, data[col], i, data);
+                    } else html += "</td>"; 
+                }
+                return html + options.fetch.row.end(i, data);
+            },
             loading: t.root.find(".loading-items"),
             error: t.root.find(".loading-items-error"),
             empty: t.root.find(".no-items")

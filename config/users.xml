@@ -15,10 +15,10 @@
         </al>
     </editors>
     <viewers>
-        <al>
+        <joe>
             <name>Joe</name>
             <surname>Black</surname>
             <pwd>joe's password</pwd>
-        </al>
+        </joe>
     </viewers>
 </root>

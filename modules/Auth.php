@@ -12,8 +12,8 @@ class Auth
     //and privilege levels
     public static $userlevels = array(
         "admins" => self::ADMIN,
-        "designers" => self::EDITOR,
-        "writers" => self::VIEWER
+        "editors" => self::EDITOR,
+        "viewers" => self::VIEWER
     );
 
     //tries login from post parameters

@@ -5,7 +5,7 @@ require_once "../../autoload.php";
 //API entities/edit (edits entity or creates a new one if id param not specified)
 
 Errors::setModeAjax();
-Auth::requireLevel(Auth::VIEWER);
+Auth::requireLevel(Auth::EDITOR);
 
 //gets helper
 $entities = Entities::helper(Params::requiredString('type'));
@@ -17,8 +17,12 @@ $id = Params::optionalInt('id', NULL);
 if ($id == NULL) //new entity
 {
     //validates params data
+    $id = "sfanfani";
 }
 else //edit entity
 {
     //validates params data
 }
+
+//returns id of created/edited entity
+echo $id;

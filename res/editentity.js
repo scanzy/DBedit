@@ -15,13 +15,17 @@ requiredata.request('typesdata', function (typesdata) {
     }
     $("#entity-details").html(html);
 
+    translate($(".box.title h1").text((id != undefined) ? "Edit" : "New")[0]); //sets page title
+
     //if we are in edit mode
     if (id != undefined) { //loads current values
-        $.ajax("./apis/entities/one.php" + urlParams({ type: type, id: id })).fail(errorPopup).success(function (data) {
+        requiredata.loadAjax('entitydata', { url: "./apis/entities/one.php", data: { type: type, id: id }, error: errorPopup});
+        requiredata.request('entitydata', function (data) {
             for (var col in typesdata[type].columns) if (col in data)
                 $("#entity-details-" + col).val(data[col]);
-        });
-    }
+        });        
+        $("#topbar-entity").addClass('active'); //selects alias in topbar
+    } else $("#topbar-type").addClass('active'); //selects type in topbar
 
     //unload event listener (confirms exit if data not saved)
     function areYouSure(e) {
@@ -35,7 +39,7 @@ requiredata.request('typesdata', function (typesdata) {
     }
 
     //buttons bindings
-    $("#details-cancel").click(function() { changeUrl({ type: type, id: id }); }); //returns to details page
+    $("#details-cancel").click(function() { changeUrl((id != undefined) ? { type: type, id: id } : { type: type }); }); //returns to entities or details page
     $("#details-save").click(function() { 
 
         //shows saving text on button and translates it
@@ -47,7 +51,7 @@ requiredata.request('typesdata', function (typesdata) {
         $("#entity-details input").each(function() { data.data[$(this).attr('name')] = $(this).val(); });
 
         //saves data (ajax request)
-        ajax("./apis/entities/edit.php", data, function() {
+        ajax("./apis/entities/edit.php", data, function(id) {
             window.removeEventListener('beforeunload', areYouSure); //prevents confirm message from being showed
             changeUrl({ type: type, id: id }); //redirects to details page
         })

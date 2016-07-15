@@ -15,11 +15,13 @@ $.fn.extend({ //extends jquery
     scanzyload: function (options) {
 
         //options default setup
-        options = defaultValues(options, {
-            request: { data: {} }, fetch: function () { },
+        var options = defaultValues(options, {
+            request: { url:'', data: {} }, fetch: function () { }, 
+            requiredata: { options: { }, name: 'scanzyload-' + this.attr('id') },
             loading: { show: function () { }, hide: function () { } },
             error: { show: function () { }, hide: function () { } },
-            empty: { show: function () { }, hide: function () { } }
+            empty: { show: function () { }, hide: function () { } },
+            done: function() {}, fail: function() {}, always: function() {}
         });
 
         //saves element root, options and load items function
@@ -29,15 +31,18 @@ $.fn.extend({ //extends jquery
             //loads request data
             if (requestdata == undefined) requestdata = options.request.data;
             else //uses data passed as param to update data stored in object
-                for (var i in options.request.data) requestdata[i] = options.request.data[i];
+                for (var i in options.request.data) //skips already present params
+                    if (!(i in requestdata)) requestdata[i] = options.request.data[i];
 
             //shows loading, hides error/empty
             options.loading.show();
             options.error.hide();
             options.empty.hide();
 
-            //sends request
-            return $.ajax(options.request).success(function (data) {
+            //sets requiredata options and sends request
+            requiredata.options(options.requiredata.name, options.requiredata.options);
+            requiredata.loadAjax(options.requiredata.name, {url: options.request.url, data: requestdata})
+            .done(function (data) {
 
                 //checks empty                       
                 if (data != null && data != "") {
@@ -52,9 +57,10 @@ $.fn.extend({ //extends jquery
                 for (var i in data) html += options.fetch(i, data[i]);
 
                 root.html(html); //and adds html to page
+                options.done(); //callback
             })
-            .fail(function () { options.error.show(); }) //shows error
-            .always(function () { options.loading.hide(); }); //hides loading
+            .fail(function () { options.error.show(); options.fail(); }) //shows error
+            .always(function () { options.loading.hide(); options.always(); }); //hides loading
         }
         };
         return x; //returns scanzyload object ref
