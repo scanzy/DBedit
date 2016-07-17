@@ -52,6 +52,7 @@ $.fn.extend({ //extends jquery
                     else if (data instanceof Array)
                         if (data.length <= 0) { options.empty.show(); return; }
                 }
+                else { options.empty.show(); return; }
 
                 var html = ""; //fetches data
                 for (var i in data) html += options.fetch(i, data[i]);

@@ -15,7 +15,7 @@ requiredata.request('typesdata', function (typesdata) {
         //setups table
         entitiestable = $("#entities-table").scanzytable({ columns: columns,
             request: { url: "./apis/entities/get.php", data: { type: type} },
-            fetch: { row: { start: function (id) { return "<tr class='clickable' data-entity-id='" + id + "'>"; } } }, search: { show: true }, 
+            fetch: { row: { start: function (x, data) { return "<tr class='clickable' data-entity-id='" + data.id + "'>"; } } }, search: { show: true }, 
             button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); }
             }
         });

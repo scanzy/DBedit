@@ -9,16 +9,21 @@
                 <displayname>Name</displayname>
                 <type>varchar</type>
                 <length>20</length>
+                <allowempty>false</allowempty>
+                <unique>false</unique>
             </name>
             <surname>
                 <displayname>Surname</displayname>
                 <type>varchar</type>
                 <length>20</length>
+                <allowempty>false</allowempty>
+                <unique>false</unique>
             </surname>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add person</add>
         <new>New person</new>
+        <edit>Edit person</edit>
     </people>
     <payments>
         <displayname>Payments</displayname>
@@ -29,11 +34,13 @@
                 <displayname>Subject</displayname>
                 <type>varchar</type>
                 <length>100</length>
+                <allowempty>false</allowempty>
             </subject>
         </columns>
         <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add payment</add>
         <new>New payment</new>
+        <edit>Edit payment</edit>
     </payments>
     <certificates>
         <displayname>Certificates</displayname>
@@ -44,10 +51,12 @@
                 <displayname>Subject</displayname>
                 <type>varchar</type>
                 <length>100</length>
+                <allowempty>false</allowempty>
             </name>
         </columns>
         <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add certificate</add>
         <new>New certificate</new>
+        <edit>Edit certificate</edit>
     </certificates>
 </root>

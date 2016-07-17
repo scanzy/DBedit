@@ -35,7 +35,7 @@ $.fn.extend({
         this.append('<div class="table-responsive"><table class="table"><thead><tr>' + thead + '</tr></thead><tbody></tbody></table></div>');
 
         //adds hidden texts for hints
-        this.append('<div><p class="no-items grey" style="display:none;">There are currently no elements</p>\
+        this.append('<div><p class="no-items grey center" style="display:none;">There are currently no elements</p>\
             <p class="loading-items center grey" style="display:none;">Loading data...</p> \
             <div class="loading-items-error center" style="display:none;"><p class="grey">Error while loading data</p>\
                 <button class="items-load-retry btn btn-default btn-sm"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button></div> \

@@ -7,7 +7,7 @@ var entitytypes = $("#entitytypes").scanzyload({
             <div class="line"></div> \
             <p class="txt-grey">' + data.description + '</p></div></a>';
     },
-    error: $("#entities-load-error"),
+    error: $("#entities-load-error"), loading: $("#entities-loading"),
     always: function () { translate(document.getElementById("entitytypes")); } //translates
 });
 

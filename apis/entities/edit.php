@@ -14,15 +14,28 @@ if ($entities == NULL) Errors::send(400, "Unknown entity type");
 //gets optional param id (new entity if no id, edit entity if found id param)
 $id = Params::optionalInt('id', NULL);
 
-if ($id == NULL) //new entity
-{
-    //validates params data
-    $id = "sfanfani";
-}
-else //edit entity
-{
-    //validates params data
-}
+//gets data
+$data = Params::requiredArray('data');
 
-//returns id of created/edited entity
-echo $id;
+//checks columns
+$unknowncol = $entities->checkColumns($data);
+if ($unknowncol !== FALSE) Errors::send(400, "Unknown column '$unknowncol'");
+
+//checks types
+$wrongtypecol = $entities->checkTypes($data);
+if ($wrongtypecol !== FALSE) Errors::send(400, "Wrong type for column '$wrongtypecol'");
+
+//checks nonempty columns
+$emptycol = $entities->checkEmpties($data, ($id == NULL));
+if ($emptycol !== FALSE) Errors::send(400, "Column '$emptycol' can't be empty");
+
+//checks unique columns
+$duplicatecol = $entities->checkUniques($id, $data);
+if ($duplicatecol !== FALSE) Errors::send(400, "Invalid value for column '$duplicatecol': found record with same value");
+
+if ($id === NULL) //new entity
+    $id = $entities->insert($data);
+else //edit entity
+    $entities->update($id, $data);
+
+echo $id; //sends id of created/edited entity

@@ -5,17 +5,20 @@
         <link1>people</link1>
         <link2>payments</link2>
         <table>PeoplePayments</table>
+        <columns></columns>
     </payments-people>
     <certificates-people>
         <description>Certificates of people</description>
         <link1>people</link1>
         <link2>certificates</link2>
         <table>CertificatesPayments</table>
+        <columns></columns>
     </certificates-people>
     <payments-certificates>
         <description>Payments of certificates</description>
         <link1>payments</link1>
         <link2>certificates</link2>
         <table>CertificatesPayments</table>
+        <columns></columns>
     </payments-certificates>
 </root>
