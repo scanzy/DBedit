@@ -2,9 +2,9 @@
 <root>
     <DB>
         <host>localhost</host>
-        <name>DBedit</name>
-        <user>root</user>
-        <pwd>root</pwd>
+        <name>my_dbedit</name>
+        <user>dbedit</user>
+        <pwd></pwd>
     </DB>
     <global>
         <appname>Super cool DB!</appname>

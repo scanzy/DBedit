@@ -105,8 +105,8 @@ class SQLhelper
         foreach($data as $col => $val)
             switch($this->columns[$col]['type'])
             {
-                case "varchar": if (!is_string($val)) return $colname; break;
-                case "int": if (!is_int($val)) return $colname; break;
+                case "varchar": if (!is_string($val)) return $col; break;
+                case "int": if (!is_int(Shared::smartCast($val))) return $col; break;
             }
         return FALSE;
     }
@@ -144,5 +144,19 @@ class SQLhelper
                 if ($stmt->fetch()[0] > 0) return $colname;
             }
         return FALSE;
+    }
+
+    //gets unique values
+    public function uniques($id)
+    {
+        //prepares columns list
+        $cols = ""; foreach($this->uniqueColumns() as $colname => $col) $cols .= " $colname,";
+
+        //no query if no uniques
+        if ($cols == "") return array();
+
+        //executes query
+        $stmt = Shared::connect()->query("SELECT" . rtrim($cols, ",") . " FROM ".$this->table. (($id === NULL) ? "" : " WHERE id<>$id").";");
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }

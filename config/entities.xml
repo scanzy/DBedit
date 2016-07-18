@@ -19,6 +19,13 @@
                 <allowempty>false</allowempty>
                 <unique>false</unique>
             </surname>
+            <cardnumber>
+                <displayname>Card number</displayname>
+                <type>int</type>
+                <length>20</length>
+                <allowempty>false</allowempty>
+                <unique>true</unique>
+            </cardnumber>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add person</add>

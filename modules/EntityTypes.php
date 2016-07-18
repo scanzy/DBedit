@@ -4,9 +4,12 @@
 
 class EntityTypes extends XMLhelper
 {
-    public static $XML_FILE = __DIR__."/../config/entities.xml";
+    public static $XML_FILE;
     public static $VAR_NAME = "DBedit-entities";
 
+    //called on class load
+    public static function init() { self::$XML_FILE = __DIR__."/../config/entities.xml"; }
+    
     //gets info about entity of specified type
     public static function one($type)
     {

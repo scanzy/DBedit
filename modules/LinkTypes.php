@@ -4,8 +4,11 @@
 
 class LinkTypes extends XMLhelper
 {
-    public static $XML_FILE = __DIR__."./../config/links.xml";
+    public static $XML_FILE;
     public static $VAR_NAME = "DBedit-links";
+
+    //called on load
+    public static function init() { self::$XML_FILE = __DIR__."/../config/links.xml"; }
 
     //gets links type data 
     public static function filter($type)

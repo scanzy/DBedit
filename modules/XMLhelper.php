@@ -4,7 +4,7 @@
 
 class XMLhelper
 {
-    public static $XML_FILE = __DIR__."/file.xml";
+    public static $XML_FILE = ""; //__DIR__."/path/to/file.xml";
     public static $VAR_NAME = "";
 
     //loads configuration in $_SESSION[$VAR_NAME] reading from xml file

@@ -54,6 +54,9 @@ $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
 //call this if you are the button you are clicking
 function hideAllTooltips() { $('[data-toggle="tooltip"]').tooltip('hide'); } 
 
+//scrolls to elements
+function scrollToElement(el) { $("html, body").animate({ scrollTop: el.offset().top - $(window).height() * 0.3 }, 700); }
+
 //sets requiredata options
 requiredata.options('userdata', { useSessionStorage: true });
 requiredata.options('typesdata', { useSessionStorage: true });

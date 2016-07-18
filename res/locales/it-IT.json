@@ -7,5 +7,6 @@
     "Delete" : "Elimina",
     "Save" : "Salva",
     "Saving..." : "Salvataggio...",
-    "Cancel" : "Annulla"
+    "Cancel" : "Annulla",
+    "This field can't be empty" : "Questo campo non puo' essere vuoto"
 }
