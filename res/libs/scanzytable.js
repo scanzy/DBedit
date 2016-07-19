@@ -6,7 +6,10 @@ $.fn.extend({
             requiredata: { options: { }, name: 'scanzytable-' + this.attr('id') },
             request: { url:'', data: {} }, columns: {},
             fetch: {
-                row: { start: function () { return "<tr>"; }, end: function () { return "</tr>"; } },
+                row: { 
+                    start: function () { return "<tr>"; }, end: function () { return "</tr>"; },
+                    click: undefined, hoverClass: undefined
+                },
                 cell: {}, content: {}
             },
             button: { show: false, text: "New", click: function () { } },
@@ -73,12 +76,12 @@ $.fn.extend({
             },
             loading: t.root.find(".loading-items"),
             error: t.root.find(".loading-items-error"),
-            empty: t.root.find(".no-items")
+            empty: t.root.find(".no-items"), 
+            retry: t.root.find(".items-load-retry")
         });
 
-        //handlers for new button, retry loading, reset search
+        //handlers for new button, reset search
         if (options.button.show) this.find(".new-item").click(options.button.click);
-        this.find(".items-load-retry").click(function (e) { e.preventDefault(); t.loadItems(); });
         this.find(".items-clear-search").click(function (e) {
             e.preventDefault(); t.root.find(".items-search").val(''); //resets search input (shows all rows)
             t.root.find(".no-items-results").hide(); t.root.find("tr").show(); $(".items-search").focus();
@@ -95,6 +98,14 @@ $.fn.extend({
             (t.root.find("tbody tr:visible").length == 0) ? // controls "no items found" visibility 
             t.root.find(".no-items-results").show() : t.root.find(".no-items-results").hide();
         });
+
+        //row click/hover handlers
+        if (t.options.fetch.row.click != undefined) t.root.on("click", "tr", t.options.fetch.row.click);   
+        if (t.options.fetch.row.hoverClass != undefined) {
+            t.root.on("mouseenter", "tr", function () { $(this).addClass(t.options.fetch.row.hoverClass); });
+            t.root.on("mouseleave", "tr", function () { $(this).removeClass(t.options.fetch.row.hoverClass); });
+        }
+         
 
         return t; //returns table object ref
     }

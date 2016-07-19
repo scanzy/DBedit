@@ -41,13 +41,10 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
             <div class="line"></div> \
             <p class="txt-grey">' + data.description + '</p></div></a>';
         },
-        error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"),
+        error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
         always: function () { translate(document.getElementById("linktypes")); } //translates
     });
-
-    //retry link
-    $("#linktypes-load-retry").click(function (e) { e.preventDefault(); linksloader.loadItems(); return false; });
-
+    
     //gets data
     linksloader.loadItems();
     detailstable.loadItems();

@@ -76,7 +76,7 @@ $appname = $conf['global']['appname'];
                 function (data) {
 
                     //shakes on error
-                    if (data == null) { $("#wrongpassword").removeClass('hidden'); shake($("#login")); } 
+                    if (data == null || data == "") { $("#wrongpassword").removeClass('hidden'); shake($("#login")); } 
 
                     //saves userdata and redirects on success
                     else { sessionStorage.setObject('userdata', data); window.location.href = "./"; } 

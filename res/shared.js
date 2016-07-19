@@ -48,12 +48,6 @@ var action = params['action'];
 $("#logout").click(function () { sessionStorage.clear(); //erases session data
     ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); });
 
-//enables bootstrap tooltip
-$(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
-
-//call this if you are the button you are clicking
-function hideAllTooltips() { $('[data-toggle="tooltip"]').tooltip('hide'); } 
-
 //scrolls to elements
 function scrollToElement(el) { $("html, body").animate({ scrollTop: el.offset().top - $(window).height() * 0.3 }, 700); }
 
@@ -87,3 +81,11 @@ if (type != undefined) requiredata.request('typesdata', function(typesdata) {
 if (id != undefined) requiredata.request('entityalias', function(alias) {       
     $("#topbar-entity").text(alias).attr('href', './' + urlParams({ type: type, id: id })).removeClass('hidden');
 });
+
+//shows linktype in topbar
+if (link != undefined) requiredata.request('linksdata', function(linksdata) {
+    requiredata.request('typesdata', function(typesdata) {
+        var linkedtype = (linksdata[link].link1 == type) ? linksdata[link].link2 : linksdata[link].link1;
+        $("#topbar-link").text(typesdata[linkedtype].displayname).removeClass('hidden')
+        .attr('href', './' + urlParams({ type: type, id: id, link: link }));
+}); });

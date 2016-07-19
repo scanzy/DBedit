@@ -4,14 +4,14 @@
 
 class Links extends SQLhelper
 {
-    //gets helper for specified types
-    public static function helper($type1, $type2)
+    //gets helper for specified link type
+    public static function helper($type)
     {
-        $typeinfo = LinkTypes::one($type1, $type2);
+        $typeinfo = LinkTypes::one($type);
         return ($typeinfo == NULL) ? NULL : new Links($typeinfo); 
     }
 
-    //gets helpers for specified type
+    //gets helpers for specified entity type
     public static function helpers($type)
     {
         $typesinfo = LinkTypes::filter($type); //filters types

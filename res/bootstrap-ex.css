@@ -11,3 +11,5 @@ textarea.vresize { resize: vertical; }
 
 h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge { vertical-align: middle }
 span.badge-light { color: #aaa; background-color: #eee; }
+
+.btn-multiline .btn { margin-top: .4em; }

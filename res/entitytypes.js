@@ -7,15 +7,9 @@ var entitytypes = $("#entitytypes").scanzyload({
             <div class="line"></div> \
             <p class="txt-grey">' + data.description + '</p></div></a>';
     },
-    error: $("#entities-load-error"), loading: $("#entities-loading"),
+    error: $("#entities-load-error"), loading: $("#entities-loading"), retry: $("#entities-load-retry"),
     always: function () { translate(document.getElementById("entitytypes")); } //translates
-});
-
-//binds retry link
-$("#entities-load-retry").click(function () { entitytypes.loadItems(); });
-
-//loads items
-entitytypes.loadItems();
+}).loadItems();
 
 //selects title in topbar
 $("#topbar-title").addClass('active');

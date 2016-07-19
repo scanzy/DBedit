@@ -47,12 +47,13 @@ $appname = $conf['global']['appname'];
         <title><?php echo $appname; ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.alphanum/1.0.24/jquery.alphanum.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.alphanum/1.0.24/jquery.alphanum.min.js"></script>
+        
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 
@@ -150,10 +151,22 @@ $appname = $conf['global']['appname'];
         <?php break; case "links": ?>
 
         <div class="container page">
-            <div class="box title"><h1>Links</h1></div>
+            <div class="box title">
+                <h1>Links</h1>
+                <div class="line"></div>
+                <div id="links-nav" class="center btn-multiline"></div>
+                <div class="center">
+                    <p id="links-nav-loading" class="grey">Loading...</p>
+                    <div id="links-nav-load-error" style="display:none">
+                        <p class="grey">Error while loading links</p><br/>
+                        <button id="links-nav-load-retry" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button>
+                    </div>
+                </div>
+            </div>
 
             <div class="box">
-                        
+                
+                <div id="links-table"></div>
             </div>
         </div>
 
@@ -216,7 +229,7 @@ $appname = $conf['global']['appname'];
             case "entitytypes": Shared::loadJS("res/entitytypes.js"); break; 
             case "entities": Shared::loadJS("res/entities.js"); break; 
             case "entitydetails": Shared::loadJS("res/entitydetails.js"); break;
-            case "links": break;
+            case "links": Shared::loadJS("res/links.js"); break;
             case "editentitytype": break;
             case "editentity": Shared::loadJS("res/editentity.js"); break;
             case "user": break;

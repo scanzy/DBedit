@@ -5,7 +5,15 @@
         <link1>people</link1>
         <link2>payments</link2>
         <table>PeoplePayments</table>
-        <columns></columns>
+        <columns>
+            <notes>
+                <displayname>Notes</displayname>
+                <type>varchar</type>
+                <length>200</length>
+                <allowempty>true</allowempty>
+                <unique>false</unique>
+            </notes>
+        </columns>
     </payments-people>
     <certificates-people>
         <description>Certificates of people</description>

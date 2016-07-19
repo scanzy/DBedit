@@ -58,6 +58,14 @@ class SQLhelper
         return $stmt->fetch()[0];
     }
 
+    //gets elements with one where clause 
+    public function filter($col, $val)
+    {
+        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE $col=:$col;");
+        $stmt->execute(array(":$col" => $val));
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //inserts element (check columns, types and nulls before calling this)
     public function insert($data)
     {
@@ -135,12 +143,13 @@ class SQLhelper
         foreach($this->uniqueColumns() as $colname => $col)        
             if (isset($data[$colname]))
             {
-                $where = "$colname=".$data[$colname];
+                $where = "$colname=:$colname";
 
                 //if updating row, it doesn't check this row
                 if ($id != NULL) $where = "id<>$id AND $where";
 
-                $stmt = Shared::connect()->query("SELECT COUNT(*) FROM ".$this->table." WHERE $where;");
+                $stmt = Shared::connect()->prepare("SELECT COUNT(*) FROM ".$this->table." WHERE $where;");
+                $stmt->execute(array(":$colname" => $data[$colname]));
                 if ($stmt->fetch()[0] > 0) return $colname;
             }
         return FALSE;

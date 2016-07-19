@@ -25,18 +25,14 @@ class LinkTypes extends XMLhelper
     }
 
     //gets specific link type data 
-    public static function one($type1, $type2)
+    public static function one($type)
     {
         //gets all types
         $linktypes = static::get();
 
         //finds type
-        foreach($linktypes as $linkname => $linkdata)
-            if (($linkdata['link1'] == $type1 && $linkdata['link2'] == $type2)
-              || ($linkdata['link1'] == $type2 && $linkdata['link2'] == $type1))
-                return $linkdata;
-
-        return NULL;
+        if (!isset($linktypes[$type])) return NULL;
+        return $linktypes[$type];
     }
 
     //gets info about links that connect something    

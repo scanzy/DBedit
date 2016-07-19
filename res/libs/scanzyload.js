@@ -21,6 +21,7 @@ $.fn.extend({ //extends jquery
             loading: { show: function () { }, hide: function () { } },
             error: { show: function () { }, hide: function () { } },
             empty: { show: function () { }, hide: function () { } },
+            retry: { click: function() { } },
             done: function() {}, fail: function() {}, always: function() {}
         });
 
@@ -64,6 +65,10 @@ $.fn.extend({ //extends jquery
             .always(function () { options.loading.hide(); options.always(); }); //hides loading
         }
         };
+
+        //binds retry button
+        options.retry.click(function(){ x.loadItems(); }); 
+
         return x; //returns scanzyload object ref
     }
 });
