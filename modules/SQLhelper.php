@@ -4,11 +4,17 @@
 
 class SQLhelper
 {
+    public $typedata; //type data
     public $table; //table name
     public $columns; //coumns
+    public $mainFiltCol; //columns used by filter()
 
     //creates helper instance 
-    public function __construct($info) { $this->table = $info['table']; $this->columns = $info['columns']; }
+    public function __construct($info) { 
+        $this->typedata = $info; 
+        $this->table = $info['table']; 
+        $this->columns = $info['columns']; 
+    }
 
     //gets unique columns 
     function uniqueColumns()
@@ -59,10 +65,10 @@ class SQLhelper
     }
 
     //gets elements with one where clause 
-    public function filter($col, $val)
+    public function filter($val)
     {
-        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE $col=:$col;");
-        $stmt->execute(array(":$col" => $val));
+        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE ".$this->mainFiltCol."=:x;");
+        $stmt->execute(array(":x" => $val));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

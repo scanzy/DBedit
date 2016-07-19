@@ -2,7 +2,7 @@
 
 require_once "../../autoload.php";
 
-//API links/get (gets links)
+//API links/filter (gets links filtered with id)
 
 Errors::setModeAjax();
 Auth::requireLevel(Auth::VIEWER);
@@ -12,4 +12,4 @@ $links = Links::helper(Params::requiredString('type'), Params::requiredString('l
 if ($links == NULL) Errors::send(400, "No linktypes found");
 
 //sends data
-Shared::sendJSON($links->get());
+Shared::sendJSON($links->filter(Params::requiredInt('id')));

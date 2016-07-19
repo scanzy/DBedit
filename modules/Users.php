@@ -4,8 +4,10 @@
 
 class Users extends XMLhelper
 {
-    public static $XML_FILE = __DIR__."/../config/users.xml";
     public static $VAR_NAME = "DBedit-users";
+
+    //inits class
+    public static function init() { self::$XML_FILE = __DIR__."/../config/users.xml"; }
 
     //gets userdata from username
     public static function one($username)

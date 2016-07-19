@@ -10,4 +10,27 @@ class Entities extends SQLhelper
         $typeinfo = EntityTypes::one($type);
         return ($typeinfo == NULL) ? NULL : new Entities($typeinfo); 
     }
+    
+    //gets array of aliases
+    public function aliases()
+    {
+        //gets all entities
+        $entities = $this->get();
+
+        $data = array(); //builds alias
+        foreach($entities as $entity)
+            $data[$entity['id']] = $this->alias($entity);
+
+        return $data;
+    }
+
+    //gets alias from data
+    public function alias($entitydata)
+    {
+        $alias = $this->typedata['alias'];
+        foreach($this->columns as $col => $colinfo) 
+            $alias = str_ireplace("%$col%", $entitydata[$col], $alias);
+
+        return $alias;
+    }
 }

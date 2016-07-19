@@ -6,4 +6,4 @@ require_once "../../autoload.php";
 
 Errors::setModeAjax();
 Auth::requireLevel(Auth::VIEWER);
-Shared::sendJSON(LinkTypes::one(Params::requiredString('link'));
+Shared::sendJSON(LinkTypes::one(Params::requiredString('type'), Params::requiredString('link')));

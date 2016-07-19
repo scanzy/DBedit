@@ -83,9 +83,7 @@ if (id != undefined) requiredata.request('entityalias', function(alias) {
 });
 
 //shows linktype in topbar
-if (link != undefined) requiredata.request('linksdata', function(linksdata) {
-    requiredata.request('typesdata', function(typesdata) {
-        var linkedtype = (linksdata[link].link1 == type) ? linksdata[link].link2 : linksdata[link].link1;
-        $("#topbar-link").text(typesdata[linkedtype].displayname).removeClass('hidden')
+if (link != undefined) requiredata.request('typesdata', function(typesdata) {
+        $("#topbar-link").text(typesdata[link].displayname).removeClass('hidden')
         .attr('href', './' + urlParams({ type: type, id: id, link: link }));
-}); });
+});

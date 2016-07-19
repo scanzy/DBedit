@@ -35,7 +35,7 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
     var linksloader = $("#linktypes").scanzyload({
         request: { url: "./apis/linktypes/info.php", data: { type: type, id: id } },
         fetch: function (name, data) {
-            return '<a href="./' + urlParams({ type: type, id: id, link: name }) + '">\
+            return '<a href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
             <div class="col-lg-4 col-md-12 col-sm-6 col-xs-6 center"> \
             <h2>' + data.displayname + ' <span class="badge badge-light">' + data.itemscount + '</span></h2> \
             <div class="line"></div> \
