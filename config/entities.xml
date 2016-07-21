@@ -65,6 +65,7 @@
             </goodboy>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <random>2</random>
         <add>Add person</add>
         <new>New person</new>
         <edit>Edit person</edit>
@@ -84,6 +85,7 @@
             </subject>
         </columns>
         <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <random>3</random>
         <add>Add payment</add>
         <new>New payment</new>
         <edit>Edit payment</edit>
@@ -103,8 +105,29 @@
             </name>
         </columns>
         <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <random>1</random>
         <add>Add certificate</add>
         <new>New certificate</new>
         <edit>Edit certificate</edit>
     </certificates>
+    <photos>
+        <displayname>Photos</displayname>
+        <displayone>Photo</displayone>
+        <alias>%name%</alias>
+        <table>Photos</table>
+        <columns>
+            <name>
+                <displayname>Name</displayname>
+                <type>varchar</type>
+                <length>100</length>
+                <allowempty>false</allowempty>
+                <unique>true</unique>
+            </name>
+        </columns>
+        <description>Photos bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <random>1</random>
+        <add>Add photo</add>
+        <new>New photo</new>
+        <edit>Edit photo</edit>
+    </photos>
 </root>

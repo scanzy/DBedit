@@ -8,7 +8,7 @@ Errors::setModeAjax();
 Auth::requireLevel(Auth::VIEWER);
 
 //gets data
-$types = LinkTypes::info(Params::requiredString('type'));
+$types = LinkTypes::info(Params::requiredString('type'), Params::requiredInt('id'));
 if ($types === NULL) Errors::send(400, "Unknown entity type");
 
 //sends data

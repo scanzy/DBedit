@@ -36,14 +36,18 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
     var linksloader = $("#linktypes").scanzyload({
         request: { url: "./apis/linktypes/info.php", data: { type: type, id: id } },
         fetch: function (name, data) {
-            return '<a href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
-            <div class="col-lg-4 col-md-12 col-sm-6 col-xs-6 center"> \
-            <h2>' + data.displayname + ' <span class="badge badge-light">' + data.itemscount + '</span></h2> \
-            <div class="line"></div> \
-            <p class="txt-grey">' + data.description + '</p></div></a>';
+
+            var random = ""; //random entities
+            //for (var i in data.somerandom) 
+                //random += '<button class="btn btn-xs btn-info" href="./' + urlParams({ type: type, id : id, link: name, linkid: data.somerandom[i].id }) + '">'
+                    //+ getAlias(data.somerandom[i], data.columns, data.alias) + '</button> ';
+
+            return '<div class="link-box col-lg-6 col-md-12 col-sm-6 col-xs-6 center" href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
+                <div><h2>' + data.displayname + ' <span class="badge badge-light">' + data.itemscount + '</span></h2> \
+                <div class="line"></div><p class="txt-grey">' + data.description + '</p>' + random + '</div></div>';
         },
         error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
-        always: function () { translate(document.getElementById("linktypes")); } //translates
+        always: function () { translate(document.getElementById("linktypes")); setLinkBoxHandlers(); } //translates
     });
     
     //gets data

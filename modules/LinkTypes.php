@@ -40,7 +40,7 @@ class LinkTypes extends XMLhelper
     }
 
     //gets info about links that connect something    
-    public static function info($type)
+    public static function info($type, $id)
     {
         //gets data from xml files
         $linktypes = static::get(); 
@@ -51,6 +51,7 @@ class LinkTypes extends XMLhelper
             if ($typedata['link1'] == $type || $typedata['link2'] == $type)
             {
                 $h = new Links($typedata); //gets helper
+                $h->mainFiltCol = ($typedata['link1'] == $type) ? "id1" : "id2";
 
                 $displayname = $types[$typedata['link1']]['displayname']; //gets display name
                 if ($displayname == $types[$type]['displayname']) $displayname = $types[$typedata['link2']]['displayname'];
@@ -59,9 +60,10 @@ class LinkTypes extends XMLhelper
                     'displayname' => $displayname,
                     'type' => $type,
                     'link' => ($typedata['link1'] == $type) ? $typedata['link2'] : $typedata['link1'],
+                    'columns' => $typedata['columns'],
                     'description' => $typedata['description'],
-                    'itemscount' => $h->count(), //counts items
-                    'somerandom' => $h->getRandom() //some random elements
+                    'itemscount' => $h->countFiltered($id), //counts items
+                    'somerandom' => $h->getRandomFiltered($id) //some random elements
                 );
         }
 

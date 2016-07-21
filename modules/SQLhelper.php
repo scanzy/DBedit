@@ -53,7 +53,21 @@ class SQLhelper
     //gets random elements in table
     public function getRandom($count = 3)
     {
+        //uses count from typedata if specified
+        if (isset($this->typedata['random'])) $count = $this->typedata['random'];
+
         $stmt = Shared::connect()->query("SELECT * FROM ".$this->table." ORDER BY RAND() LIMIT $count;");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    //gets random elements in table using a filter
+    public function getRandomFiltered($val, $count = 3)
+    {
+        //uses count from typedata if specified
+        if (isset($this->typedata['random'])) $count = $this->typedata['random'];
+
+        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE ".$this->mainFiltCol."=:x ORDER BY RAND() LIMIT $count;");
+        $stmt->execute(array(":x" => $val));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -61,6 +75,14 @@ class SQLhelper
     public function count()
     {
         $stmt = Shared::connect()->query("SELECT COUNT(*) FROM ".$this->table.";");
+        return $stmt->fetch()[0];
+    }
+
+    //counts elements with filter
+    public function countFiltered($val)
+    {
+        $stmt = Shared::connect()->prepare("SELECT COUNT(*) FROM ".$this->table." WHERE ".$this->mainFiltCol."=:x;");
+        $stmt->execute(array(":x" => $val));
         return $stmt->fetch()[0];
     }
 

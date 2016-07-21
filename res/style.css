@@ -50,3 +50,22 @@ button.left, span.left { float: left; }
 .table tr.hover { background-color: #eee; }
 .table tr { transition: background-color .5s; }
 .table tr.clickable { cursor: pointer; }
+
+.link-box { 
+    padding: 0;     
+    display: inline-block;
+    float: none;
+    vertical-align: top;     
+    cursor: pointer; 
+}
+
+.link-box > div { padding: .8em 1em; margin: .5em; border-radius: .8em; transition: background-color 1s linear;}
+.link-box > div.hover { background-color: #eee; transition: background-color 0s;} 
+
+.link-box h2 { color: #555; transition: color .5s ease; }
+.link-box > div.hover h2 { color: #4ad; }
+
+.link-box > div .badge.badge-light { transition: background-color .5s ease, color .5s ease, font-size .5s ease, border-radius .5s ease; }
+.link-box > div.hover .badge.badge-light { background-color: #4ad; color: white; font-size: 18px; border-radius: 15px; }
+
+.link-box .btn { margin-bottom: 5px; }

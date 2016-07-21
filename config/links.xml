@@ -14,6 +14,7 @@
                 <unique>false</unique>
             </notes>
         </columns>
+        <random>3</random>
         <linked>Payed</linked>
         <unlinked>Not payed</unlinked>
     </payments-people>
@@ -23,6 +24,7 @@
         <link2>certificates</link2>
         <table>CertificatesPayments</table>
         <columns></columns>
+        <random>2</random>
         <linked>We have it</linked>
         <unlinked>We don't have it</unlinked>
     </certificates-people>

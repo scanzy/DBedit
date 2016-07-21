@@ -87,8 +87,8 @@ $appname = $conf['global']['appname'];
                     <li><a id="topbar-title" href="./" class="hidden"></a></li>
                     <li><a id="topbar-type" class="hidden"></a></li>
                     <li><a id="topbar-entity" class="hidden"></a></li>
-                    <li><a id="topbar-link" class="hidden"></a></li>
-                    <li class="right"><a href="#" id="logout">Logout</a>
+                    <li><a id="topbar-link" class="hidden"></a>
+                    </li><li class="right"><a href="#" id="logout">Logout</a>
                     </li><li class="right"><a id="topbar-user" href="./?action=user"></a>
                     </li><li class="right"><a id="topbar-help" href="./?action=help">Help</a>
                     </li>
@@ -106,7 +106,7 @@ $appname = $conf['global']['appname'];
             <div class="box title"><h1>Dashboard</h1></div>
 
             <div class="box">
-                <div id="entitytypes" class="row"></div>
+                <div id="entitytypes" class="row center"></div>
                 <div id="entities-loading" class="center"><p class="grey">Loading...</p></div>
                 <div id="entities-load-error" style="display:none" class="center">
                     <p class="grey">Error while loading types</p><br/>
@@ -146,7 +146,7 @@ $appname = $conf['global']['appname'];
                                 <span class="glyphicon glyphicon-repeat"></span> <span>Retry</span>
                             </button>                 
                         </div>
-                        <div id="linktypes" class="row"></div>
+                        <div id="linktypes" class="row center"></div>
                         <div id="linktypes-empty" class="center"><p class="grey">No links for this type</p></div>
                     </div>
                 </div>

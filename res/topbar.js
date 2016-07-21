@@ -1,3 +1,9 @@
+//gets alias from data and type data
+function getAlias(data, columns, alias) {
+    for (var col in columns) alias = alias.replace("%" + col + "%", data[col]);
+    return alias;
+}
+
 //stores params
 var params = GetParams();
 var type = params['type'];
@@ -28,10 +34,8 @@ if (type != undefined) requiredata.request('typesdata', function(typesdata) {
     $("#topbar-type").text(typesdata[type].displayname).attr('href', './' + urlParams({ type: type })).removeClass('hidden');
 
     //gets display name for this entity
-    requiredata.request('entitydata', function (data) {
-        var alias = typesdata[type].alias; 
-        for (var col in typesdata[type].columns) alias = alias.replace("%" + col + "%", data[col]);
-        requiredata.set('entityalias', alias); //and saves it
+    requiredata.request('entitydata', function (data) { 
+        requiredata.set('entityalias', getAlias(data, typesdata[type].columns, typesdata[type].alias)); //and saves it
     });
 });
 
@@ -45,3 +49,17 @@ if (link != undefined) requiredata.request('typesdata', function(typesdata) {
         $("#topbar-link").text(typesdata[link].displayname).removeClass('hidden')
         .attr('href', './' + urlParams({ type: type, id: id, link: link }));
 });
+
+//sets handlers for link-box
+function setLinkBoxHandlers() {
+    
+    //activates buttons
+    $(".link-box[href], button[href]").on('click', function(e) { 
+        e.stopPropagation(); 
+        window.location.href = $(this).attr('href');
+    });
+
+    //hover effect
+    $(".link-box > div").on('mouseenter', function() { $(this).addClass("hover"); })
+    $(".link-box > div").on('mouseleave', function() { $(this).removeClass("hover"); });
+}

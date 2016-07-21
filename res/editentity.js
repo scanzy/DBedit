@@ -123,9 +123,11 @@ requiredata.request('typesdata', function (typesdata) {
     $.ajax({ url: "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker." + langcode + ".min.js",
         dataType: "script", cache: true, 
     }).always(function() { 
-        $(".input-group.date").datepicker({ 
-            autoclose: true, language: langcode, //and inits picker
-            clearBtn: typesdata[type].columns[$(".input-group.date input").attr('name')].allowEmpty 
+        $(".input-group.date").each(function() { 
+            $(this).datepicker({ 
+                autoclose: true, language: langcode, //and inits picker
+                clearBtn: typesdata[type].columns[$(this).find("input").attr('name')].allowEmpty 
+            });
         }); 
     });
 

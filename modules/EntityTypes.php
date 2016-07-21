@@ -32,6 +32,8 @@ class EntityTypes extends XMLhelper
 
             $data[$type] = array(
                 'displayname' => $typedata['displayname'],
+                'columns' => $typedata['columns'],
+                'alias' => $typedata['alias'],
                 'description' => $typedata['description'],
                 'itemscount' => $h->count(), //counts items
                 'somerandom' => $h->getRandom() //some random elements
