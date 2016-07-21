@@ -84,7 +84,7 @@ class SQLhelper
         $conn = Shared::connect();
         $stmt = $conn->prepare("INSERT INTO ".$this->table." ($columns) VALUES ($values)");
 
-        foreach($data as $col => $val) $stmt->bindValue(":".$col, $val); //binds values
+        foreach($data as $col => $val) $stmt->bindValue(":".$col, Types::smartCast($val)); //binds values
         $stmt->execute(); //executes
 
         return $conn->lastInsertId(); //returns id of created/edited entity
@@ -101,7 +101,7 @@ class SQLhelper
         //prepares statement
         $stmt = Shared::connect()->prepare("UPDATE ".$this->table." SET $set WHERE id=$id");
 
-        foreach($data as $col => $val) $stmt->bindValue(":".$col, $val); //binds values
+        foreach($data as $col => $val) $stmt->bindValue(":".$col, Types::smartCast($val)); //binds values
         return $stmt->execute(); //executes
     }
 
@@ -119,8 +119,10 @@ class SQLhelper
         foreach($data as $col => $val)
             switch($this->columns[$col]['type'])
             {
-                case "varchar": if (!is_string($val)) return $col; break;
-                case "int": if (!is_int(Shared::smartCast($val))) return $col; break;
+                case "varchar": if (!Types::is_str($val)) return $col; break;
+                case "int": if (!Types::is_int($val)) return $col; break;
+                case "date": if (!Types::is_date($val)) return $col; break;
+                case "bool": if ($val != "0" && $val != "1") return $col; break;
             }
         return FALSE;
     }
@@ -131,14 +133,25 @@ class SQLhelper
         foreach($this->nonEmptyColumns() as $colname => $col)
             if (!isset($data[$colname])) //checks if is set
             {
-                if (forinsert === TRUE) return $colname; //if for insert all non empty fields must be specified
+                if ($forinsert === TRUE) return $colname; //if for insert all non empty fields must be specified
             }
             else 
             {
                 if ($data[$colname] === NULL) return $colname; //checks if is null
-                if ($col['type'] == "varchar") //checks if is empty string
-                    if (trim($data[$colname]) == "") return $colname;
+                if ($col['type'] == "varchar")
+                    if (trim($data[$colname]) == "") return $colname; //checks if is empty string
             }
+        return FALSE;
+    }
+
+    //check bounds (min max)
+    public function checkBounds($data)
+    {
+        foreach($this->columns as $colname => $col)
+        {
+            if (isset($col['max'])) if ($data[$colname] > $col['max']) return $colname;
+            if (isset($col['min'])) if ($data[$colname] < $col['min']) return $colname;
+        }
         return FALSE;
     }
 

@@ -16,7 +16,7 @@ class XMLcore
                 $arr[$key] = self::xml2arr($value); //recursively sets it
 
             //add simple child otherwise
-            else $arr[$key] = Shared::smartCast((string) $value[0]); 
+            else $arr[$key] = Types::smartCast((string) $value[0]); 
         return $arr;
     }
 

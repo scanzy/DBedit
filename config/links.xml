@@ -26,13 +26,4 @@
         <linked>We have it</linked>
         <unlinked>We don't have it</unlinked>
     </certificates-people>
-    <payments-certificates>
-        <description>Payments of certificates</description>
-        <link1>payments</link1>
-        <link2>certificates</link2>
-        <table>CertificatesPayments</table>
-        <columns></columns>
-        <linked>Linked</linked>
-        <unlinked>Not linked</unlinked>
-    </payments-certificates>
 </root>

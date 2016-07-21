@@ -40,7 +40,7 @@ requiredata.request('typesdata', function(typesdata){
             requiredata: { name: 'links' }, columns: columns,
             button: { show: true, click: function() { }}, search: { show: true },
             fetch: {
-                row: { 
+                rows: { 
                     start: function(x, data) { return '<tr data-link-id="' + data.id +'">'; },
                     hoverClass : 'hover' 
                 },
@@ -73,10 +73,10 @@ requiredata.request('typesdata', function(typesdata){
 
             //adds handler for link/unlink button
             $(".linked").on('click', function() { 
-                ajax("./apis/links/link.php" + urlParams({}), function() { document.loaction.reload(true); });
+                ajax("./apis/links/link.php" + urlParams({}), function() { document.location.reload(true); });
             });
             $(".unlinked").on('click', function() { 
-                ajax("./apis/links/unlink.php" + urlParams({}), function() { document.loaction.reload(true); });
+                ajax("./apis/links/unlink.php" + urlParams({}), function() { document.location.reload(true); });
             });
         });
     });

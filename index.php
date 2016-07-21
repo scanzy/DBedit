@@ -57,7 +57,12 @@ $appname = $conf['global']['appname'];
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
+
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
         <link rel="stylesheet" type="text/css" href="res/bootstrap-ex.css" />
         <link rel="stylesheet" type="text/css" href="res/style.css" />
 
@@ -186,7 +191,7 @@ $appname = $conf['global']['appname'];
             <div class="box title"><h1>Edit entity</h1></div>
 
             <div class="box">
-                <form class="form-horizontal" id="entity-details" role="form"></form>
+                <div class="row form-horizontal" id="entity-details"></div>
                 <div class="right">
                     <button id="details-cancel" class="btn btn-lg btn-default">Cancel</button>
                     <button id="details-save" class="btn btn-lg btn-success disabled">Save</button>
@@ -223,6 +228,7 @@ $appname = $conf['global']['appname'];
         <script src="res/libs/messages.js"></script>
         <script src="res/libs/confirm.js"></script>
         <script src="res/shared.js"></script>
+        <script src="res/topbar.js"></script>
 
         <?php switch($page) { 
 

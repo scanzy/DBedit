@@ -37,53 +37,35 @@ function ajax(url, data, callback) {
     return $.post(url, data, function (data) { if (callback != undefined) callback(data); }).fail(errorPopup);
 }
 
-//stores params
-var params = GetParams();
-var type = params['type'];
-var id = params['id'];
-var link = params['link'];
-var action = params['action'];
-
-//logout button
-$("#logout").click(function () { sessionStorage.clear(); //erases session data
-    ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); });
-
 //scrolls to elements
 function scrollToElement(el) { $("html, body").animate({ scrollTop: el.offset().top - $(window).height() * 0.3 }, 700); }
 
-//sets requiredata options
-requiredata.options('userdata', { useSessionStorage: true });
-requiredata.options('typesdata', { useSessionStorage: true });
+//date-string conversions
+String.prototype.date2str = function() { return this.split("-").reverse().join("/"); } //transforms Y-m-d date in d/m/Y string
+String.prototype.str2date = function() { return this.split("/").reverse().join("-"); } //transforms d/m/Y string in Y-m-d date 
 
-//and loads data if needed
-requiredata.loadAjax('userdata', { url: "./apis/auth/info.php" }); //gets data about users
-requiredata.loadAjax('typesdata', { url: "./apis/entitytypes/get.php" }); //gets data about entities
-
-//sets topbar elements  
-$("#topbar-title").text(document.title).removeClass('hidden'); //sets title in topbar
-
-//sets user name in topbar
-requiredata.request('userdata', function (data) { $("#topbar-user").text(data.name + ' ' + data.surname); });
-
-//shows type in topbar
-if (type != undefined) requiredata.request('typesdata', function(typesdata) {      
-    $("#topbar-type").text(typesdata[type].displayname).attr('href', './' + urlParams({ type: type })).removeClass('hidden');
-
-    //gets display name for this entity
-    requiredata.request('entitydata', function (data) {
-        var alias = typesdata[type].alias; 
-        for (var col in typesdata[type].columns) alias = alias.replace("%" + col + "%", data[col]);
-        requiredata.set('entityalias', alias); //and saves it
-    });
-});
-
-//shows entity alias in topbar
-if (id != undefined) requiredata.request('entityalias', function(alias) {       
-    $("#topbar-entity").text(alias).attr('href', './' + urlParams({ type: type, id: id })).removeClass('hidden');
-});
-
-//shows linktype in topbar
-if (link != undefined) requiredata.request('typesdata', function(typesdata) {
-        $("#topbar-link").text(typesdata[link].displayname).removeClass('hidden')
-        .attr('href', './' + urlParams({ type: type, id: id, link: link }));
-});
+//gets display content from raw data
+function raw2display(data, colinfo)
+{
+    switch(colinfo.type) {
+        case "date": return data.date2str();
+        case "bool": 
+            var style = 'default';
+            if (data == "1") {
+                data = ('text' in colinfo.on) ? colinfo.on.text : "On"; 
+                if ('style' in colinfo.on) style = colinfo.on.style;                 
+            }
+            else if ('off' in colinfo) {
+                data = ('text' in colinfo.off) ? colinfo.off.text : "Off"; 
+                if ('style' in colinfo.off) style = colinfo.off.style;   
+            } 
+            return '<span class="label label-' + style + '">' + data + '</span>';
+                                    
+        case "select": 
+            if (data == "") return "";
+            return '<span class="label label-' + 
+                (('style' in colinfo.options[data]) ? colinfo.options[data].style : "default") + 
+                '">' + colinfo.options[data].text + '</span>';
+    }
+    return data;
+}

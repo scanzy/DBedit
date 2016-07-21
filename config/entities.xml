@@ -20,13 +20,49 @@
                 <allowempty>false</allowempty>
                 <unique>false</unique>
             </surname>
+            <gender>
+                <displayname>Gender</displayname>
+                <type>select</type>
+                <options>
+                    <male>
+                        <text>Male</text>
+                    </male>
+                    <female>
+                        <text>Female</text>
+                    </female>
+                </options>
+                <allowempty>false</allowempty>
+                <unique>false</unique>
+            </gender>
             <cardnumber>
                 <displayname>Card number</displayname>
                 <type>int</type>
                 <length>20</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>
+                <min>0</min>
+                <max>1000</max>
             </cardnumber>
+            <birth>
+                <displayname>Date of birth</displayname>
+                <type>date</type>
+                <allowempty>true</allowempty>
+                <unique>false</unique>
+            </birth>
+            <goodboy>
+                <displayname>Is good boy</displayname>
+                <type>bool</type>
+                <on>
+                    <text>Good boy</text>
+                    <style>success</style>
+                </on>
+                <off>
+                    <text>Bad boy</text>
+                    <style>danger</style>
+                </off>
+                <allowempty>false</allowempty>
+                <unique>false</unique>
+            </goodboy>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <add>Add person</add>

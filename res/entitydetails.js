@@ -5,10 +5,11 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
         request: { url: "./apis/entities/one.php", data: { type: type, id: id } },
         requiredata: { name: 'entitydata' },
         fetch: {
-            row: {
+            rows: {
                 start: function (col, data) {
                     if (!(col in typesdata[type].columns)) return ""; //skips row if no column in typesdata
-                    return "<tr><td>" + typesdata[type].columns[col].displayname + "</td><td><b>" + data + "</b></td>";
+                    return "<tr><td>" + typesdata[type].columns[col].displayname + "</td>\
+                            <td><b>" + raw2display(data, typesdata[type].columns[col]) + "</b></td>";
                 }
             }
         }

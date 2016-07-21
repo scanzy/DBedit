@@ -42,23 +42,6 @@ class Shared
         echo json_encode($obj);
         exit();
     }
-
-    //MISC
-
-    //casts passed string into correct type
-    public static function smartCast($s)
-    {
-        if (is_numeric($s))
-        {
-            if (strpos($s, '.') === FALSE) return intval($s);
-            return floatval($s);
-        }
-        else if (strtolower(trim($s)) == "true") return TRUE;
-        else if (strtolower(trim($s)) == "false") return FALSE;
-        else if (strtolower(trim($s)) == "null") return NULL;
-        
-        return $s; //string
-    }
 }
 
 ?>

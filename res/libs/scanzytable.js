@@ -5,12 +5,12 @@ $.fn.extend({
         var options = defaultValues(options, {
             requiredata: { options: { }, name: 'scanzytable-' + this.attr('id') },
             request: { url:'', data: {} }, columns: {},
-            fetch: {
-                row: { 
+            fetch: {                
+                rows: { 
                     start: function () { return "<tr>"; }, end: function () { return "</tr>"; },
                     click: undefined, hoverClass: undefined
                 },
-                cell: {}, content: {}
+                cell: {}, content: {}, cells: { start: undefined, end: undefined }, contents: undefined,
             },
             button: { show: false, text: "New", click: function () { } },
             search: { show: false, text: "Search..." },
@@ -58,21 +58,29 @@ $.fn.extend({
             fetch: function (i, data) {
 
                 //fetches row
-                var html = options.fetch.row.start(i, data);
+                var html = options.fetch.rows.start(i, data);
                 for (var col in options.columns) {
 
                     if (col in options.fetch.cell) { //opens tag
                         if ('start' in options.fetch.cell[col]) html += options.fetch.cell[col].start(col, data[col], i, data);
-                    } else html += "<td>";
+                    } else if (options.fetch.cells.start != undefined)
+                        html += options.fetch.cells.start(col, data[col], i, data);
+                    else html += "<td>";
 
                     //puts content
-                    html += (col in options.fetch.content) ? options.fetch.content[col](col, data[col], i, data) : data[col]; 
+                    if (col in options.fetch.content)
+                        html += options.fetch.content[col](col, data[col], i, data);
+                    else if (options.fetch.contents != undefined)
+                        html += options.fetch.contents(col, data[col], i, data);
+                    else html += data[col]; 
 
                     if (col in options.fetch.cell) { //closes tag
                         if('end' in options.fetch.cell[col]) html += options.fetch.cell[col].end(col, data[col], i, data);
-                    } else html += "</td>"; 
+                    } else if (options.fetch.cells.end != undefined)
+                        html += options.fetch.cells.end(col, data[col], i, data);
+                    else html += "</td>"; 
                 }
-                return html + options.fetch.row.end(i, data);
+                return html + options.fetch.rows.end(i, data);
             },
             loading: t.root.find(".loading-items"),
             error: t.root.find(".loading-items-error"),
@@ -100,12 +108,11 @@ $.fn.extend({
         });
 
         //row click/hover handlers
-        if (t.options.fetch.row.click != undefined) t.root.on("click", "tr", t.options.fetch.row.click);   
-        if (t.options.fetch.row.hoverClass != undefined) {
-            t.root.on("mouseenter", "tr", function () { $(this).addClass(t.options.fetch.row.hoverClass); });
-            t.root.on("mouseleave", "tr", function () { $(this).removeClass(t.options.fetch.row.hoverClass); });
-        }
-         
+        if (t.options.fetch.rows.click != undefined) t.root.on("click", "tr", t.options.fetch.rows.click);   
+        if (t.options.fetch.rows.hoverClass != undefined) {
+            t.root.on("mouseenter", "tr", function () { $(this).addClass(t.options.fetch.rows.hoverClass); });
+            t.root.on("mouseleave", "tr", function () { $(this).removeClass(t.options.fetch.rows.hoverClass); });
+        }       
 
         return t; //returns table object ref
     }

@@ -1,7 +1,7 @@
-langdata = undefined;
+var langdata = undefined;
 
 //gets language data and translates body
-lang = navigator.language || navigator.userLanguage;
+var lang = navigator.language || navigator.userLanguage;
 $.ajax({ dataType: "json", url: "res/locales/" + lang + ".json", cache:true, success: function (data) {
     langdata = data; document.getElementsByTagName("html")[0].setAttribute("lang", lang);
     translatenow(document);

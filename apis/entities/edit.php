@@ -29,6 +29,10 @@ if ($wrongtypecol !== FALSE) Errors::send(400, "Wrong type for column '$wrongtyp
 $emptycol = $entities->checkEmpties($data, ($id == NULL));
 if ($emptycol !== FALSE) Errors::send(400, "Column '$emptycol' can't be empty");
 
+//checks bounds
+$outofboundcol = $entities->checkBounds($data);
+if ($outofboundcol !== FALSE) Errors::send(400, "Value of column '$outofboundcol' out of bounds");
+
 //checks unique columns
 $duplicatecol = $entities->checkUniques($id, $data);
 if ($duplicatecol !== FALSE) Errors::send(400, "Invalid value for column '$duplicatecol': found record with same value");

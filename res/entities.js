@@ -14,15 +14,17 @@ requiredata.request('typesdata', function (typesdata) {
 
         //setups table
         entitiestable = $("#entities-table").scanzytable({ columns: columns,
-            request: { url: "./apis/entities/get.php", data: { type: type} },
-            fetch: { row: { 
-                start: function (x, data) { return "<tr data-entity-id='" + data.id + "'>"; }, 
-                click: function () { changeUrl({ type: type, id: $(this).attr('data-entity-id')}); },
-                hoverClass: 'hover' 
-            } }, 
+            request: { url: "./apis/entities/get.php", data: { type: type} },            
+            fetch: { 
+                rows: { 
+                    start: function (col, data) { return "<tr data-entity-id='" + data.id + "'>"; }, 
+                    click: function () { changeUrl({ type: type, id: $(this).attr('data-entity-id')}); },
+                    hoverClass: 'hover' 
+                }, 
+                contents: function(col, data) { return raw2display(data, typesdata[type].columns[col]); },                                  
+            }, 
             search: { show: true }, 
-            button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); }
-            }
+            button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); } } 
         });
 
         //sets entities count in title
