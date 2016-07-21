@@ -60,7 +60,7 @@ class LinkTypes extends XMLhelper
                     'displayname' => $displayname,
                     'type' => $type,
                     'link' => ($typedata['link1'] == $type) ? $typedata['link2'] : $typedata['link1'],
-                    'columns' => $typedata['columns'],
+                    'linkedidcol' => ($typedata['link1'] == $type) ? "id2" : "id1",
                     'description' => $typedata['description'],
                     'itemscount' => $h->countFiltered($id), //counts items
                     'somerandom' => $h->getRandomFiltered($id) //some random elements

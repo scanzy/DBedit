@@ -38,16 +38,17 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
         fetch: function (name, data) {
 
             var random = ""; //random entities
-            //for (var i in data.somerandom) 
-                //random += '<button class="btn btn-xs btn-info" href="./' + urlParams({ type: type, id : id, link: name, linkid: data.somerandom[i].id }) + '">'
-                    //+ getAlias(data.somerandom[i], data.columns, data.alias) + '</button> ';
+            for (var i in data.somerandom) 
+                random += '<button class="btn btn-xs btn-info alias" href="./' + 
+                    urlParams({ type: type, id : id, link: data.link, linkid: data.somerandom[i].id }) + '" \
+                    data-entity-type="' + data.link + '" data-entity-id="' + data.somerandom[i][data.linkedidcol] + '"></button> ';
 
-            return '<div class="link-box col-lg-6 col-md-12 col-sm-6 col-xs-6 center" href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
+            return '<div class="link-box col-lg-6 col-md-12 col-sm-6 col-xs-12 center" href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
                 <div><h2>' + data.displayname + ' <span class="badge badge-light">' + data.itemscount + '</span></h2> \
                 <div class="line"></div><p class="txt-grey">' + data.description + '</p>' + random + '</div></div>';
         },
         error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
-        always: function () { translate(document.getElementById("linktypes")); setLinkBoxHandlers(); } //translates
+        always: function () { translate(document.getElementById("linktypes")); setLinkBoxHandlers(); loadAliases(); } //translates
     });
     
     //gets data

@@ -38,7 +38,7 @@ requiredata.request('typesdata', function(typesdata){
         var linkstable = $("#links-table").scanzytable({
             request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } },
             requiredata: { name: 'links' }, columns: columns,
-            button: { show: true, click: function() { }}, search: { show: true },
+            button: { show: true, click: function() { }}, search: { show: true, minRows: typesdata[type].searchminrows },
             fetch: {
                 rows: { 
                     start: function(x, data) { return '<tr data-link-id="' + data.id +'">'; },

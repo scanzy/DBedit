@@ -12,6 +12,7 @@
                 <length>20</length>
                 <allowempty>false</allowempty>
                 <unique>false</unique>
+                <showinlist>true</showinlist>
             </name>
             <surname>
                 <displayname>Surname</displayname>
@@ -19,6 +20,7 @@
                 <length>20</length>
                 <allowempty>false</allowempty>
                 <unique>false</unique>
+                <showinlist>true</showinlist>
             </surname>
             <gender>
                 <displayname>Gender</displayname>
@@ -33,6 +35,7 @@
                 </options>
                 <allowempty>false</allowempty>
                 <unique>false</unique>
+                <showinlist>true</showinlist>
             </gender>
             <cardnumber>
                 <displayname>Card number</displayname>
@@ -42,12 +45,14 @@
                 <unique>true</unique>
                 <min>0</min>
                 <max>1000</max>
+                <showinlist>true</showinlist>
             </cardnumber>
             <birth>
                 <displayname>Date of birth</displayname>
                 <type>date</type>
                 <allowempty>true</allowempty>
                 <unique>false</unique>
+                <showinlist>true</showinlist>
             </birth>
             <goodboy>
                 <displayname>Is good boy</displayname>
@@ -62,9 +67,12 @@
                 </off>
                 <allowempty>false</allowempty>
                 <unique>false</unique>
+                <showinlist>false</showinlist>
             </goodboy>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <searchminrows>1</searchminrows>
+        <searchhint>Search people...</searchhint>
         <random>2</random>
         <add>Add person</add>
         <new>New person</new>
@@ -82,9 +90,12 @@
                 <length>100</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>
+                <showinlist>true</showinlist>
             </subject>
         </columns>
         <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <searchminrows>5</searchminrows>
+        <searchhint>Search payments...</searchhint>
         <random>3</random>
         <add>Add payment</add>
         <new>New payment</new>
@@ -102,9 +113,12 @@
                 <length>100</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>
+                <showinlist>true</showinlist>
             </name>
         </columns>
         <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <searchminrows>5</searchminrows>
+        <searchhint>Search certificates...</searchhint>
         <random>1</random>
         <add>Add certificate</add>
         <new>New certificate</new>
@@ -122,9 +136,12 @@
                 <length>100</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>
+                <showinlist>true</showinlist>
             </name>
         </columns>
         <description>Photos bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <searchminrows>5</searchminrows>
+        <searchhint>Search photos...</searchhint>
         <random>1</random>
         <add>Add photo</add>
         <new>New photo</new>

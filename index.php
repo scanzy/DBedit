@@ -102,7 +102,7 @@ $appname = $conf['global']['appname'];
         </div>
 
         <?php switch($page) { case "entitytypes": ?>
-        <div class="container page">
+        <div class="container page noselect">
             <div class="box title"><h1>Dashboard</h1></div>
 
             <div class="box">
@@ -120,14 +120,14 @@ $appname = $conf['global']['appname'];
         <?php break; case "entities": ?>
 
         <div class="container page">
-            <div class="box title"><h1></h1></div>
+            <div class="box title noselect"><h1></h1></div>
             <div class="box"><div id="entities-table"></div></div>
         </div>
 
         <?php break; case "entitydetails": ?>
 
         <div class="container page">
-            <div class="box title"><h1></h1></div>
+            <div class="box title noselect"><h1></h1></div>
 
             <div class="row">
                 <div class="col-lg-4 col-md-8">
@@ -138,7 +138,7 @@ $appname = $conf['global']['appname'];
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-4">
-                    <div class="box">
+                    <div class="box noselect">
                         <div id="linktypes-loading" class="center"><p class="grey">Loading links...</p></div>
                         <div id="linktypes-load-error" class="center" style="display:none">
                             <p class="grey">Error while loading links</p><br/>
@@ -156,7 +156,7 @@ $appname = $conf['global']['appname'];
         <?php break; case "links": ?>
 
         <div class="container page">
-            <div class="box title">
+            <div class="box title noselect">
                 <h1>Links</h1>
                 <div class="line"></div>
                 <div id="links-nav" class="center btn-multiline"></div>
@@ -169,8 +169,7 @@ $appname = $conf['global']['appname'];
                 </div>
             </div>
 
-            <div class="box">
-                
+            <div class="box">                
                 <div id="links-table"></div>
             </div>
         </div>
@@ -187,7 +186,7 @@ $appname = $conf['global']['appname'];
 
         <?php break; case "editentity": ?>
 
-        <div class="container page">
+        <div class="container page noselect">
             <div class="box title"><h1>Edit entity</h1></div>
 
             <div class="box">

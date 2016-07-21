@@ -16,7 +16,7 @@ $.fn.extend({ //extends jquery
 
         //options default setup
         var options = defaultValues(options, {
-            request: { url:'', data: {} }, fetch: function () { }, 
+            request: { url:'', data: {} }, processResponse: undefined, fetch: function () { }, 
             requiredata: { options: { }, name: 'scanzyload-' + this.attr('id') },
             loading: { show: function () { }, hide: function () { } },
             error: { show: function () { }, hide: function () { } },
@@ -44,6 +44,9 @@ $.fn.extend({ //extends jquery
             requiredata.options(options.requiredata.name, options.requiredata.options);
             requiredata.loadAjax(options.requiredata.name, {url: options.request.url, data: requestdata})
             .done(function (data) {
+
+                //performs response processing if needed
+                if (options.processResponse != undefined) data = options.processResponse(data);
 
                 //checks empty                       
                 if (data != null && data != "") {

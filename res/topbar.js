@@ -4,6 +4,21 @@ function getAlias(data, columns, alias) {
     return alias;
 }
 
+//gets data to show aliases
+function loadAliases() { 
+    requiredata.request('typesdata', function(typesdata) {
+        $(".alias[data-entity-type][data-entity-id]").each(function() {       
+
+            //gets type and id to send via ajax, saves element ref for late text update
+            var el = $(this), type = $(this).attr('data-entity-type'), id = $(this).attr('data-entity-id'); 
+            
+            ajax("./apis/entities/one.php", { type: type, id: id }, function(data) { //sends request            
+                el.text(getAlias(data, typesdata[type].columns, typesdata[type].alias)); //sets alias
+            });
+        });
+    });
+}
+
 //stores params
 var params = GetParams();
 var type = params['type'];

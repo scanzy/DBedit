@@ -5,6 +5,7 @@ body { font-family: Verdana; }
 
 .box { margin-bottom: 1.5em; border-bottom:solid 1px #ccc; padding: 1.5em 0; }
 .box > h1, .box > h2, .box > h3, .box > h4 { margin:0; }
+.box > .row:not(.form-horizontal) { margin: -15px; }
 
 .line { margin:1em 0; border-top:solid 1px #ddd; }
 
@@ -47,8 +48,8 @@ button.left, span.left { float: left; }
 .nav li a.active { background-color:#eaeaea; }
 .nav li a:hover { background-color:#6bf; color:#fff; }
 
-.table tr.hover { background-color: #eee; }
-.table tr { transition: background-color .5s; }
+.table tr { transition: background-color .5s linear; }
+.table tr.hover { background-color: #eaeaea; transition: none;}
 .table tr.clickable { cursor: pointer; }
 
 .link-box { 

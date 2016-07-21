@@ -6,8 +6,9 @@ requiredata.request('typesdata', function (typesdata) {
 
     $("#topbar-type").addClass('active'); //select entity type in topbar
 
-    var columns = []; //gets columns
-    for (var col in typedata.columns) columns[col] = typedata.columns[col].displayname;
+    var columns = []; //gets columns (only columns to show)
+    for (var col in typedata.columns) if (typedata.columns[col].showinlist) 
+        columns[col] = typedata.columns[col].displayname;
 
     //requires userlevel to show/hide new entity button
     requiredata.request('userdata', function(userdata) {
@@ -23,7 +24,7 @@ requiredata.request('typesdata', function (typesdata) {
                 }, 
                 contents: function(col, data) { return raw2display(data, typesdata[type].columns[col]); },                                  
             }, 
-            search: { show: true }, 
+            search: { show: true, text: typesdata[type].searchhint, minRows: typesdata[type].searchminrows }, 
             button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); } } 
         });
 
