@@ -71,6 +71,10 @@
             </goodboy>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <orderby>
+            <column>surname</column>
+            <reverse>false</reverse>
+        </orderby>
         <searchminrows>1</searchminrows>
         <searchhint>Search people...</searchhint>
         <random>2</random>

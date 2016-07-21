@@ -6,9 +6,9 @@ $.fn.extend({
             requiredata: { options: { }, name: 'scanzytable-' + this.attr('id') },
             request: { url:'', data: {} }, columns: {},
             sort: { 
-                load: { enabled: false, column: undefined }, //sorting when data loaded
+                enabled: false, column: undefined, reverse: false, //sorting when data loaded
                 func: { rows: undefined, columns: {}}, //sorting functions
-                click: { enabled: false } //enable sort when th clicked
+                click: false //enable sort when th clicked
             }, 
             fetch: {                
                 rows: { 
@@ -25,7 +25,7 @@ $.fn.extend({
 
         //adds html for searchbar and new item btn
         if (options.search.show || options.button.show) {
-            var html = '<div class="row">';
+            var html = '<div class="row table-topbar">';
 
             if (options.search.show) //searchbar
                 html += '<div class="col-xs-8 col-md-6 col-lg-4"> \
@@ -40,8 +40,12 @@ $.fn.extend({
         }
 
         //adds html for table
-        var thead = ""; for (var i in options.columns) thead += "<th>" + options.columns[i] + "</th>";
-        this.append('<div class="table-responsive"><table class="table"><thead><tr>' + thead + '</tr></thead><tbody></tbody></table></div>');
+        var thead = ""; for (var colname in options.columns) 
+            thead += '<th name="' + colname + '"><span class="colname">' + options.columns[colname] + '</span> \
+                <span class="sort-normal glyphicon glyphicon-chevron-down" style="display:none"></span>\
+                <span class="sort-reverse glyphicon glyphicon-chevron-up" style="display:none"></span>\
+                <span class="no-sort glyphicon glyphicon-minus" style="color:transparent !important"></span></th>';
+        this.append('<div class="table-responsive"><table class="table"><thead class="noselect"><tr>' + thead + '</tr></thead><tbody></tbody></table></div>');
 
         //adds hidden texts for hints
         this.append('<div><p class="no-items grey center" style="display:none;">' + options.empty + '</p>\
@@ -55,10 +59,41 @@ $.fn.extend({
             this.append('<div class="new-item-lg center" style="display:none; margin: 4em auto;"><button class="btn btn-success btn-lg new-item">\
                 <span class="glyphicon glyphicon-plus"></span> <span>' + options.button.text + '</span></button></div>');
 
+        //shows sort state (highlights sort col, using icon for asc/desc)
+        function showSortState() {
+            t.root.find("th").each(function() { //for each th
+                var colname = $(this).attr('name'); //gets name
+
+                //adds/removes class from name
+                $(this).find(".colname").toggleClass('sorted', (colname == t.options.sort.column)); 
+
+                //hides shows icons
+                if ((colname == t.options.sort.column)) { //if sorting this column
+                    $(this).find(".sort-normal").toggle(!t.options.sort.reverse); 
+                    $(this).find(".sort-reverse").toggle(t.options.sort.reverse); 
+                }
+                else $(this).find(".sort-normal, .sort-reverse").hide();
+                $(this).find(".no-sort").toggle(colname != t.options.sort.column);
+            });
+        }
+
+        //sorts data using custom function if specified
+        function sortData(data, sortcol, reverse) { 
+            if (sortcol in options.sort.func.columns) //manipulates data
+                data.sort(function(a, b) { return options.sort.func.columns[sortcol](a[sortcol], b[sortcol]); });
+            else data.sort(function(a, b) { return a[sortcol].localeCompare(b[sortcol]) * (reverse ? -1: 1); });
+
+            //saves this sorting mode
+            t.options.sort.column = sortcol;
+            t.options.sort.reverse = reverse;
+            return data;
+        }
+
         //saves root, options and load items function
         var t = { root: this, options: options, loadItems: function (requestdata) {
 
                 this.loader.loadItems(requestdata); //loads items
+                showSortState(); //adds icon in table heading, etc
                 this.root.find(".items-search").focus(); //focuses search
             } 
         };
@@ -69,28 +104,26 @@ $.fn.extend({
                 var rowcount = (data != null && data != "") ? data.length : 0; //calculates row count
 
                 //hides search if needed (too few rows)
-                if (rowcount < options.search.minRows) 
-                    t.root.find(".items-search").hide(); else t.root.find(".items-search").show();
+                t.root.find(".items-search").toggle(rowcount >= options.search.minRows) ;
 
                 //hides new button from top right to show it under table if needed (too few rows)
-                if (rowcount <= options.button.maxRows) 
-                { t.root.find(".new-item-sm").hide(); t.root.find(".new-item-lg").show(); }
-                else { t.root.find(".new-item-sm").show(); t.root.find(".new-item-lg").hide(); }
+                t.root.find(".new-item-sm").toggle(rowcount > options.button.maxRows);
+                t.root.find(".new-item-lg").toggle(rowcount <= options.button.maxRows); 
+
+                //hides the whole topbar if nothing inside
+                $(".table-topbar").toggle($(".table-topbar :visible").length <= 0);
 
                 //sorts data if needed
-                if (options.sort.load.enabled) {
+                if (options.sort.enabled) {
                     
                     //uses default rows sort func if specified
                     if (options.sort.func.rows != undefined) data.sort(options.sort.func.rows);
                     else {
-                        var sortcol = options.sort.load.column; //gets sort column
+                        var sortcol = options.sort.column; //gets sort column
                         if (sortcol == undefined) //if no column specified uses first one
-                            sortcol = options.columns[0];
+                            sortcol = Object.keys(options.columns)[0];                        
 
-                        //uses custom sort func if specified
-                        if (sortcol in options.sort.func.columns) 
-                            data.sort(function(a, b) { return options.sort.func.columns[sortcol](a[sortcol], b[sortcol]); });
-                        else data.sort(function(a, b) { return a[sortcol].localeCompare(b[sortcol]); }); //uses default sort                        
+                        data = sortData(data, sortcol, options.sort.reverse); //sorts by column               
                     }
                 }
 
@@ -141,19 +174,43 @@ $.fn.extend({
             var searchstr = $(this).val().trim().toLowerCase(); //gets input
             if (searchstr == "") t.root.find("tr").show(); //shows all if no input
             t.root.find("tbody tr").each(function () {
-                if ($(this).text().toLowerCase().indexOf(searchstr) == -1) //finds elements
-                    $(this).hide(); else $(this).show();
+                $(this).toggle($(this).text().toLowerCase().indexOf(searchstr) != -1); //finds elements
             });
             (t.root.find("tbody tr:visible").length == 0) ? // controls "no items found" visibility 
             t.root.find(".no-items-results").show() : t.root.find(".no-items-results").hide();
         });
 
+        //sets sort function 
+        t.sortBy = function(col, reverse){
+            var data = t.loader.data.slice(0); //gets original request data to sort it (clones array)
+            if (col != undefined) data = sortData(data, col, reverse); //sorts by column
+            else t.options.sort.column = undefined; //skips sort if undefined
+
+            var html = ""; //fetches table again
+            for (var i in data) html += t.loader.options.fetch(i, data[i]);
+            t.loader.root.html(html);
+            showSortState(); //adds icon in table heading, etc
+        }
+
+        //sort th click handler
+        if (t.options.sort.click) {
+            t.root.on('click', "th .colname", function() { 
+                var sortcol = $(this).parent().attr('name'); //gets this column
+                if (t.options.sort.column == sortcol) { //if previously sorted this column
+                    if (t.options.sort.reverse) t.sortBy(); //returns to unsorted
+                    else t.sortBy(sortcol, true); //sorts this column (reverse)
+                } else t.sortBy(sortcol, false); //sorts this column (normal)
+            });
+            t.root.on("mouseenter", "th .colname", function() { $(this).addClass('hover'); });
+            t.root.on("mouseleave", "th .colname", function() { $(this).removeClass('hover'); });
+        }
+
         //row click/hover handlers
-        if (t.options.fetch.rows.click != undefined) t.root.on("click", "tr", t.options.fetch.rows.click);   
-        if (t.options.fetch.rows.hoverClass != undefined) {
+        if (options.fetch.rows.click != undefined) t.root.on("click", "tbody tr", options.fetch.rows.click);   
+        if (options.fetch.rows.hoverClass != undefined) {
             t.root.find("tbody").css({ 'cursor': 'pointer'}); //shows pointer
-            t.root.on("mouseenter", "tbody tr", function () { $(this).addClass(t.options.fetch.rows.hoverClass); });
-            t.root.on("mouseleave", "tbody tr", function () { $(this).removeClass(t.options.fetch.rows.hoverClass); });
+            t.root.on("mouseenter", "tbody tr", function () { $(this).addClass(options.fetch.rows.hoverClass); });
+            t.root.on("mouseleave", "tbody tr", function () { $(this).removeClass(options.fetch.rows.hoverClass); });
         }       
 
         return t; //returns table object ref

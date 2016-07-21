@@ -27,7 +27,7 @@ $.fn.extend({ //extends jquery
 
         //saves element root, options and load items function
         var x = { root: this, options: options, loadItems: function (requestdata) {
-            var root = this.root;
+            var root = this.root, loader = this;
 
             //loads request data
             if (requestdata == undefined) requestdata = options.request.data;
@@ -43,10 +43,14 @@ $.fn.extend({ //extends jquery
             //sets requiredata options and sends request
             requiredata.options(options.requiredata.name, options.requiredata.options);
             requiredata.loadAjax(options.requiredata.name, {url: options.request.url, data: requestdata})
-            .done(function (data) {
+            .done(function (data) {   
+
+                //saves original data from request (cloning array or object)
+                if ($.isArray(data)) loader.data = data.slice(0); 
+                else { loader.data = {}; for(var x in data) loader.data[x] = data[x]; }
 
                 //performs response processing if needed
-                if (options.processResponse != undefined) data = options.processResponse(data);
+                if (options.processResponse != undefined) data = options.processResponse(data);                
 
                 //checks empty                       
                 if (data != null && data != "") {

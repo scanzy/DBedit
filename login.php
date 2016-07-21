@@ -60,8 +60,7 @@ $appname = $conf['global']['appname'];
         <script>
             //disables login button if empty fields
             function checkEmptyFields() {
-                if ($("#username").val().trim() != "" && $("#password").val().trim() != "")
-                    $("#submit").removeClass('disabled'); else $("#submit").addClass('disabled');
+                $("#submit").toggleClass('disabled', ($("#username").val().trim() == "" || $("#password").val().trim() == ""));
             }
 
             $(document).ready(checkEmptyFields);

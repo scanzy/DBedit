@@ -15,9 +15,15 @@ requiredata.request('typesdata', function (typesdata) {
 
         //setups table
         entitiestable = $("#entities-table").scanzytable({ columns: columns,
-            request: { url: "./apis/entities/get.php", data: { type: type} },            
+            request: { url: "./apis/entities/get.php", data: { type: type} },  
+            sort: {  
+                enabled: ('orderby' in typedata), //sort options on data load
+                column: ('orderby' in typedata) ? typedata.orderby.column : undefined,
+                reverse: ('orderby' in typedata) ? typedata.orderby.reverse : false,
+                click: true //enables sort on th click
+            },          
             fetch: { 
-                rows: { 
+                rows: { //setups row click
                     start: function (col, data) { return "<tr data-entity-id='" + data.id + "'>"; }, 
                     click: function () { changeUrl({ type: type, id: $(this).attr('data-entity-id')}); },
                     hoverClass: 'hover' 
