@@ -9,7 +9,8 @@ requiredata.request('linktypedata', function(linktypedata) {
             //gets data about linked and sets alias (to get title)
             requiredata.request('typesdata', function(typesdata) {
                 requiredata.request('linkabledata', function(data) { 
-                    requiredata.set('linkedalias', getAlias(data[linkedid], typesdata[link].columns, typesdata[link].alias)); 
+                    var linkeddata; for (var i in data) { if (data[i].id == linkedid) linkeddata = data[i]; break; }
+                    requiredata.set('linkedalias', getAlias(linkeddata, typesdata[link].columns, typesdata[link].alias)); 
                 });
             });
 

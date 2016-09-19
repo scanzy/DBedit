@@ -1,4 +1,5 @@
-requiredata.request('typesdata', function (typesdata) { //requires types data
+requiredata.request('typesdata', function (typesdata) {
+    var typedata = typesdata[type]; //data about type
 
     //details table
     var detailstable = $("#details-table").scanzytable({
@@ -6,9 +7,9 @@ requiredata.request('typesdata', function (typesdata) { //requires types data
         fetch: {
             rows: {
                 start: function (col, data) {
-                    if (!(col in typesdata[type].columns)) return ""; //skips row if no column in typesdata
-                    return "<tr><td>" + typesdata[type].columns[col].displayname + "</td>\
-                            <td><b>" + raw2display(data, typesdata[type].columns[col]) + "</b></td>";
+                    if (!(col in typedata.columns)) return ""; //skips row if no column in typesdata
+                    return "<tr><td>" + typedata.columns[col].displayname + "</td>\
+                            <td><b>" + raw2display(data, typedata.columns[col]) + "</b></td>";
                 }
             }
         }
