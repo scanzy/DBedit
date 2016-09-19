@@ -52,6 +52,7 @@ class LinkTypes extends XMLhelper
             {
                 $h = new Links($typedata); //gets helper
                 $h->mainFiltCol = ($typedata['link1'] == $type) ? "id1" : "id2";
+                $h->auxFiltCol = ($typedata['link1'] == $type) ? "id2" : "id1";
 
                 $displayname = $types[$typedata['link1']]['displayname']; //gets display name
                 if ($displayname == $types[$type]['displayname']) $displayname = $types[$typedata['link2']]['displayname'];

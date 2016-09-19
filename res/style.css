@@ -53,6 +53,7 @@ button.left, span.left { float: left; }
 
 .table tr { transition: background-color .5s linear; }
 .table tr.hover { background-color: #eaeaea; transition: none; }
+.table tr.active { background-color: #29f; color:white; transition:none; }
 .table tr.clickable { cursor: pointer; }
 
 .link-box { 

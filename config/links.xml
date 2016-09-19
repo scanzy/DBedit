@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
     <payments-people>
-        <description>Payments of people</description>
+        <description>
+            <people>Payments of %alias%</people>
+            <payments>People who payed %alias%</payments>
+        </description>
+        <displayname>%payments% payed by %people%</displayname>
         <link1>people</link1>
         <link2>payments</link2>
         <table>PeoplePayments</table>
@@ -16,11 +20,17 @@
         </columns>
         <searchminrows>5</searchminrows>
         <random>3</random>
-        <linked>Payed</linked>
-        <unlinked>Not payed</unlinked>
+        <add>
+            <people>Add payment of %alias%</people>
+            <payments>Add person who payed %alias%</payments>
+        </add>
     </payments-people>
     <certificates-people>
-        <description>Certificates of people</description>
+        <description>
+            <people>Certificates of %alias%</people>
+            <certificates>People with %alias%</certificates>
+        </description>
+        <displayname>%certificates% of %people%</displayname>
         <link1>people</link1>
         <link2>certificates</link2>
         <table>CertificatesPeople</table>
@@ -35,7 +45,9 @@
         </columns>
         <searchminrows>5</searchminrows>
         <random>2</random>
-        <linked>We have it</linked>
-        <unlinked>We don't have it</unlinked>
+        <add>
+            <people>Add certificate of %alias%</people>
+            <certificates>Add %alias% for person</certificates>
+        </add>
     </certificates-people>
 </root>

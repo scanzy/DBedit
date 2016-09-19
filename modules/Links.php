@@ -14,6 +14,7 @@ class Links extends SQLhelper
         //creates helper and initializes it
         $links = new Links($typeinfo); 
         $links->mainFiltCol = ($typeinfo['link1'] == $type) ? "id1" : "id2";
+        $links->auxFiltCol = ($typeinfo['link1'] == $type) ? "id2" : "id1";
 
         return $links;
     }

@@ -95,6 +95,7 @@ $.fn.extend({
                 this.loader.loadItems(requestdata); //loads items
                 showSortState(); //adds icon in table heading, etc
                 this.root.find(".items-search").focus(); //focuses search
+                return t; //returns obj table ref
             } 
         };
 
@@ -103,15 +104,19 @@ $.fn.extend({
             processResponse: function(data) {                 
                 var rowcount = (data != null && data != "") ? data.length : 0; //calculates row count
 
+                //to hide searchbar/new button
+                var showSearch = (rowcount >= options.search.minRows);
+                var showNewBtnSm = (rowcount > options.button.maxRows);
+
                 //hides search if needed (too few rows)
-                t.root.find(".items-search").toggle(rowcount >= options.search.minRows) ;
+                t.root.find(".items-search").toggle(showSearch) ;
 
                 //hides new button from top right to show it under table if needed (too few rows)
-                t.root.find(".new-item-sm").toggle(rowcount > options.button.maxRows);
-                t.root.find(".new-item-lg").toggle(rowcount <= options.button.maxRows); 
+                t.root.find(".new-item-sm").toggle(showNewBtnSm);
+                t.root.find(".new-item-lg").toggle(!showNewBtnSm); 
 
                 //hides the whole topbar if nothing inside
-                $(".table-topbar").toggle($(".table-topbar :visible").length <= 0);
+                t.root.find(".table-topbar").toggle(showSearch || showNewBtnSm);
 
                 //sorts data if needed
                 if (options.sort.enabled) {
@@ -136,7 +141,7 @@ $.fn.extend({
                 for (var col in options.columns) {
 
                     if (col in options.fetch.cell) { //opens tag
-                        if ('start' in options.fetch.cell[col]) html += options.fetch.cell[col].start(col, data[col], i, data);
+                        if (options.fetch.cell[col].start != undefined) html += options.fetch.cell[col].start(col, data[col], i, data);
                     } else if (options.fetch.cells.start != undefined)
                         html += options.fetch.cells.start(col, data[col], i, data);
                     else html += "<td>";
@@ -149,7 +154,7 @@ $.fn.extend({
                     else html += data[col]; 
 
                     if (col in options.fetch.cell) { //closes tag
-                        if('end' in options.fetch.cell[col]) html += options.fetch.cell[col].end(col, data[col], i, data);
+                        if(options.fetch.cell[col].end != undefined) html += options.fetch.cell[col].end(col, data[col], i, data);
                     } else if (options.fetch.cells.end != undefined)
                         html += options.fetch.cells.end(col, data[col], i, data);
                     else html += "</td>"; 
@@ -213,6 +218,7 @@ $.fn.extend({
             t.root.on("mouseleave", "tbody tr", function () { $(this).removeClass(options.fetch.rows.hoverClass); });
         }       
 
+        if (options.done != undefined) options.done(t); //done custom callback
         return t; //returns table object ref
     }
 });

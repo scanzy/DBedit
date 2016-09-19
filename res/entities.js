@@ -2,9 +2,7 @@
 requiredata.request('typesdata', function (typesdata) {
 
     var typedata = typesdata[type]; //gets data of this type
-    $(".box.title h1").text(typedata.displayname); //sets title
-
-    $("#topbar-type").addClass('active'); //select entity type in topbar
+    $(".box.title h1").text(typedata.displayname); //sets title    
 
     var columns = []; //gets columns (only columns to show)
     for (var col in typedata.columns) if (typedata.columns[col].showinlist) 
@@ -15,7 +13,7 @@ requiredata.request('typesdata', function (typesdata) {
 
         //setups table
         entitiestable = $("#entities-table").scanzytable({ columns: columns,
-            request: { url: "./apis/entities/get.php", data: { type: type} },  
+            request: { url: undefined }, requiredata: { name: 'entitiesdata' }, //passive mode 
             sort: {  
                 enabled: ('orderby' in typedata), //sort options on data load
                 column: ('orderby' in typedata) ? typedata.orderby.column : undefined,
@@ -28,18 +26,18 @@ requiredata.request('typesdata', function (typesdata) {
                     click: function () { changeUrl({ type: type, id: $(this).attr('data-entity-id')}); },
                     hoverClass: 'hover' 
                 }, 
-                contents: function(col, data) { return raw2display(data, typesdata[type].columns[col]); },                                  
+                contents: function(col, data) { return raw2display(data, typedata.columns[col]); },                                  
             }, 
-            search: { show: true, text: typesdata[type].searchhint, minRows: typesdata[type].searchminrows }, 
-            button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); } } 
-        });
-
-        //sets entities count in title
-        requiredata.request('scanzytable-entities-table', function(data) {
-            $(".box.title h1").html(typesdata[type].displayname + ' <span class="badge badge-light">' + data.length + '</span>');
-        });
-
-        //loads data
-        entitiestable.loadItems();
+            empty: typedata.emptysethint,
+            search: { show: true, text: typedata.searchhint, minRows: typedata.searchminrows }, 
+            button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); } },
+            done: function(t) { t.root.translate(); } //translates table 
+        }).loadItems();        
     });
+
+    //sets entities count in title
+    requiredata.request('entitiesdata', function(data) { $(".box.title h1").append(' <span class="badge badge-light">' + data.length + '</span>'); });
 });
+
+//loads entities
+requiredata.loadAjax('entitiesdata', { url: "./apis/entities/get.php", data: { type: type }, error: errorPopup });

@@ -1,82 +1,59 @@
-requiredata.request('typesdata', function(typesdata){
+requiredata.request('typesdata', function(typesdata) {
+    requiredata.request('entityalias', function(alias) {    
 
-    //fetches link types nav
-    var linksnav = $("#links-nav").scanzyload({ 
-        requiredata: { name: 'linksdata' }, 
-        request: { url: "./apis/linktypes/get.php", data: { type: type } },
-        fetch: function(name, data) { 
-            var linkedtype = (data.link1 == type) ? data.link2 : data.link1;
-            return '<a class="btn btn-' + ((linkedtype == link) ? "primary" : "default" ) + '" data-toggle="tooltip" title="' + data.description + '"' +
-                '" href="./' + urlParams({type: type, id: id, link: linkedtype}) + '">' + typesdata[linkedtype].displayname + '</a> ';
-        },
-        error: $("#links-nav-load-error"), loading: $("#links-nav-loading"), retry: $("#links-nav-load-retry"),
-        always: function () { 
-            $('#links-nav [data-toggle="tooltip"]').tooltip(); //enables tooltips
-            translate(document.getElementById("links-nav")); //translates
-        } 
-    }).loadItems();
-
-    //fetches table
-    requiredata.request('linksdata', function(linksdata) {    
-       
-        //gets linktype info
-        linktype = undefined;
-        for(var i in linksdata) 
-            if (((linksdata[i].link1 == type) && (linksdata[i].link2 == link))
-             || ((linksdata[i].link2 == type) && (linksdata[i].link1 == link)))
-                { linktype = linksdata[i]; break; }
-
-        var columns = { }; //gets columns
-        columns[(linksdata[i].link1 == type) ? "id2" : "id1"] = typesdata[link].displayone;
-        for (var col in linktype.columns) columns[col] = linktype.columns[col].displayname;
-        
-        columns["-"] = ""; //linked/unlinked button column
-
-        //uses this and then loads aliases
-        function aliasPlaceholder(x, id) { return '<td data-entity-id="' + id + '">'; }
-
-        var linkstable = $("#links-table").scanzytable({
-            request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } },
-            requiredata: { name: 'links' }, columns: columns,
-            button: { show: true, click: function() { }}, search: { show: true, minRows: typesdata[type].searchminrows },
-            fetch: {
-                rows: { 
-                    start: function(x, data) { return '<tr data-link-id="' + data.id +'">'; },
-                    hoverClass : 'hover' 
-                },
-                cell: { 
-                    id1: { start: aliasPlaceholder }, id2: { start: aliasPlaceholder }, 
-                    "-": { start: function() { return "<td class='right'>"; } }
-                },
-                content: { id1: function() {}, id2: function() {}, "-": function() {
-                    return "<button class='btn btn-success btn-xs linked'>" + linktype.linked +"</button>";
-                }}
-            }            
+        //fetches link types nav
+        var linksnav = $("#links-nav").scanzyload({ 
+            requiredata: { name: 'linktypesdata' }, request: { url: undefined }, //passive mode
+            fetch: function(name, data) { 
+                var linkedtype = (data.link1 == type) ? data.link2 : data.link1;
+                return '<a class="btn btn-' + ((linkedtype == link) ? "primary" : "default" ) + '" data-toggle="tooltip" \
+                        title="' + getAlias({ alias: alias }, { alias: alias }, data.description[type]) + '" \
+                        href="./' + urlParams({type: type, id: id, link: linkedtype}) + '">' + typesdata[linkedtype].displayname + '</a> ';
+            },
+            error: $("#links-nav-load-error"), loading: $("#links-nav-loading"), retry: $("#links-nav-load-retry"),
+            always: function () { 
+                $('#links-nav [data-toggle="tooltip"]').tooltip(); //enables tooltips
+                $('#links-nav').translate(); //translates
+            } 
         }).loadItems();
-        
-        //after table and aliasesloaded
-        requiredata.request('links', function(links) {            
-            requiredata.request('linkedaliases', function(aliases) {
 
-            //sets entity aliases in table
-            $("[data-entity-id]").each(function() {
-                $(this).text(aliases[$(this).attr("data-entity-id")]);
-            });
+        //fetches table
+        requiredata.request('linktypedata', function(linktypedata) {        
+            requiredata.request('linkedaliases', function(linkedaliases) {
 
-            //adds rows for unlinked items
-            for(var id in aliases)
-                if ($("#links-table td[data-entity-id='" + id + "']").length <= 0)
-                    $("#links-table tbody").append("<tr>\
-                    <td colspan='" + (Object.keys(columns).length - 1) + "' data-entity-id='" + id + "'>" + aliases[id] + "</td>\
-                    <td class='right'><button class='btn btn-danger btn-xs unlinked'>" + linktype.unlinked + "</button></td></tr>");
-                });
+                var columns = { }; //gets columns
+                var linkedcol = (linktypedata.link1 == type) ? "id2" : "id1";
+                columns[linkedcol] = typesdata[link].displayone;
+                for (var col in linktypedata.columns) columns[col] = linktypedata.columns[col].displayname;
+                
+                //gets aliases
+                function aliasPlaceholder(x, id) { 
+                    if (x != linkedcol) return ""; //skips if not right col
+                    for (var i in linkedaliases) //finds alias
+                        if (linkedaliases[i].id == id) return linkedaliases[i].alias;
+                    return "Unknown"; //fallback
+                }
 
-            //adds handler for link/unlink button
-            $(".linked").on('click', function() { 
-                ajax("./apis/links/link.php" + urlParams({}), function() { document.location.reload(true); });
-            });
-            $(".unlinked").on('click', function() { 
-                ajax("./apis/links/unlink.php" + urlParams({}), function() { document.location.reload(true); });
+                var linkstable = $("#links-table").scanzytable({
+                    request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } }, 
+                    requiredata: { name: 'linksfitered' }, columns: columns,
+                    button: { 
+                        show: true, text: getAlias({ alias: alias }, { alias: alias }, linktypedata.add[type]),
+                        click: function() { changeUrl({ type: type, id: id, link: link, action: "edit" }); } 
+                    }, 
+                    search: { show: true, minRows: typesdata[type].searchminrows },
+                    fetch: {
+                        rows: { 
+                            start: function(x, data) { return '<tr data-link-id="' + data.id +'">'; },
+                            click: function() { changeUrl({ type: type, id: id, link: link, linkid: $(this).attr('data-link-id'), action: "edit" }); },
+                            hoverClass : 'hover' 
+                        },
+                        content: { id1: aliasPlaceholder, id2: aliasPlaceholder } //uses aliases to fill table
+                    }            
+                }).loadItems();
+
+                //sets links count in title
+                requiredata.request('linksfitered', function(data) { $(".box.title h1").append(' <span class="badge badge-light">' + data.length + '</span>'); });
             });
         });
     });
@@ -85,9 +62,5 @@ requiredata.request('typesdata', function(typesdata){
 //requests aliases (for table) and gets current (to set topbar and title)
 requiredata.loadAjax('linkedaliases', { url: "./apis/entities/aliases.php", data: { type: link } });     
 
-//sets title and request entity data to get entity alias
-requiredata.loadAjax('entitydata', { url: "./apis/entities/one.php", data: { type: type, id: id }});
+//sets title with entity alias 
 requiredata.request('entityalias', function(alias) { $(".box.title h1").text(alias); });
-
-//selects link in topbar
-$("#topbar-link").addClass('active');

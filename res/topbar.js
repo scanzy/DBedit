@@ -24,6 +24,7 @@ var params = GetParams();
 var type = params['type'];
 var id = params['id'];
 var link = params['link'];
+var linkid = params['linkid'];
 var action = params['action'];
 
 //logout button
@@ -55,15 +56,45 @@ if (type != undefined) requiredata.request('typesdata', function(typesdata) {
 });
 
 //shows entity alias in topbar
-if (id != undefined) requiredata.request('entityalias', function(alias) {       
-    $("#topbar-entity").text(alias).attr('href', './' + urlParams({ type: type, id: id })).removeClass('hidden');
-});
+if (id != undefined) {  
+    requiredata.loadAjax('entitydata', { url: "./apis/entities/one.php", data: { type: type, id: id }, error: errorPopup}); //request entity data   
+    requiredata.request('entityalias', function(alias) { 
+        $("#topbar-entity").text(alias).attr('href', './' + urlParams({ type: type, id: id })).removeClass('hidden'); //sets alias in topbar
 
-//shows linktype in topbar
-if (link != undefined) requiredata.request('typesdata', function(typesdata) {
+        requiredata.request('linktypedata', function(linktypedata) {
+            requiredata.request('linkedalias', function(linkedalias) { //gets link alias
+                var replace = {}; replace[type] = alias; replace[link] = linkedalias;
+                requiredata.set('linkdisplayname', getAlias(replace, replace, linktypedata.displayname));
+            });
+        });
+    });
+}
+
+if (link != undefined) {
+
+    //shows linktype in topbar
+    requiredata.request('typesdata', function(typesdata) {
         $("#topbar-link").text(typesdata[link].displayname).removeClass('hidden')
         .attr('href', './' + urlParams({ type: type, id: id, link: link }));
-});
+    });
+
+    //load links data types 
+    requiredata.loadAjax('linktypesdata', { url: "./apis/linktypes/get.php", data: { type: type } });
+
+    //gets linktype from links data
+    requiredata.request('linktypesdata', function(linktypesdata) {           
+        for(var i in linktypesdata) 
+            if (((linktypesdata[i].link1 == type) && (linktypesdata[i].link2 == link))
+             || ((linktypesdata[i].link2 == type) && (linktypesdata[i].link1 == link)))
+                { requiredata.set('linktypedata', linktypesdata[i]); break; }
+    });    
+}
+
+//selects (as "active") the right topbar element
+if      (type == undefined) $("#topbar-title").addClass('active');  //selects title in topbar
+else if (id == undefined)   $("#topbar-type").addClass('active');   //selects entity type in topbar
+else if (link == undefined) $("#topbar-entity").addClass('active'); //selects entity alias in topbar
+else                        $("#topbar-link").addClass('active');   //selects link type in topbar  
 
 //sets handlers for link-box
 function setLinkBoxHandlers() {

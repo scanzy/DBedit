@@ -77,6 +77,7 @@
         </orderby>
         <searchminrows>1</searchminrows>
         <searchhint>Search people...</searchhint>
+        <emptysethint>There are no people at the moment</emptysethint>
         <random>2</random>
         <add>Add person</add>
         <new>New person</new>
@@ -100,6 +101,7 @@
         <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <searchminrows>5</searchminrows>
         <searchhint>Search payments...</searchhint>
+        <emptysethint>There are no payments at the moment</emptysethint>
         <random>3</random>
         <add>Add payment</add>
         <new>New payment</new>
@@ -123,6 +125,7 @@
         <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <searchminrows>5</searchminrows>
         <searchhint>Search certificates...</searchhint>
+        <emptysethint>There are no certificates at the moment</emptysethint>
         <random>1</random>
         <add>Add certificate</add>
         <new>New certificate</new>
@@ -146,6 +149,7 @@
         <description>Photos bla bla bla bla bla bla bla bla bla bla bla bla</description>
         <searchminrows>5</searchminrows>
         <searchhint>Search photos...</searchhint>
+        <emptysethint>There are no photos at the moment</emptysethint>
         <random>1</random>
         <add>Add photo</add>
         <new>New photo</new>

@@ -94,6 +94,15 @@ class SQLhelper
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //gets elements with not in clause
+    public function filterNotIn($helper2, $val)
+    {
+        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE id NOT IN (SELECT ".$helper2->auxFiltCol
+            ." FROM ".$helper2->table." WHERE ".$helper2->mainFiltCol."=:x);");
+        $stmt->execute(array(":x" => $val));
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //inserts element (check columns, types and nulls before calling this)
     public function insert($data)
     {
@@ -133,7 +142,7 @@ class SQLhelper
    
     //checks if data has only columns of this table
     public function checkColumns($data)
-    { foreach($data as $col => $val) if (!isset($this->columns[$col])) return $colname; return FALSE;}
+    { foreach($data as $colname => $val) if (!isset($this->columns[$colname])) return $colname; return FALSE;}
 
     //checks if data has data of correct type
     public function checkTypes($data)

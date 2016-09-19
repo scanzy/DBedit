@@ -19,7 +19,7 @@ class Entities extends SQLhelper
 
         $data = array(); //builds alias
         foreach($entities as $entity)
-            $data[$entity['id']] = $this->alias($entity);
+            $data[] = array('id' => $entity['id'], 'alias' => $this->alias($entity));
 
         return $data;
     }

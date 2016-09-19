@@ -16,7 +16,7 @@ $.fn.extend({ //extends jquery
 
         //options default setup
         var options = defaultValues(options, {
-            request: { url:'', data: {} }, processResponse: undefined, fetch: function () { }, 
+            request: { url: undefined, data: { } }, processResponse: undefined, fetch: function () { }, 
             requiredata: { options: { }, name: 'scanzyload-' + this.attr('id') },
             loading: { show: function () { }, hide: function () { } },
             error: { show: function () { }, hide: function () { } },
@@ -26,28 +26,14 @@ $.fn.extend({ //extends jquery
         });
 
         //saves element root, options and load items function
-        var x = { root: this, options: options, loadItems: function (requestdata) {
-            var root = this.root, loader = this;
+        var x = { root: this, options: options, 
 
-            //loads request data
-            if (requestdata == undefined) requestdata = options.request.data;
-            else //uses data passed as param to update data stored in object
-                for (var i in options.request.data) //skips already present params
-                    if (!(i in requestdata)) requestdata[i] = options.request.data[i];
-
-            //shows loading, hides error/empty
-            options.loading.show();
-            options.error.hide();
-            options.empty.hide();
-
-            //sets requiredata options and sends request
-            requiredata.options(options.requiredata.name, options.requiredata.options);
-            requiredata.loadAjax(options.requiredata.name, {url: options.request.url, data: requestdata})
-            .done(function (data) {   
+            //fetches items
+            fetchItems: function(data) { 
 
                 //saves original data from request (cloning array or object)
-                if ($.isArray(data)) loader.data = data.slice(0); 
-                else { loader.data = {}; for(var x in data) loader.data[x] = data[x]; }
+                if ($.isArray(data)) x.data = data.slice(0); 
+                else { x.data = {}; for(var i in data) x.data[i] = data[i]; }
 
                 //performs response processing if needed
                 if (options.processResponse != undefined) data = options.processResponse(data);                
@@ -65,12 +51,42 @@ $.fn.extend({ //extends jquery
                 var html = ""; //fetches data
                 for (var i in data) html += options.fetch(i, data[i]);
 
-                root.html(html); //and adds html to page
+                x.root.html(html); //and adds html to page
                 options.done(); //callback
-            })
-            .fail(function () { options.error.show(); options.fail(); }) //shows error
-            .always(function () { options.loading.hide(); options.always(); }); //hides loading
-        }
+            },
+            
+            //post-fetch (hides loading)
+            postFetch: function() { options.loading.hide(); options.always(); },
+
+            //loads items
+            loadItems: function (requestdata) {
+
+                //shows loading, hides error/empty
+                options.loading.show();
+                options.error.hide();
+                options.empty.hide();
+
+                //passive mode (does not perform ajax request)
+                if (options.request.url == undefined) { 
+                    requiredata.request(options.requiredata.name, function(data) { 
+                        x.fetchItems(data), x.postFetch(); 
+                    }); 
+                    return; 
+                }
+
+                //loads request data
+                if (requestdata == undefined) requestdata = options.request.data;
+                else //uses data passed as param to update data stored in object
+                    for (var i in options.request.data) //skips already present params
+                        if (!(i in requestdata)) requestdata[i] = options.request.data[i];                
+
+                //sets requiredata options and sends request
+                requiredata.options(options.requiredata.name, options.requiredata.options);
+                requiredata.loadAjax(options.requiredata.name, {url: options.request.url, data: requestdata})
+                .done(x.fetchItems) //fetches items 
+                .fail(function () { options.error.show(); options.fail(); }) //shows error
+                .always(x.postFetch); //hides loading
+            }
         };
 
         //binds retry button

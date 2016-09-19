@@ -10,6 +10,6 @@ function showMsg(msg, type)
 }
 
 //different message types (colors)
-function showError(msg){ showMsg(msg, "danger");}
-function showWarning(msg){ showMsg(msg, "warning");}
-function showInfo(msg){ showMsg(msg, "info");}
+function showError(msg){ showMsg(msg, "danger"); }
+function showWarning(msg){ showMsg(msg, "warning"); }
+function showInfo(msg){ showMsg(msg, "info"); }

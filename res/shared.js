@@ -37,18 +37,11 @@ function ajax(url, data, callback) {
     return $.post(url, data, function (data) { if (callback != undefined) callback(data); }).fail(errorPopup);
 }
 
-//scrolls to elements
-function scrollToElement(el) { $("html, body").animate({ scrollTop: el.offset().top - $(window).height() * 0.3 }, 700); }
-
-//date-string conversions
-String.prototype.date2str = function() { return this.split("-").reverse().join("/"); } //transforms Y-m-d date in d/m/Y string
-String.prototype.str2date = function() { return this.split("/").reverse().join("-"); } //transforms d/m/Y string in Y-m-d date 
-
 //gets display content from raw data
 function raw2display(data, colinfo)
 {
     switch(colinfo.type) {
-        case "date": return data.date2str();
+        case "date": return data.split("-").reverse().join("/");
         case "bool": 
             var style = 'default';
             if (data == "1") {

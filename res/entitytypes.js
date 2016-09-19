@@ -14,8 +14,5 @@ var entitytypes = $("#entitytypes").scanzyload({
             <div class="line"></div><p class="txt-grey">' + data.description + '</p>' + random + '</div></div>';
     },
     error: $("#entities-load-error"), loading: $("#entities-loading"), retry: $("#entities-load-retry"),
-    always: function () { translate(document.getElementById("entitytypes")); setLinkBoxHandlers(); } //translates
+    always: function () { $("#entitytypes").translate(); setLinkBoxHandlers(); } //translates
 }).loadItems();
-
-//selects title in topbar
-$("#topbar-title").addClass('active');

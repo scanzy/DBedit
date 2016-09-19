@@ -13,6 +13,7 @@ $type = Params::optionalString('type', NULL);
 $id = Params::optionalInt('id', NULL); 
 $action = Params::optionalString('action', NULL); 
 $link = Params::optionalString('link', NULL);
+$linkid = Params::optionalString('linkid', NULL);
 
 //selects page
 switch($action) {
@@ -25,7 +26,10 @@ switch($action) {
 
     case "edit":
         if ($type === NULL) $page = "editentitytype";
-        else $page = "editentity";
+        else if ($id === NULL) $page = "newentity";
+        else if ($link === NULL) $page = "editentity";
+        else if ($linkid === NULL) $page = "newlink";
+        else $page = "editlink";
     break;
 
     case "user": case "help": $page = $action; break;
@@ -131,10 +135,8 @@ $appname = $conf['global']['appname'];
 
             <div class="row">
                 <div class="col-lg-4 col-md-8">
-                    <div class="box">
-                        <div id="details-table"></div>
-                        <button id="entity-edit" class="btn btn-info hidden"><span class="glyphicon glyphicon-edit"></span> <span>Edit</span></button>
-                        <button id="entity-delete" class="btn btn-danger hidden right"><span class="glyphicon glyphicon-trash"></span> <span>Delete</span></button>
+                    <div class="box details-box">
+                        <div id="details-table"></div>     
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-4">
@@ -169,9 +171,7 @@ $appname = $conf['global']['appname'];
                 </div>
             </div>
 
-            <div class="box">                
-                <div id="links-table"></div>
-            </div>
+            <div class="box"><div id="links-table"></div></div>
         </div>
 
         <?php break; case "editentitytype": ?>
@@ -184,38 +184,32 @@ $appname = $conf['global']['appname'];
             </div>
         </div>
 
-        <?php break; case "editentity": ?>
+        <?php break; case "editentity": case "newentity": ?>
 
         <div class="container page noselect">
-            <div class="box title"><h1>Edit entity</h1></div>
+            <div class="box title"><h1></h1></div>
+            <div class="box" id="entity-details"></div>
+        </div>
 
-            <div class="box">
-                <div class="row form-horizontal" id="entity-details"></div>
-                <div class="right">
-                    <button id="details-cancel" class="btn btn-lg btn-default">Cancel</button>
-                    <button id="details-save" class="btn btn-lg btn-success disabled">Save</button>
-                </div>
-            </div>
+        <?php break; case "editlink": case "newlink": ?>
+
+        <div class="container page noselect">
+            <div class="box title"><h1></h1></div>
+            <div class="box"><div id="link-details"></div></div>            
         </div>
 
         <?php break; case "user": ?>
 
         <div class="container page">
             <div class="box title"><h1>User</h1></div>
-
-            <div class="box">
-                        
-            </div>
+            <div class="box"></div>
         </div>
 
         <?php break; case "help": ?>
 
         <div class="container page">
             <div class="box title"><h1>Help</h1></div>
-
-            <div class="box">
-                        
-            </div>
+            <div class="box"></div>
         </div>
 
         <?php break; } ?>
@@ -225,18 +219,34 @@ $appname = $conf['global']['appname'];
         </div>  
 
         <script src="res/libs/messages.js"></script>
-        <script src="res/libs/confirm.js"></script>
+        <script src="res/libs/modal.js"></script>
         <script src="res/shared.js"></script>
         <script src="res/topbar.js"></script>
 
-        <?php switch($page) { 
+        <?php 
 
+        switch($page) {
+            case "editentity": case "newentity": case "editlink": case "newlink":
+                Shared::loadJS("res/libs/scanzyform.js"); 
+                Shared::loadJS("res/libs/formbuilder.js"); 
+                Shared::loadJS("res/libs/fieldconverter.js");
+            break;
+        }
+
+        switch($page) {
+            case "newlink": case "editlink": Shared::loadJS("res/linkableentitiespopup.js"); break;
+        }
+
+        switch($page) { 
             case "entitytypes": Shared::loadJS("res/entitytypes.js"); break; 
             case "entities": Shared::loadJS("res/entities.js"); break; 
             case "entitydetails": Shared::loadJS("res/entitydetails.js"); break;
             case "links": Shared::loadJS("res/links.js"); break;
             case "editentitytype": break;
+            case "newentity": Shared::loadJS("res/newentity.js"); break;
             case "editentity": Shared::loadJS("res/editentity.js"); break;
+            case "newlink": Shared::loadJS("res/newlink.js"); break;
+            case "editlink": Shared::loadJS("res/editlink.js"); break;
             case "user": break;
             case "help": break;                                            
         } ?>

@@ -28,3 +28,14 @@ function translatenow(element) {
     { var attr = e[i].getAttribute(a[j]); if (attr != null && attr != "") 
         if (attr in langdata) e[i].setAttribute(a[j], langdata[attr]); }
 }
+
+$.fn.extend({ //for jQuery
+    translate: function() { 
+        if (langdata != undefined) { 
+            var elements = this.get(); //gets dom elements
+            for (var i in elements) //for each
+                translatenow(elements[i]); //translates
+        }
+        return this; //for jQuery chain pattern
+    }
+});
