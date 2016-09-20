@@ -32,7 +32,7 @@ requiredata.request('linktypedata', function(linktypedata) {
                                     ajax("./apis/links/del.php", { type: type, link: link, linkid: linkid }, //deletes link
                                         function() { changeUrl({ type: type, id: id, link: link }); //and redirects to links page
                                     }); 
-                                }, "danger", "default", "<span>Yes, delete</span> " + alias, undefined, "Warning!"
+                                }, "danger", "default", "Yes, delete", undefined, "Warning!"
                             );
                         }, style: 'danger'
                     },

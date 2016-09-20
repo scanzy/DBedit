@@ -5,6 +5,10 @@
 ul.dropdown-menu > li { width:100%; }
 .navbar-collapse.in { overflow-y: visible; }
 
+.hidden { display: none; }
+.noselect { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+.selectable { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+
 .progress-bar.fill { width: 100%; } 
 .progress { height: auto; min-height: 20px; }
 .progress a { color: #fff; cursor: pointer; }

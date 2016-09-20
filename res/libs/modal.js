@@ -24,7 +24,7 @@ var confirmResult = false; //variable to store result (ok/cancel)
 function showConfirm(html, size, callback, okstyle, cancelstyle, oktext, canceltext, title) {
 
     //default fallback styles
-    var styles = [ "default", "danger", "success", "warning", "info" ];
+    var styles = [ "default", "danger", "success", "warning", "info", "primary", "link" ];
     if (styles.indexOf(okstyle) == -1) okstyle = styles[0];
     if (styles.indexOf(cancelstyle) == -1) cancelstyle = styles[0];
 

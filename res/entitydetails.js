@@ -28,11 +28,13 @@ requiredata.request('typesdata', function (typesdata) {
             .translate().click(function() { changeUrl({ type: type, id: id, action: "edit" }); }).hide().fadeIn("slow");
 
             //delete button
-            $('<button class="btn btn-danger right"><span class="glyphicon glyphicon-trash"></span> <span>Delete</span></button>')
-            .appendTo('#details-box').translate().click(function () {
-                showConfirm("<p><span>Are you sure you really want to delete</span> <b>" + alias + "</b> <span>from</span> <b>" + typesdata[type].displayname + "</b>?", "md", 
-                function(x) { if (x == true) ajax("./apis/entities/del.php", { type: type, id: id }, function() { changeUrl({ type: type }); }); }, "danger", "default",
-                "<span>Yes, delete</span> " + alias, undefined, "Warning!");
+            $('<button class="btn btn-danger right"><span class="glyphicon glyphicon-trash"></span> <span>Delete</span></button>').appendTo('#details-box')
+            .translate().click(function () {
+                showConfirm(
+                    "<p><span>Are you sure you really want to delete</span> <b>" + alias + "</b> <span>from</span> <b>" + typesdata[type].displayname + "</b>?", "md", 
+                    function(x) { if (x == true) ajax("./apis/entities/del.php", { type: type, id: id }, function() { changeUrl({ type: type }); }); }, 
+                    "danger", "default", "<span>Yes, delete</span> " + alias, undefined, "Warning!"
+                );
             }).hide().fadeIn("slow"); 
         });    
 

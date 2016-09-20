@@ -80,6 +80,9 @@ $appname = $conf['global']['appname'];
 
         <nav id="topbar" class="navbar-default noselect">
             <div class="navbar-header">
+                <div class="navbar-back-container hidden">
+                    <a class="navbar-back" href="#"><span class="glyphicon glyphicon-menu-left"></span> <span id="back-text"></span></a>
+                </div>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topbarcontent">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -104,10 +107,11 @@ $appname = $conf['global']['appname'];
             <h2 class="inline">admin</h2>
         </div>
 
-        <?php switch($page) { case "entitytypes": ?>
         <div class="container page noselect">
-            <div class="box title"><h1></h1></div>
 
+        <?php switch($page) { case "entitytypes": ?>
+        
+            <div class="box title"><h1></h1></div>
             <div class="box">
                 <div id="entitytypes" class="row center"></div>
                 <div id="entities-loading" class="center"><p class="grey">Loading...</p></div>
@@ -118,19 +122,15 @@ $appname = $conf['global']['appname'];
                     </button>
                 </div>
             </div>
-        </div>
 
         <?php break; case "entities": ?>
 
-        <div class="container page">
-            <div class="box title noselect"><h1></h1></div>
-            <div class="box"><div id="entities-table"></div></div>
-        </div>
+            <div class="box title"><h1></h1></div>
+            <div class="box" id="entities-table"></div>
 
         <?php break; case "entitydetails": ?>
 
-        <div class="container page">
-            <div class="box title noselect"><h1></h1></div>
+            <div class="box title"><h1></h1></div>
 
             <div class="row">
                 <div class="col-lg-4 col-md-8">
@@ -150,12 +150,10 @@ $appname = $conf['global']['appname'];
                     </div>
                 </div>
             </div>
-        </div>
 
         <?php break; case "links": ?>
 
-        <div class="container page">
-            <div class="box title noselect">
+            <div class="box title">
                 <h1>Links</h1>
                 <div class="line"></div>
                 <div id="links-nav" class="center btn-multiline"></div>
@@ -167,32 +165,26 @@ $appname = $conf['global']['appname'];
                     </div>
                 </div>
             </div>
-
             <div class="box"><div id="links-table"></div></div>
-        </div>
 
         <?php break; case "editentity": case "newentity": ?>
 
-        <div class="container page noselect">
             <div class="box title"><h1></h1></div>
             <div class="box" id="entity-details"></div>
-        </div>
 
         <?php break; case "editlink": case "newlink": ?>
 
-        <div class="container page noselect">
             <div class="box title"><h1></h1></div>
             <div class="box" id="link-details"></div>            
-        </div>
 
         <?php break; case "user": ?>
 
-        <div class="container page">
             <div class="box title"><h1>User</h1></div>
             <div class="box"></div>
-        </div>
 
         <?php break; } ?>
+
+        </div>
 
         <div id="footer">
             <span>Powered by <b>ScanzySoftware</b></span>
