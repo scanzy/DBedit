@@ -9,5 +9,7 @@
     "Saving..." : "Salvataggio...",
     "Cancel" : "Annulla",
     "Are you sure you really want to delete": "Sei veramente sicuro di voler eliminare",
-    "This field can't be empty" : "Questo campo non puo' essere vuoto"
+    "from": "da",
+    "Warning!": "Attenzione!",
+    "Yes, delete": "Sì, elimina"
 }

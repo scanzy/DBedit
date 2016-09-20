@@ -11,29 +11,33 @@ requiredata.request('linktypedata', function(linktypedata) {
             });
         });
         
-        requiredata.request('linkdisplayname', function(linkdisplayname) { 
-            $(".box.title h1").text(linkdisplayname); //sets title 
+        requiredata.request('userdata', function(userdata) {
+            requiredata.request('linkdisplayname', function(linkdisplayname) { 
+                requiredata.set('title', linkdisplayname); //sets title 
 
-            //inits form
-            var builder = $("#link-details").formbuilder({
-                fields: typecols2fieldinfo(linktypedata.columns, linkdata), //converts data from entities (columns) to data about fields
-                confirmExit: { enabled: true, msg: "Are you sure you want to exit without saving? Changes will be lost" },
-                cancel: function() { changeUrl({ type: type, id: id, link: link }); },
-                save: { 
-                    url: "./apis/links/edit.php", 
-                    getpostdata: function(data) { return { type: type, id: id, link: link, linkedid: linkedid, data: data, linkid: linkid }; }, //collects post data from form
-                    success: function(linkid) { changeUrl({ type: type, id: id, link: link }); } //redirects to links page
-                },
-                altbtn: { text: '<span class="glyphicon glyphicon-trash"></span> <span>Delete</span>', style: 'danger', //delete button
-                    click: function() { 
-                        showConfirm("<p><span>Are you sure you really want to delete</span> <b>" + linkdisplayname + "</b>?", "md", function (x) { if (x == true) 
-                            ajax("./apis/links/del.php", { type: type, link: link, linkid: linkid }, //deletes link
-                                function() { changeUrl({ type: type, id: id, link: link }); //and redirects to links page
-                            }); 
-                        });
-                    } 
-                },
-                done: function(form) { form.root.translate(); } //translates form  
+                //inits form
+                var builder = $("#link-details").formbuilder({
+                    fields: typecols2fieldinfo(linktypedata.columns, linkdata), //converts data from entities (columns) to data about fields
+                    confirmExit: { enabled: true, msg: "Are you sure you want to exit without saving? Changes will be lost" },
+                    cancel: function() { changeUrl({ type: type, id: id, link: link }); },
+                    save: { 
+                        url: "./apis/links/edit.php", 
+                        getpostdata: function(data) { return { type: type, id: id, link: link, linkedid: linkedid, data: data, linkid: linkid }; }, //collects post data from form
+                        success: function(linkid) { changeUrl({ type: type, id: id, link: link }); } //redirects to links page
+                    },
+                    altbtn: { text: (userdata.userlevel >= 2) ? undefined : '<span class="glyphicon glyphicon-trash"></span> <span>Delete</span>', //delete button
+                        click: function() { 
+                            showConfirm("<p><span>Are you sure you really want to delete</span> <b>" + linkdisplayname + "</b>?", "md", 
+                                function (x) { if (x == true) 
+                                    ajax("./apis/links/del.php", { type: type, link: link, linkid: linkid }, //deletes link
+                                        function() { changeUrl({ type: type, id: id, link: link }); //and redirects to links page
+                                    }); 
+                                }, "danger", "default", "<span>Yes, delete</span> " + alias, undefined, "Warning!"
+                            );
+                        }, style: 'danger'
+                    },
+                    done: function(form) { form.root.translate(); } //translates form  
+                });
             });
         });
     });

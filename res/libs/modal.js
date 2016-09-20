@@ -21,13 +21,25 @@ var confirmCallback = function() { }; //variable to store callback
 var confirmResult = false; //variable to store result (ok/cancel)
 
 //shows a confirm dialog
-function showConfirm(html, size, callback) {
+function showConfirm(html, size, callback, okstyle, cancelstyle, oktext, canceltext, title) {
+
+    //default fallback styles
+    var styles = [ "default", "danger", "success", "warning", "info" ];
+    if (styles.indexOf(okstyle) == -1) okstyle = styles[0];
+    if (styles.indexOf(cancelstyle) == -1) cancelstyle = styles[0];
+
+    //default fallback texts
+    if (oktext == undefined) oktext = "OK";
+    if (canceltext == undefined) canceltext = "Cancel";
+
     confirmCallback = callback; //binds callbacks
-    return showModal('<div class="modal-body">' + html + '</div>\
-                <div class="modal-footer"> \
-                    <button type="button" class="btn btn-default confirm-ok" data-dismiss="modal">OK</button> \
-                    <button type="button" class="btn btn-default confirm-cancel" data-dismiss="modal">Cancel</button> \
-                </div>', size,
+    return showModal((title == undefined) ? '' : 
+        '<div class="modal-header"><button data-dismiss="modal" class="close">&times;</button><h2 class="title">' + title + '</h2></div>' +
+        '<div class="modal-body">' + html + '</div>\
+         <div class="modal-footer"> \
+            <button type="button" class="btn btn-' + okstyle + ' confirm-ok" data-dismiss="modal">' + oktext + '</button> \
+            <button type="button" class="btn btn-' + cancelstyle + ' confirm-cancel" data-dismiss="modal">' + canceltext + '</button> \
+         </div>', size,
     function(root) { 
         root.translate(); //translates dialog
         root.find(".confirm-ok").click(function() { confirmResult = true; });

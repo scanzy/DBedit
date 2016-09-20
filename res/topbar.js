@@ -39,8 +39,11 @@ requiredata.options('typesdata', { useSessionStorage: true });
 requiredata.loadAjax('userdata', { url: "./apis/auth/info.php" }); //gets data about users
 requiredata.loadAjax('typesdata', { url: "./apis/entitytypes/get.php" }); //gets data about entities
 
+//hides all topbar left elements
+$("#topbar li:not(.right)").hide();
+
 //sets topbar elements  
-$("#topbar-title").text(document.title).removeClass('hidden'); //sets title in topbar
+$("#topbar-title").text(document.title).removeClass("hidden"); //sets title in topbar
 
 //sets user name in topbar
 requiredata.request('userdata', function (data) { $("#topbar-user").text(data.name + ' ' + data.surname); });
@@ -95,6 +98,12 @@ if      (type == undefined) $("#topbar-title").addClass('active');  //selects ti
 else if (id == undefined)   $("#topbar-type").addClass('active');   //selects entity type in topbar
 else if (link == undefined) $("#topbar-entity").addClass('active'); //selects entity alias in topbar
 else                        $("#topbar-link").addClass('active');   //selects link type in topbar  
+
+//shows tobar links with animation
+$("#topbar li:not(.right):not(.hidden)").fadeIn("slow");
+
+//sets title
+requiredata.request('title', function(title) { $(".box.title h1").hide().text(title).fadeIn("slow"); });
 
 //sets handlers for link-box
 function setLinkBoxHandlers() {

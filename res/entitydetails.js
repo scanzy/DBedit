@@ -2,7 +2,7 @@ requiredata.request('typesdata', function (typesdata) {
     var typedata = typesdata[type]; //data about type
 
     //details table
-    var detailstable = $("#details-table").scanzytable({
+    var detailstable = $("#details-box").scanzytable({
         request: { url: undefined }, requiredata: { name: 'entitydata' }, //passive mode
         fetch: {
             rows: {
@@ -18,21 +18,22 @@ requiredata.request('typesdata', function (typesdata) {
     //when entity alias loaded
     requiredata.request('entityalias', function (alias) {
 
-        $(".box.title h1").text(alias); //sets page title        
+        requiredata.set('title', alias); //sets page title        
 
         //edit and delete button 
         requiredata.request('userdata', function(userdata) { if (userdata.userlevel >= 2) return; // (do not show if user is viewer)
 
             //edit button
-            $('<button class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> <span>Edit</span></button>').appendTo('.details-box')
-            .translate().click(function() { changeUrl({ type: type, id: id, action: "edit" }); });
+            $('<button class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> <span>Edit</span></button>').appendTo('#details-box')
+            .translate().click(function() { changeUrl({ type: type, id: id, action: "edit" }); }).hide().fadeIn("slow");
 
             //delete button
             $('<button class="btn btn-danger right"><span class="glyphicon glyphicon-trash"></span> <span>Delete</span></button>')
-            .appendTo('.details-box').translate().click(function () {
-                showConfirm("<p><span>Are you sure you really want to delete</span> <b>" + alias + "</b> from <b>" + typesdata[type].displayname + "</b>?", "md", 
-                function(x) { if (x == true) ajax("./apis/entities/del.php", { type: type, id: id }, function() { changeUrl({ type: type }); }); });
-            });
+            .appendTo('#details-box').translate().click(function () {
+                showConfirm("<p><span>Are you sure you really want to delete</span> <b>" + alias + "</b> <span>from</span> <b>" + typesdata[type].displayname + "</b>?", "md", 
+                function(x) { if (x == true) ajax("./apis/entities/del.php", { type: type, id: id }, function() { changeUrl({ type: type }); }); }, "danger", "default",
+                "<span>Yes, delete</span> " + alias, undefined, "Warning!");
+            }).hide().fadeIn("slow"); 
         });    
 
         //links info

@@ -2,7 +2,7 @@
 requiredata.request('typesdata', function (typesdata) {
 
     var typedata = typesdata[type]; //gets data of this type
-    $(".box.title h1").text(typedata.displayname); //sets title    
+    requiredata.set('title', typedata.displayname); //sets title    
 
     var columns = []; //gets columns (only columns to show)
     for (var col in typedata.columns) if (typedata.columns[col].showinlist) 

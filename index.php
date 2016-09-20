@@ -94,7 +94,6 @@ $appname = $conf['global']['appname'];
                     <li><a id="topbar-link" class="hidden"></a>
                     </li><li class="right"><a href="#" id="logout">Logout</a>
                     </li><li class="right"><a id="topbar-user" href="./?action=user"></a>
-                    </li><li class="right"><a id="topbar-help" href="./?action=help">Help</a>
                     </li>
                 </ul>
             </div>
@@ -107,7 +106,7 @@ $appname = $conf['global']['appname'];
 
         <?php switch($page) { case "entitytypes": ?>
         <div class="container page noselect">
-            <div class="box title"><h1>Dashboard</h1></div>
+            <div class="box title"><h1></h1></div>
 
             <div class="box">
                 <div id="entitytypes" class="row center"></div>
@@ -135,9 +134,7 @@ $appname = $conf['global']['appname'];
 
             <div class="row">
                 <div class="col-lg-4 col-md-8">
-                    <div class="box details-box">
-                        <div id="details-table"></div>     
-                    </div>
+                    <div class="box" id="details-box"></div>
                 </div>
                 <div class="col-lg-8 col-md-4">
                     <div class="box noselect">
@@ -174,16 +171,6 @@ $appname = $conf['global']['appname'];
             <div class="box"><div id="links-table"></div></div>
         </div>
 
-        <?php break; case "editentitytype": ?>
-
-        <div class="container page">
-            <div class="box title"><h1>Edit entity type</h1></div>
-
-            <div class="box">
-                        
-            </div>
-        </div>
-
         <?php break; case "editentity": case "newentity": ?>
 
         <div class="container page noselect">
@@ -195,20 +182,13 @@ $appname = $conf['global']['appname'];
 
         <div class="container page noselect">
             <div class="box title"><h1></h1></div>
-            <div class="box"><div id="link-details"></div></div>            
+            <div class="box" id="link-details"></div>            
         </div>
 
         <?php break; case "user": ?>
 
         <div class="container page">
             <div class="box title"><h1>User</h1></div>
-            <div class="box"></div>
-        </div>
-
-        <?php break; case "help": ?>
-
-        <div class="container page">
-            <div class="box title"><h1>Help</h1></div>
             <div class="box"></div>
         </div>
 
@@ -247,8 +227,7 @@ $appname = $conf['global']['appname'];
             case "editentity": Shared::loadJS("res/editentity.js"); break;
             case "newlink": Shared::loadJS("res/newlink.js"); break;
             case "editlink": Shared::loadJS("res/editlink.js"); break;
-            case "user": break;
-            case "help": break;                                            
+            case "user": break;                                       
         } ?>
     </body>
 </html>

@@ -41,7 +41,7 @@ $.fn.extend({
 
             build: function() {
                 
-                this.root.html(options.html); //form html setup
+                this.root.empty().append($(options.html)).hide().fadeIn("slow"); //form html setup
                 
                 //inits field types (pre)
                 for(var type in options.types) if (options.types[type].init_all_pre != undefined) options.types[type].init_all_pre();
@@ -52,7 +52,7 @@ $.fn.extend({
 
                     var field = options.fields[name]; //gets field
                     var type = options.types[field.type]; //gets type info
-                    field.ref = $(type.html(name, field.label, field.options)).appendTo(fieldroot); //appends new field
+                    field.ref = $(type.html(name, field.label, field.options)).appendTo(fieldroot).hide().fadeIn("slow"); //appends new field
 
                     if (type.init_one != undefined) type.init_one(field.ref, field.options); //inits field
                 }
@@ -65,7 +65,7 @@ $.fn.extend({
                 for(var name in options.buttons) {
 
                     var btn = options.buttons[name]; //gets btn
-                    btn.ref = $(btn.html).appendTo(btnroot); //inserts it
+                    btn.ref = $(btn.html).appendTo(btnroot).hide().fadeIn("slow"); //inserts it
 
                     if (btn.click != undefined) btn.ref.click(btn.click); //binds click callback
                 }            

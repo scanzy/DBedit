@@ -31,4 +31,4 @@ requiredata.request('linktypedata', function(linktypedata) {
 });
 
 //sets title
-requiredata.request('linkdisplayname', function(name) { $(".box.title h1").text(name); }); 
+requiredata.request('linkdisplayname', function(name) { requiredata.set('title', name); }); 

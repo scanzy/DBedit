@@ -16,11 +16,11 @@ $.fn.extend({ //extends jquery
 
         //options default setup
         var options = defaultValues(options, {
-            request: { url: undefined, data: { } }, processResponse: undefined, fetch: function () { }, 
+            request: { url: undefined, data: { } }, processResponse: undefined, fetch: function() { }, 
             requiredata: { options: { }, name: 'scanzyload-' + this.attr('id') },
-            loading: { show: function () { }, hide: function () { } },
-            error: { show: function () { }, hide: function () { } },
-            empty: { show: function () { }, hide: function () { } },
+            loading: { show: function() { }, hide: function() { } },
+            error: { show: function() { }, hide: function() { } },
+            empty: { show: function() { }, hide: function() { } },
             retry: { click: function() { } },
             done: function() {}, fail: function() {}, always: function() {}
         });
@@ -41,18 +41,18 @@ $.fn.extend({ //extends jquery
                 //checks empty                       
                 if (data != null && data != "") {
                     if (data instanceof Object) {
-                        if (Object.keys(data).length <= 0) { options.empty.show(); return; }
+                        if (Object.keys(data).length <= 0) { options.empty.show("fade"); return; }
                     }
                     else if (data instanceof Array)
-                        if (data.length <= 0) { options.empty.show(); return; }
+                        if (data.length <= 0) { options.empty.show("fade"); return; }
                 }
-                else { options.empty.show(); return; }
+                else { options.empty.show("fade"); return; }
 
                 var html = ""; //fetches data
                 for (var i in data) html += options.fetch(i, data[i]);
 
-                x.root.html(html); //and adds html to page
-                options.done(); //callback
+                $(html).hide("fade").appendTo(x.root.empty()).fadeIn("slow"); //and adds html to page               
+                options.done(); //callback                    
             },
             
             //post-fetch (hides loading)
@@ -84,7 +84,7 @@ $.fn.extend({ //extends jquery
                 requiredata.options(options.requiredata.name, options.requiredata.options);
                 requiredata.loadAjax(options.requiredata.name, {url: options.request.url, data: requestdata})
                 .done(x.fetchItems) //fetches items 
-                .fail(function () { options.error.show(); options.fail(); }) //shows error
+                .fail(function () { options.error.show("fade"); options.fail(); }) //shows error
                 .always(x.postFetch); //hides loading
             }
         };

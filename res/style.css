@@ -1,9 +1,15 @@
-body { font-family: Verdana; }
+html { height: 100%; }
+body { min-height: 100%; position: relative; }
+body:after { content: ''; display: block; height: 3.5em; }
+#footer { padding:1em; font-size: 1em; position:absolute; bottom:0; width: 100%; }
+
+body { min-height: 100%; font-family: Verdana; }
 
 .hidden { display: none; }
 .noselect { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 
-.box { margin-bottom: 1.5em; border-bottom:solid 1px #ccc; padding: 1.5em 0; }
+.box { margin-bottom: 1.5em; }
+.box:not(:last-child) { border-bottom:solid 1px #ccc; padding: 1.5em 0; }
 .box > h1, .box > h2, .box > h3, .box > h4 { margin:0; }
 .box > .row:not(.form-horizontal) { margin: -15px; min-height: 30px; }
 
@@ -20,27 +26,30 @@ td.right, div.right { text-align: right; }
 button.right, span.right { float: right; }
 button.left, span.left { float: left; }
 
-.row { margin-bottom: 1em; }
-
 .grey { color:#bbb; }
 .grey a { color:#777; }
 .grey a:hover { text-decoration: underline; color: #0d8; }
 
 #topbar, #footer { box-shadow:0 0 .8em #BBB; text-align:center; }
 #topbar, #header { margin-bottom: 1em; }
-#footer { margin-top: .8em; padding:1em; }
+#footer { margin-top: .8em; }
 
 #header h1 { font-size:3em; margin-top: .2em;}
 
 #header  { color:#058; }
 #footer { background-color: #fff; }
 
+.box .table-responsive { margin-left: -5px; margin-right: -5px; width: auto; }
+
 @media screen and (min-width: 786px) {
     #topbar li { float:left; display:inline-block; }
     #topbar li.right { float: right; }
-    body { background-color: #eee; }      
+    body { background-color: #eee; }
+
     .box, .box.title { padding: 1.5em; background-color:#fff; border-radius: 0.5em; box-shadow: 0px 0px 1em #ccc; border: none; }
-    .box > :last-child { margin-bottom: 0; } 
+    .box > :last-child { margin-bottom: 0; }
+    .box .table-responsive { margin:0; }
+    .link-box > div { border-radius: .8em; }
 }
 
 .nav li a { transition: background-color .4s ease, color .4s ease; color:#49b; font-size: 1.2em; }
@@ -64,7 +73,7 @@ button.left, span.left { float: left; }
     cursor: pointer; 
 }
 
-.link-box > div { padding: .8em 1em; margin: .5em; border-radius: .8em; transition: background-color 1s linear;}
+.link-box > div { padding: .8em 1em; margin: .5em; transition: background-color 1s linear;}
 .link-box > div.hover { background-color: #eee; transition: background-color 0s;} 
 
 .link-box h2 { color: #555; transition: color .5s ease; }

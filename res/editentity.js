@@ -2,7 +2,7 @@ requiredata.request('typesdata', function (typesdata) {
     
     var typedata = typesdata[type]; //gets type data
 
-    $(".box.title h1").text(typedata['edit']); //sets page title
+    requiredata.set('title', typedata['edit']); //sets page title
     $("#topbar-entity").addClass('active'); //selects alias in topbar
 
     //loads current values

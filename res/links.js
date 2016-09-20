@@ -15,25 +15,16 @@ requiredata.request('entityalias', function(alias) {
                 $('#links-nav [data-toggle="tooltip"]').tooltip(); //enables tooltips
                 $('#links-nav').translate(); //translates
             } 
-        }).loadItems();
-    });
+        }).loadItems();   
 
-    //fetches table
-    requiredata.request('linktypedata', function(linktypedata) {        
-        requiredata.request('linkedaliases', function(linkedaliases) {
-
+        //inits table
+        requiredata.request('linktypedata', function(linktypedata) {
+            requiredata.set('title', getAlias({ alias: alias }, { alias: alias }, linktypedata.description[type])); //sets title with linktype description
+            
             var columns = { }; //gets columns
             var linkedcol = (linktypedata.link1 == type) ? "id2" : "id1";
-            columns[linkedcol] = linktypedata.displayone;
-            for (var col in linktypedata.columns) columns[col] = linktypedata.columns[col].displayname;
-            
-            //gets aliases
-            function aliasPlaceholder(x, id) { 
-                if (x != linkedcol) return ""; //skips if not right col
-                for (var i in linkedaliases) //finds alias
-                    if (linkedaliases[i].id == id) return linkedaliases[i].alias;
-                return "Unknown"; //fallback
-            }
+            columns[linkedcol] = typesdata[link].displayone;
+            for (var col in linktypedata.columns) columns[col] = linktypedata.columns[col].displayname;   
 
             var linkstable = $("#links-table").scanzytable({
                 request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } }, 
@@ -48,19 +39,34 @@ requiredata.request('entityalias', function(alias) {
                         start: function(x, data) { return '<tr data-link-id="' + data.id +'">'; },
                         click: function() { changeUrl({ type: type, id: id, link: link, linkid: $(this).attr('data-link-id'), action: "edit" }); },
                         hoverClass : 'hover' 
-                    },
-                    content: { id1: aliasPlaceholder, id2: aliasPlaceholder } //uses aliases to fill table
+                    }
                 }            
-            }).loadItems();            
+            });
+
+            linkstable.loader.options.loading.show(); //shows loading hint
+            
+            //fetches table
+            requiredata.request('linkedaliases', function(linkedaliases) { 
+
+                //gets aliases
+                function aliasPlaceholder(x, id) { 
+                    if (x != linkedcol) return ""; //skips if not right col
+                    for (var i in linkedaliases) //finds alias
+                        if (linkedaliases[i].id == id) return linkedaliases[i].alias;
+                    return "Unknown"; //fallback
+                }
+
+                //sets alias funcs and loads items
+                linkstable.options.fetch.content.id1 = aliasPlaceholder;
+                linkstable.options.fetch.content.id2 = aliasPlaceholder;
+                linkstable.loadItems();    
+            });        
         });
     });
 });
 
 //requests aliases (for table) and gets current (to set topbar and title)
 requiredata.loadAjax('linkedaliases', { url: "./apis/entities/aliases.php", data: { type: link } });     
-
-//sets title with entity alias 
-requiredata.request('entityalias', function(alias) { $(".box.title h1").text(alias); });
 
 //sets links count in title
 requiredata.request('linksfitered', function(data) { $(".box.title h1").append(' <span class="badge badge-light">' + data.length + '</span>'); });

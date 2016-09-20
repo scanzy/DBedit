@@ -25,14 +25,14 @@ $.fn.extend({
 
         //adds html for searchbar and new item btn
         if (options.search.show || options.button.show) {
-            var html = '<div class="row table-topbar">';
+            var html = '<div class="row table-topbar" style="display:none">';
 
             if (options.search.show) //searchbar
-                html += '<div class="col-xs-8 col-md-6 col-lg-4"> \
+                html += '<div class="col-md-6 col-lg-4"> \
                     <input type="text" class="form-control input-sm items-search" style="display:none;" placeholder="' + options.search.text + '"/></div>';
 
             if (options.button.show) //new item button
-                html += '<div class="col-xs-4 col-md-6 col-lg-8 right"> \
+                html += '<div class="col-md-6 col-lg-8 right"> \
                     <button class="btn btn-sm btn-success new-item new-item-sm" type="button" style="display:none;"> \
                     <span class="glyphicon glyphicon-plus"></span> <span>' + options.button.text + '</span></button></div>';
 
@@ -45,19 +45,20 @@ $.fn.extend({
                 <span class="sort-normal glyphicon glyphicon-chevron-down" style="display:none"></span>\
                 <span class="sort-reverse glyphicon glyphicon-chevron-up" style="display:none"></span>\
                 <span class="no-sort glyphicon glyphicon-minus" style="color:transparent !important"></span></th>';
-        this.append('<div class="table-responsive"><table class="table"><thead class="noselect"><tr>' + thead + '</tr></thead><tbody></tbody></table></div>');
+        $('<div class="table-responsive"><table class="table"><thead class="noselect"><tr>' + thead + '</tr></thead><tbody></tbody></table></div>')
+        .appendTo(this).hide().fadeIn("slow"); //appends elements with animation
 
         //adds hidden texts for hints
-        this.append('<div><p class="no-items grey center" style="display:none;">' + options.empty + '</p>\
-            <p class="loading-items center grey" style="display:none;">' + options.loading + '</p> \
-            <div class="loading-items-error center" style="display:none;"><p class="grey">Error while loading data</p>\
+        $('<p class="no-items grey center">' + options.empty + '</p><p class="loading-items center grey">' + options.loading + '</p> \
+            <div class="loading-items-error center"><p class="grey">Error while loading data</p>\
                 <button class="items-load-retry btn btn-default btn-sm"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button></div> \
-            <div class="no-items-results center" style="display:none;"><p class="grey">No rows matching searched string</p>\
-                <button class="btn btn-default btn-sm items-clear-search"><span class="glyphicon glyphicon-repeat"></span> <span>Reset search</span></button></div></div>');
+            <div class="no-items-results center"><p class="grey">No rows matching searched string</p>\
+                <button class="btn btn-default btn-sm items-clear-search"><span class="glyphicon glyphicon-repeat"></span> <span>Reset search</span></button></div>')
+                .appendTo(this).hide();
                
-        if (options.button.show) //adds big new button 
-            this.append('<div class="new-item-lg center" style="display:none; margin: 4em auto;"><button class="btn btn-success btn-lg new-item">\
-                <span class="glyphicon glyphicon-plus"></span> <span>' + options.button.text + '</span></button></div>');
+        if (options.button.show) //adds hidden big new button 
+            this.append('<div class="new-item-lg center" style="display:none; margin: 3em auto;"><button class="btn btn-success btn-lg new-item">\
+                <span class="glyphicon glyphicon-plus"></span> <span>' + options.button.text + '</span></button></div>');       
 
         //shows sort state (highlights sort col, using icon for asc/desc)
         function showSortState() {
@@ -116,7 +117,9 @@ $.fn.extend({
                 t.root.find(".new-item-lg").toggle(!showNewBtnSm); 
 
                 //hides the whole topbar if nothing inside
-                t.root.find(".table-topbar").toggle(showSearch || showNewBtnSm);
+                if (showSearch || showNewBtnSm) 
+                    t.root.find(".table-topbar").fadeIn("slow");
+                else t.root.find(".table-topbar").fadeOut("slow");
 
                 //sorts data if needed
                 if (options.sort.enabled) {
@@ -171,7 +174,7 @@ $.fn.extend({
         if (options.button.show) this.find(".new-item").click(options.button.click);
         this.find(".items-clear-search").click(function (e) {
             e.preventDefault(); t.root.find(".items-search").val(''); //resets search input (shows all rows)
-            t.root.find(".no-items-results").hide(); t.root.find("tr").show(); $(".items-search").focus();
+            t.root.find(".no-items-results").fadeOut("slow"); t.root.find("tr").fadeIn("slow"); $(".items-search").focus();
         })
 
         //handler for searchbar

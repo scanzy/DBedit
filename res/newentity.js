@@ -2,7 +2,7 @@ requiredata.request('typesdata', function (typesdata) {
     
     var typedata = typesdata[type]; //gets type data
 
-    $(".box.title h1").text(typedata['new']); //sets page title 
+    requiredata.set('title', typedata['new']); //sets page title 
     $("#topbar-type").addClass('active'); //selects type in topbar    
 
     //inits form

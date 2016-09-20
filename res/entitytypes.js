@@ -1,3 +1,5 @@
+requiredata.set('title', "Dashboard"); //sets title
+
 //setups load
 var entitytypes = $("#entitytypes").scanzyload({
     request: { url: "./apis/entitytypes/info.php" },
