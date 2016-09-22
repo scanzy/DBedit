@@ -71,7 +71,7 @@ $appname = $conf['global']['appname'];
                 e.preventDefault();
                 if ($("#submit").hasClass('disabled')) return false;
 
-                $.post("../apis/auth/login.php", { username: $("#username").val(), password: $("#password").val() }, 
+                $.post("./apis/auth/login.php", { username: $("#username").val(), password: $("#password").val() }, 
                 function (data) {
 
                     //shakes on error
