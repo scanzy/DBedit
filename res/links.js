@@ -40,7 +40,7 @@ requiredata.request('entityalias', function(alias) {
                         click: function() { changeUrl({ type: type, id: id, link: link, linkid: $(this).attr('data-link-id'), action: "edit" }); },
                         hoverClass : 'hover' 
                     },
-                    contents: function(col, data) { return raw2display(data, typedata.columns[col]); }
+                    contents: function(col, data) { return raw2display(data, linktypedata.columns[col]); }
                 }            
             });
 
