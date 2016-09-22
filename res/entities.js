@@ -26,7 +26,7 @@ requiredata.request('typesdata', function (typesdata) {
                     click: function () { changeUrl({ type: type, id: $(this).attr('data-entity-id')}); },
                     hoverClass: 'hover' 
                 }, 
-                contents: function(col, data) { return raw2display(data, typedata.columns[col]); },                                  
+                contents: function(col, data) { return raw2display(data, typedata.columns[col]); }                                  
             }, 
             empty: typedata.emptysethint,
             search: { show: true, text: typedata.searchhint, minRows: typedata.searchminrows }, 

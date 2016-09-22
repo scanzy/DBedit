@@ -2,6 +2,7 @@
     "Username:" : "Nome utente:",
     "Password:" : "Password:",
     "Login" : "Accedi",
+    "Logout": "Esci",
     "Wrong username or password" : "Nome utente o password non corretti",
     "Edit" : "Modifica",
     "Delete" : "Elimina",
