@@ -52,7 +52,7 @@ button.left, span.left { float: left; }
 .navbar-back:hover { text-decoration: none; color: #49b; }
 .navbar-back span { vertical-align: middle; }
 
-.nav li a { transition: background-color .4s ease, color .4s ease; color:#49b;  }
+.nav li a { transition: background-color .4s ease, color .4s ease; color:#49b; font-size: 1.2em; }
 .nav li a.active { background-color:#eaeaea; }
 .nav li a:hover { background-color:#6bf; color:#fff; }
 
