@@ -104,7 +104,7 @@ $appname = $conf['global']['appname'];
 
         <div id="header" class="center container noselect">
             <h1 class="inline"><?php echo $appname; ?></h1>
-            <h2 class="inline">admin</h2>
+            <h2 class="inline"></h2>
         </div>
 
         <div class="container page noselect">

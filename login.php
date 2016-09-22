@@ -35,7 +35,7 @@ $appname = $conf['global']['appname'];
 
         <div id="header" class="center container noselect">
             <h1 class="inline"><?php echo $appname; ?></h1>
-            <h3 class="inline">login</h3>
+            <h3 class="inline"></h3>
         </div>
 
         <div class="container">
