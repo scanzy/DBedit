@@ -39,14 +39,14 @@ class SQLhelper
     //gets all elements in table
     public function get()
     {
-        $stmt = Shared::connect()->query("SELECT * FROM ".$this->table.";");
+        $stmt = Shared::connect()->query("SELECT * FROM \x60".$this->table."\x60;");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //gets one element in table
     public function one($id)
     {
-        $stmt = Shared::connect()->query("SELECT * FROM ".$this->table." WHERE id=$id LIMIT 1;");
+        $stmt = Shared::connect()->query("SELECT * FROM \x60".$this->table."\x60 WHERE id=$id LIMIT 1;");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -56,7 +56,7 @@ class SQLhelper
         //uses count from typedata if specified
         if (isset($this->typedata['random'])) $count = $this->typedata['random'];
 
-        $stmt = Shared::connect()->query("SELECT * FROM ".$this->table." ORDER BY RAND() LIMIT $count;");
+        $stmt = Shared::connect()->query("SELECT * FROM \x60".$this->table."\x60 ORDER BY RAND() LIMIT $count;");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -66,7 +66,7 @@ class SQLhelper
         //uses count from typedata if specified
         if (isset($this->typedata['random'])) $count = $this->typedata['random'];
 
-        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE ".$this->mainFiltCol."=:x ORDER BY RAND() LIMIT $count;");
+        $stmt = Shared::connect()->prepare("SELECT * FROM \x60".$this->table."\x60 WHERE \x60".$this->mainFiltCol."\x60=:x ORDER BY RAND() LIMIT $count;");
         $stmt->execute(array(":x" => $val));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -74,14 +74,14 @@ class SQLhelper
     //counts elements
     public function count()
     {
-        $stmt = Shared::connect()->query("SELECT COUNT(*) FROM ".$this->table.";");
+        $stmt = Shared::connect()->query("SELECT COUNT(*) FROM \x60".$this->table."\x60;");
         return $stmt->fetch()[0];
     }
 
     //counts elements with filter
     public function countFiltered($val)
     {
-        $stmt = Shared::connect()->prepare("SELECT COUNT(*) FROM ".$this->table." WHERE ".$this->mainFiltCol."=:x;");
+        $stmt = Shared::connect()->prepare("SELECT COUNT(*) FROM \x60".$this->table."\x60 WHERE \x60".$this->mainFiltCol."\x60=:x;");
         $stmt->execute(array(":x" => $val));
         return $stmt->fetch()[0];
     }
@@ -89,7 +89,7 @@ class SQLhelper
     //gets elements with one where clause 
     public function filter($val)
     {
-        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE ".$this->mainFiltCol."=:x;");
+        $stmt = Shared::connect()->prepare("SELECT * FROM \x60".$this->table."\x60 WHERE \x60".$this->mainFiltCol."\x60=:x;");
         $stmt->execute(array(":x" => $val));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -97,8 +97,8 @@ class SQLhelper
     //gets elements with not in clause
     public function filterNotIn($helper2, $val)
     {
-        $stmt = Shared::connect()->prepare("SELECT * FROM ".$this->table." WHERE id NOT IN (SELECT ".$helper2->auxFiltCol
-            ." FROM ".$helper2->table." WHERE ".$helper2->mainFiltCol."=:x);");
+        $stmt = Shared::connect()->prepare("SELECT * FROM \x60".$this->table."\x60 WHERE id NOT IN (SELECT \x60".$helper2->auxFiltCol
+            ."\x60 FROM \x60".$helper2->table."\x60 WHERE \x60".$helper2->mainFiltCol."\x60=:x);");
         $stmt->execute(array(":x" => $val));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -108,12 +108,12 @@ class SQLhelper
     {
         //prepares query
         $columns = $values = "";
-        foreach($data as $col => $val) { $columns .= $col.","; $values .= ":".$col.","; }
+        foreach($data as $col => $val) { $columns .= "\x60".$col."\x60,"; $values .= ":".$col.","; }
         $columns = rtrim($columns, ","); $values = rtrim($values, ","); //removes last commas
 
         //prepares statement
         $conn = Shared::connect();
-        $stmt = $conn->prepare("INSERT INTO ".$this->table." ($columns) VALUES ($values)");
+        $stmt = $conn->prepare("INSERT INTO \x60".$this->table."\x60 ($columns) VALUES ($values)");
 
         foreach($data as $col => $val) $stmt->bindValue(":".$col, Types::smartCast($val)); //binds values
         $stmt->execute(); //executes
@@ -126,19 +126,19 @@ class SQLhelper
     {
         //prepares query
         $set = "";
-        foreach($data as $col => $val) { $set .= $col."=:".$col.","; }
+        foreach($data as $col => $val) { $set .= "\x60".$col."\x60=:".$col.","; }
         $set = rtrim($set, ","); //removes last comma
 
         //prepares statement
-        $stmt = Shared::connect()->prepare("UPDATE ".$this->table." SET $set WHERE id=$id");
+        $stmt = Shared::connect()->prepare("UPDATE \x60".$this->table."\x60 SET $set WHERE id=$id");
 
         foreach($data as $col => $val) $stmt->bindValue(":".$col, Types::smartCast($val)); //binds values
         return $stmt->execute(); //executes
     }
 
     //deletes element(s)
-    public function del($id) { return Shared::connect()->exec("DELETE FROM ".$this->table." WHERE id=$id;"); }
-    public function delEx($where) { return Shared::connect()->exec("DELETE FROM ".$this->table." WHERE $where"); }
+    public function del($id) { return Shared::connect()->exec("DELETE FROM \x60".$this->table."\x60 WHERE id=$id;"); }
+    public function delEx($where) { return Shared::connect()->exec("DELETE FROM \x60".$this->table."\x60 WHERE $where"); }
    
     //checks if data has only columns of this table
     public function checkColumns($data)
@@ -193,12 +193,12 @@ class SQLhelper
         foreach($this->uniqueColumns() as $colname => $col)        
             if (isset($data[$colname]))
             {
-                $where = "$colname=:$colname";
+                $where = "\x60$colname\x60=:$colname";
 
                 //if updating row, it doesn't check this row
                 if ($id != NULL) $where = "id<>$id AND $where";
 
-                $stmt = Shared::connect()->prepare("SELECT COUNT(*) FROM ".$this->table." WHERE $where;");
+                $stmt = Shared::connect()->prepare("SELECT COUNT(*) FROM \x60".$this->table."\x60 WHERE $where;");
                 $stmt->execute(array(":$colname" => $data[$colname]));
                 if ($stmt->fetch()[0] > 0) return $colname;
             }
@@ -209,13 +209,13 @@ class SQLhelper
     public function uniques($id)
     {
         //prepares columns list
-        $cols = ""; foreach($this->uniqueColumns() as $colname => $col) $cols .= " $colname,";
+        $cols = ""; foreach($this->uniqueColumns() as $colname => $col) $cols .= " \x60$colname\x60,";
 
         //no query if no uniques
         if ($cols == "") return array();
 
         //executes query
-        $stmt = Shared::connect()->query("SELECT" . rtrim($cols, ",") . " FROM ".$this->table. (($id === NULL) ? "" : " WHERE id<>$id").";");
+        $stmt = Shared::connect()->query("SELECT" . rtrim($cols, ",") . " FROM \x60".$this->table."\x60". (($id === NULL) ? "" : " WHERE id<>$id").";");
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }
