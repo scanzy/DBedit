@@ -13,7 +13,7 @@ ul.dropdown-menu > li { width:100%; }
 .progress { height: auto; min-height: 20px; }
 .progress a { color: #fff; cursor: pointer; }
 
-textarea.vresize { resize: vertical; }
+textarea.vresize { resize: vertical; min-height: 37px; }
  
 h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge { vertical-align: middle }
 span.badge-light { color: #aaa; background-color: #eee; }

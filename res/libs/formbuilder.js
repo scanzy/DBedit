@@ -73,8 +73,10 @@ $.fn.extend({
                         options: { allowEmpty: true, unique: false }                                               
                     },
                     "text": { //text area
-                        html: function(name, label, foptions) { return builder.fieldWrapper(label, '<textarea class="form-control vresize" stylecols="3" name="' + name + '">'); },
+                        html: function(name, label, foptions) { return builder.fieldWrapper(label, '<textarea class="form-control vresize" rows="3" name="' + name + '"></textarea>'); },
                         bind_change: function(name, func) { $("textarea[name='" + name + "']").on('input', func); },
+                        set: function(name, value) { $("textarea[name='" + name + "']").val(value); },
+                        get: function(name) { return $("textarea[name='" + name + "']").val(); },
                         options: { allowEmpty: true, unique: false } 
                     },
                     "int": { //integer field
