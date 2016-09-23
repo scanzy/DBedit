@@ -8,7 +8,7 @@
         <columns>
             <name>
                 <displayname>Name</displayname>
-                <type>varchar</type>
+                <type>string</type>
                 <length>20</length>
                 <allowempty>false</allowempty>
                 <unique>false</unique>
@@ -16,7 +16,7 @@
             </name>
             <surname>
                 <displayname>Surname</displayname>
-                <type>varchar</type>
+                <type>string</type>
                 <length>20</length>
                 <allowempty>false</allowempty>
                 <unique>false</unique>
@@ -91,7 +91,7 @@
         <columns>
             <subject>
                 <displayname>Subject</displayname>
-                <type>varchar</type>
+                <type>string</type>
                 <length>100</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>
@@ -115,7 +115,7 @@
         <columns>
             <name>
                 <displayname>Subject</displayname>
-                <type>varchar</type>
+                <type>string</type>
                 <length>100</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>
@@ -139,7 +139,7 @@
         <columns>
             <name>
                 <displayname>Name</displayname>
-                <type>varchar</type>
+                <type>string</type>
                 <length>100</length>
                 <allowempty>false</allowempty>
                 <unique>true</unique>

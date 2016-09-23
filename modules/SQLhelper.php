@@ -150,7 +150,8 @@ class SQLhelper
         foreach($data as $col => $val)
             switch($this->columns[$col]['type'])
             {
-                case "varchar": if (!Types::is_str($val)) return $col; break;
+                case "text":
+                case "string": if (!Types::is_str($val)) return $col; break;
                 case "int": if (!Types::is_int($val)) return $col; break;
                 case "date": if (!Types::is_date($val)) return $col; break;
                 case "bool": if ($val != "0" && $val != "1") return $col; break;
@@ -169,7 +170,7 @@ class SQLhelper
             else 
             {
                 if ($data[$colname] === NULL) return $colname; //checks if is null
-                if ($col['type'] == "varchar")
+                if ($col['type'] == "string")
                     if (trim($data[$colname]) == "") return $colname; //checks if is empty string
             }
         return FALSE;

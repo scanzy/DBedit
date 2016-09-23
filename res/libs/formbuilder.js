@@ -67,10 +67,15 @@ $.fn.extend({
                     separator: { html: '<span> </span>' }, cancel: { html: '<button class="btn btn-lg btn-default">Cancel</button> ', click: options.cancel }                    
                 },
                 types: { 
-                    "varchar": { //simple text field
+                    "string": { //simple text field
                         html: function(name, label, foptions) { return builder.fieldWrapper(label, '<input class="form-control" type="text" name="' + name + '">'); }, 
                         bind_change: function(name, func) { $("input[name='" + name + "']").on('input', func); },
                         options: { allowEmpty: true, unique: false }                                               
+                    },
+                    "text": { //text area
+                        html: function(name, label, foptions) { return builder.fieldWrapper(label, '<textarea class="form-control vresize" stylecols="3" name="' + name + '">'); },
+                        bind_change: function(name, func) { $("textarea[name='" + name + "']").on('input', func); },
+                        options: { allowEmpty: true, unique: false } 
                     },
                     "int": { //integer field
                         html: function(name, label, foptions) {                             

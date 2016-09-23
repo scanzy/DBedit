@@ -2,7 +2,10 @@
 function err(urlobj, msg) { urlobj.action = "error"; changeUrl(urlobj); window.onerror = null; throw new Error(msg); }
 
 //binds generic error handler
-window.onerror = function() { changeUrl({ action: "error" }); } 
+window.onerror = function(msg, source, lineno, colno, obj) { 
+    console.log("Error in file " + source + ":" + lineno + ":" + colno + ": " + msg); console.log(obj); //logs error
+    changeUrl({ action: "error" }); 
+} 
 
 //checks entity type not found
 if (type != undefined)

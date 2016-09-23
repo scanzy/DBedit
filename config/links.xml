@@ -12,7 +12,7 @@
         <columns>
             <notes>
                 <displayname>Notes</displayname>
-                <type>varchar</type>
+                <type>text</type>
                 <length>200</length>
                 <allowempty>true</allowempty>
                 <unique>false</unique>
@@ -37,7 +37,7 @@
         <columns>
             <notes>
                 <displayname>Notes</displayname>
-                <type>varchar</type>
+                <type>string</type>
                 <length>200</length>
                 <allowempty>true</allowempty>
                 <unique>false</unique>
