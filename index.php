@@ -15,6 +15,9 @@ $action = Params::optionalString('action', NULL);
 $link = Params::optionalString('link', NULL);
 $linkid = Params::optionalString('linkid', NULL);
 
+//gets developer mode
+$devmode = Params::optionalBool('devmode', FALSE); 
+
 //selects page
 switch($action) {
     case NULL:
@@ -35,7 +38,7 @@ switch($action) {
     case "user": case "help": $page = $action; break;
 
     //default page if not found action
-    default: $page = "entitytypes"; break; 
+    case "error": default: $page = "error"; break; 
 }
 
 //gets configuration
@@ -81,7 +84,7 @@ $appname = $conf['global']['appname'];
         <nav id="topbar" class="navbar-default noselect">
             <div class="navbar-header">
                 <div class="navbar-back-container hidden">
-                    <a class="navbar-back" href="#"><span class="glyphicon glyphicon-menu-left"></span> <span id="back-text"></span></a>
+                    <a class="navbar-back" href="#"><span class="glyphicon glyphicon-menu-left"></span> <span class="back-text"></span></a>
                 </div>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topbarcontent">
                     <span class="icon-bar"></span>
@@ -181,6 +184,18 @@ $appname = $conf['global']['appname'];
 
             <div class="box title"><h1>User</h1></div>
             <div class="box"></div>
+        
+        <?php break; case "error": ?>
+
+            <div class="box title"><h1></h1></div>
+            <div class="box center">
+                <div class="grey" style="margin: 4em">
+                    <h3>An error occurred</h3>
+                    <h4 style="margin:2em">Probably something went wrong</h4>
+                </div>
+                <div class="line"></div>
+                <h5 style="padding:1em"> <a class="btn btn-lg btn-default" href="./"><span class="glyphicon glyphicon-th-large"></span> <span>Dashboard</span></a></h5>
+            </div>
 
         <?php break; } ?>
 
@@ -196,6 +211,8 @@ $appname = $conf['global']['appname'];
         <script src="res/topbar.js"></script>
 
         <?php 
+
+        if (!$devmode && $page != "error") Shared::loadJS("res/errorcheck.js"); //enables error check if not in dev mode
 
         switch($page) {
             case "editentity": case "newentity": case "editlink": case "newlink":
@@ -219,7 +236,8 @@ $appname = $conf['global']['appname'];
             case "editentity": Shared::loadJS("res/editentity.js"); break;
             case "newlink": Shared::loadJS("res/newlink.js"); break;
             case "editlink": Shared::loadJS("res/editlink.js"); break;
-            case "user": break;                                       
+            case "error": Shared::loadJS("res/error.js"); break;
+            case "user": Shared::loadJS("res/user.js"); break;                                       
         } ?>
     </body>
 </html>

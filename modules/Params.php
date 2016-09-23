@@ -39,4 +39,13 @@ class Params
         if (!isset($_REQUEST[$name])) return $default;
         return strval($_REQUEST[$name]);
     }
+
+    //gets value (default if not found)
+    public static function optionalBool($name, $default)
+    {
+        if (!isset($_REQUEST[$name])) return $default;        
+        if (in_array(trim(strtolower($_REQUEST[$name])), array('true', '1', 'on', 'yes'))) return TRUE; //checks true        
+        if (in_array(trim(strtolower($_REQUEST[$name])), array('false', '0', 'off', 'no'))) return FALSE; //checks false 
+        return $default; //fallback
+    }
 }

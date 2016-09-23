@@ -104,21 +104,21 @@ if (type == undefined) $("#topbar .navbar-brand").remove(); else {
 
     if (id == undefined && action != "edit") { //page entities
         $("#topbar .navbar-back").attr('href', './'); // goes to dashboard
-        $("#back-text").text("Dashboard").translate(); // shows "Dashboard"
+        $(".back-text").text("Dashboard").translate(); // shows "Dashboard"
     } 
     else if (link == undefined && action != "edit" || id == undefined && action == "edit") { //page entity details or new entity
         $("#topbar .navbar-back").attr('href', './' + urlParams({ type: type })); // goes to entities
-        requiredata.request('typesdata', function(data) { $("#back-text").text(data[type].displayname); }); //shows entity type name
+        requiredata.request('typesdata', function(data) { $(".back-text").text(data[type].displayname); }); //shows entity type name
     }
     else if (linkid == undefined && action != "edit" || link == undefined && action == "edit") { //page links or edit entity
          $("#topbar .navbar-back").attr('href', './' + urlParams({ type: type, id: id })); //goes to entity details
-         requiredata.request('entityalias', function(alias) { $("#back-text").text(alias); }); //shows entity alias
+         requiredata.request('entityalias', function(alias) { $(".back-text").text(alias); }); //shows entity alias
     }
     else { //page link details
         $("#topbar .navbar-back").attr('href', './' + urlParams({ type: type, id: id, link: link })); //goes to links
         requiredata.request('entityalias', function(alias) {  
             requiredata.request('linktypedata', function(data) { //shows link display name
-                $("#back-text").text(getAlias({ alias: alias }, { alias: alias }, data.description[type])); 
+                $(".back-text").text(getAlias({ alias: alias }, { alias: alias }, data.description[type])); 
             });
         });
     }
