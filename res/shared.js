@@ -4,7 +4,7 @@ function GetParams() {
     var paramsdata = window.location.search.substring(1).split('&');
     for (var i = 0; i < paramsdata.length; i++) {
         var pdata = paramsdata[i].split('=');
-        params[pdata[0]] = pdata[1];
+        params[pdata[0]] = decodeURIComponent(pdata[1]);
     }            
     return params;
 }
@@ -14,7 +14,7 @@ function GetParam(p) {
     var params = window.location.search.substring(1).split('&');
     for (var i = 0; i < params.length; i++)
         if (p == params[i].split('=')[0])
-            return params[i].split('=')[1];
+            return decodeURIComponent(params[i].split('=')[1]);
     return undefined;
 }
 
