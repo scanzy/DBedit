@@ -94,7 +94,7 @@ $appname = $conf['global']['appname'];
             </div>
             <div class="collapse navbar-collapse" id="topbarcontent">
                 <ul class="nav">
-                    <li><a id="topbar-title" href="./" class="hidden"></a></li>
+                    <li><a id="topbar-title" href="./" class="hidden">Dashboard</a></li>
                     <li><a id="topbar-type" class="hidden"></a></li>
                     <li><a id="topbar-entity" class="hidden"></a></li>
                     <li><a id="topbar-link" class="hidden"></a>

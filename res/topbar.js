@@ -42,8 +42,8 @@ requiredata.loadAjax('typesdata', { url: "./apis/entitytypes/get.php" }); //gets
 //hides all topbar left elements
 $("#topbar li:not(.right)").hide();
 
-//sets topbar elements  
-$("#topbar-title").text(document.title).removeClass("hidden"); //sets title in topbar
+//shows title
+$("#topbar-title").removeClass("hidden");
 
 //sets user name in topbar
 requiredata.request('userdata', function (data) { $("#topbar-user").text(data.name + ' ' + data.surname); });

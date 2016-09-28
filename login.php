@@ -8,7 +8,7 @@ Errors::setModeHtml();
 //gets configuration
 $conf = Config::get();
 $appname = $conf['global']['appname'];
-
+$landpage = (isset($conf['global']['landpage'])) ? $conf['global']['landpage'] : "";
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +35,6 @@ $appname = $conf['global']['appname'];
 
         <div id="header" class="center container noselect">
             <h1 class="inline"><?php echo $appname; ?></h1>
-            <h3 class="inline"></h3>
         </div>
 
         <div class="container">
@@ -57,6 +56,9 @@ $appname = $conf['global']['appname'];
             </div>
         </div>
 
+        <div id="landpage-url" class="hidden"><?php echo $landpage; ?></div>
+
+        <script src="res/libs/messages.js"></script>
         <script>
             //disables login button if empty fields
             function checkEmptyFields() {
@@ -75,12 +77,16 @@ $appname = $conf['global']['appname'];
                 function (data) {
 
                     //shakes on error
-                    if (data == null || data == "") { $("#wrongpassword").removeClass('hidden'); shake($("#login")); } 
+                    if (data == null || data == "") { $("#wrongpassword").removeClass('hidden'); shake($("#login")); }    
 
-                    //saves userdata and redirects on success
-                    else { sessionStorage.setObject('userdata', data); window.location.href = "./"; } 
+                    else { 
+                        sessionStorage.setObject('userdata', data); //saves userdata
+                    
+                        var landpage = $("#landpage-url").text(); //and redirects on success
+                        window.location.href = "./" + ((landpage == "") ? "" : ("?type=" + landpage)); 
+                    }
                 });
             });
-        </script>
+        </script>        
     </body>
 </html>

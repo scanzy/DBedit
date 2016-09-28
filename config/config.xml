@@ -8,5 +8,6 @@
     </DB>
     <global>
         <appname>Super cool DB!</appname>
+        <landpage>people</landpage>
     </global>
 </root>
