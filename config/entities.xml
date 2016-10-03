@@ -71,6 +71,8 @@
             </goodboy>
         </columns>
         <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <badgesize>3</badgesize>
+        <showcount>true</showcount>
         <orderby>
             <column>surname</column>
             <reverse>false</reverse>
@@ -99,6 +101,8 @@
             </subject>
         </columns>
         <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <badgesize>1</badgesize>
+        <showcount>false</showcount>
         <searchminrows>5</searchminrows>
         <searchhint>Search payments...</searchhint>
         <emptysethint>There are no payments at the moment</emptysethint>
@@ -123,6 +127,8 @@
             </name>
         </columns>
         <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <badgesize>2</badgesize>
+        <showcount>false</showcount>
         <searchminrows>5</searchminrows>
         <searchhint>Search certificates...</searchhint>
         <emptysethint>There are no certificates at the moment</emptysethint>
@@ -147,6 +153,8 @@
             </name>
         </columns>
         <description></description>
+        <badgesize>1</badgesize>
+        <showcount>false</showcount>
         <searchminrows>5</searchminrows>
         <searchhint>Search photos...</searchhint>
         <emptysethint>There are no photos at the moment</emptysethint>
