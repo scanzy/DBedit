@@ -26,6 +26,9 @@ requiredata.request('entityalias', function(alias) {
             columns[linkedcol] = typesdata[link].displayone;
             for (var col in linktypedata.columns) columns[col] = linktypedata.columns[col].displayname;   
 
+            //orderby object
+            var orderby = ('orderby' in linktypedata) ? ((link in linktypedata.orderby) ? linktypedata.orderby[link] : undefined) : undefined; 
+
             var linkstable = $("#links-table").scanzytable({
                 request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } }, 
                 requiredata: { name: 'linksfitered' }, columns: columns,
@@ -33,6 +36,12 @@ requiredata.request('entityalias', function(alias) {
                     show: true, text: getAlias({ alias: alias }, { alias: alias }, linktypedata.add[type]),
                     click: function() { changeUrl({ type: type, id: id, link: link, action: "edit" }); } 
                 }, 
+                sort: {  
+                    enabled: (orderby != undefined), //sort options on data load
+                    column: (orderby != undefined) ? orderby.column : undefined,
+                    reverse: (orderby != undefined) ? orderby.reverse : false,
+                    click: true //enables sort on th click
+                },    
                 search: { show: true, minRows: linktypedata.searchminrows },
                 fetch: {
                     rows: { 

@@ -18,6 +18,16 @@
                 <unique>false</unique>
             </notes>
         </columns>
+        <orderby>
+            <people>
+                <column>id1</column>
+                <reverse>false</reverse>
+            </people>
+            <payments>
+                <column>id2</column>
+                <reverse>false</reverse>
+            </payments>
+        </orderby>
         <searchminrows>5</searchminrows>
         <random>3</random>
         <add>
