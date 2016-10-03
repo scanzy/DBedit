@@ -146,7 +146,7 @@
                 <showinlist>true</showinlist>
             </name>
         </columns>
-        <description>Photos bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <description></description>
         <searchminrows>5</searchminrows>
         <searchhint>Search photos...</searchhint>
         <emptysethint>There are no photos at the moment</emptysethint>
