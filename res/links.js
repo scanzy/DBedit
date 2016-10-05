@@ -27,7 +27,7 @@ requiredata.request('entityalias', function(alias) {
             for (var col in linktypedata.columns) columns[col] = linktypedata.columns[col].displayname;   
 
             //orderby object
-            var orderby = ('orderby' in linktypedata) ? ((link in linktypedata.orderby) ? linktypedata.orderby[link] : undefined) : undefined; 
+            var orderby = ('orderby' in linktypedata) ? ((type in linktypedata.orderby) ? linktypedata.orderby[type] : undefined) : undefined; 
 
             var linkstable = $("#links-table").scanzytable({
                 request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } }, 
@@ -50,7 +50,8 @@ requiredata.request('entityalias', function(alias) {
                         hoverClass : 'hover' 
                     },
                     contents: function(col, data) { return raw2display(data, linktypedata.columns[col]); }
-                }            
+                },
+                empty: getAlias({ alias: alias }, { alias: alias }, linktypedata.emptysethint[type])          
             });
 
             linkstable.loader.options.loading.show(); //shows loading hint

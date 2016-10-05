@@ -20,11 +20,11 @@
         </columns>
         <orderby>
             <people>
-                <column>id1</column>
+                <column>id2</column>
                 <reverse>false</reverse>
             </people>
             <payments>
-                <column>id2</column>
+                <column>id1</column>
                 <reverse>false</reverse>
             </payments>
         </orderby>
@@ -34,6 +34,10 @@
             <people>Add payment of %alias%</people>
             <payments>Add person who payed %alias%</payments>
         </add>
+        <emptysethint>
+            <people>No payments of %alias%</people>
+            <payments>No people payed %alias%</payments>
+        </emptysethint>
     </payments-people>
     <certificates-people>
         <description>
@@ -59,5 +63,9 @@
             <people>Add certificate of %alias%</people>
             <certificates>Add %alias% for person</certificates>
         </add>
+        <emptysethint>
+            <people>No certificates for %alias%</people>
+            <certificates>No people has %alias%</certificates>
+        </emptysethint>
     </certificates-people>
 </root>
