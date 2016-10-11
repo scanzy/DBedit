@@ -19,14 +19,6 @@ function loadAliases() {
     });
 }
 
-//stores params
-var params = GetParams();
-var type = params['type'];
-var id = params['id'];
-var link = params['link'];
-var linkid = params['linkid'];
-var action = params['action'];
-
 // logout function, erases session data (and redirects)
 function logout() { sessionStorage.clear(); ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); }
 $("#logout").click(logout); //logout button

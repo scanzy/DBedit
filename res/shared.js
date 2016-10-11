@@ -18,6 +18,13 @@ function GetParam(p) {
     return undefined;
 }
 
+//stores params
+var params = GetParams();
+var type = params['type'];
+var id = params['id'];
+var link = params['link'];
+var linkid = params['linkid'];
+
 //writes a get search string to append to urls from params data object
 function urlParams(params)
 {

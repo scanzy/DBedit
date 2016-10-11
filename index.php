@@ -81,7 +81,7 @@ $appname = $conf['global']['appname'];
         <nav id="topbar" class="navbar-default noselect">
             <div class="navbar-header">
                 <div class="navbar-back-container hidden">
-                    <a class="navbar-back" href="#"><span class="glyphicon glyphicon-menu-left"></span> <span class="back-text"></span></a>
+                    <a class="navbar-back" href="./"><span class="glyphicon glyphicon-menu-left"></span> <span class="back-text"></span></a>
                 </div>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topbarcontent">
                     <span class="icon-bar"></span>
@@ -193,8 +193,8 @@ $appname = $conf['global']['appname'];
         <script src="res/libs/messages.js"></script>
         <script src="res/libs/modal.js"></script>
         <script src="res/shared.js"></script>
-        <script src="res/topbar.js"></script>
         <script src="res/errorcheck.js"></script>
+        <script src="res/topbar.js"></script>        
 
         <?php 
 

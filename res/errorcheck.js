@@ -30,3 +30,9 @@ window.onerror = function(msg, source, lineno, colno, obj) {
 
     err(errstr); //shows popup
 }
+
+//checks entity not found
+if (id != undefined) requiredata.request('entitydata', function (data) { if (data == false) err("Entity not found (id '" + id + "')"); });
+
+//checks link not found
+if (linkid != undefined) requiredata.request('linkdata', function (data) { if (data == false) err("Link not found (linkid '" + linkid + "')"); });
