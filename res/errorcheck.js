@@ -29,16 +29,4 @@ window.onerror = function(msg, source, lineno, colno, obj) {
     console.log(errstr); console.log(obj);     
 
     err(errstr); //shows popup
-} 
-
-//checks entity type not found
-if (type != undefined) requiredata.request('typesdata', function (data) { var t = type; if (!(t in data)) err("Entity type not found (type '" + type + "')"); });
-
-//checks entity not found
-if (id != undefined) requiredata.request('entitydata', function (data) { if (data == false) err("Entity not found (id '" + id + "')"); });
-
-//checks link type not found
-if (link != undefined) requiredata.request('typesdata', function (data) { if (!(link in data)) err("Link type not found (type '" + link + "')"); });
-
-//checks link not found
-if (linkid != undefined) requiredata.request('linkdata', function (data) { if (data == false) err("Link not found (linkid '" + linkid + "')"); });
+}
