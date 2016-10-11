@@ -6,16 +6,7 @@ class Errors
 {
     //HTML MODE
 
-    const ERROR_404_PAGE = "../errors/404.html"; //404 error page here
     const ERROR_500_PAGE = "../errors/500.html"; //500 error page here
-
-    //sends error page
-    public static function page404()
-    {     
-        self::sendHeader(404); //header
-        @readfile(__DIR__."\\".self::ERROR_404_PAGE);  //displays error page  
-        die();
-    }
 
     //sends error page
     public static function page500()
@@ -102,4 +93,4 @@ class Errors
         header($_SERVER['SERVER_PROTOCOL']." ".$code." ".$codenames[$code], TRUE, $code); 
     }   
 }
- ?>
+?>
