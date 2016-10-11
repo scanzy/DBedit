@@ -15,9 +15,6 @@ $action = Params::optionalString('action', NULL);
 $link = Params::optionalString('link', NULL);
 $linkid = Params::optionalString('linkid', NULL);
 
-//gets developer mode
-$devmode = Params::optionalBool('devmode', FALSE); 
-
 //selects page
 switch($action) {
     case NULL:
@@ -38,7 +35,7 @@ switch($action) {
     case "user": case "help": $page = $action; break;
 
     //default page if not found action
-    case "error": default: $page = "error"; break; 
+    default: $page = "entitytypes"; break; 
 }
 
 //gets configuration
@@ -184,18 +181,6 @@ $appname = $conf['global']['appname'];
 
             <div class="box title"><h1>User</h1></div>
             <div class="box"></div>
-        
-        <?php break; case "error": ?>
-
-            <div class="box title"><h1></h1></div>
-            <div class="box center">
-                <div class="grey" style="margin: 4em">
-                    <h3>An error occurred</h3>
-                    <h4 style="margin:2em">Probably something went wrong</h4>
-                </div>
-                <div class="line"></div>
-                <h5 style="padding:1em"> <a class="btn btn-lg btn-default" href="./"><span class="glyphicon glyphicon-th-large"></span> <span>Dashboard</span></a></h5>
-            </div>
 
         <?php break; } ?>
 
@@ -209,10 +194,9 @@ $appname = $conf['global']['appname'];
         <script src="res/libs/modal.js"></script>
         <script src="res/shared.js"></script>
         <script src="res/topbar.js"></script>
+        <script src="res/errorcheck.js"></script>
 
         <?php 
-
-        if (!$devmode && $page != "error") Shared::loadJS("res/errorcheck.js"); //enables error check if not in dev mode
 
         switch($page) {
             case "editentity": case "newentity": case "editlink": case "newlink":
@@ -231,12 +215,10 @@ $appname = $conf['global']['appname'];
             case "entities": Shared::loadJS("res/entities.js"); break; 
             case "entitydetails": Shared::loadJS("res/entitydetails.js"); break;
             case "links": Shared::loadJS("res/links.js"); break;
-            case "editentitytype": break;
             case "newentity": Shared::loadJS("res/newentity.js"); break;
             case "editentity": Shared::loadJS("res/editentity.js"); break;
             case "newlink": Shared::loadJS("res/newlink.js"); break;
             case "editlink": Shared::loadJS("res/editlink.js"); break;
-            case "error": Shared::loadJS("res/error.js"); break;
             case "user": Shared::loadJS("res/user.js"); break;                                       
         } ?>
     </body>

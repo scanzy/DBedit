@@ -151,6 +151,14 @@
                 <unique>true</unique>
                 <showinlist>true</showinlist>
             </name>
+            <errfield>
+                <displayname>Error</displayname>
+                <type>xx</type>
+                <length>100</length>
+                <allowempty>false</allowempty>
+                <unique>true</unique>
+                <showinlist>true</showinlist>
+            </errfield>
         </columns>
         <description></description>
         <badgesize>1</badgesize>
@@ -159,8 +167,6 @@
         <searchhint>Search photos...</searchhint>
         <emptysethint>There are no photos at the moment</emptysethint>
         <random>1</random>
-        <add>Add photo</add>
-        <new>New photo</new>
-        <edit>Edit photo</edit>
+        <add>Click here to get an error</add>
     </photos>
 </root>

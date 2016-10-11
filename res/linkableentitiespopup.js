@@ -34,6 +34,6 @@ function linkableEntitiesPopup(title, selectedid, callback) {
             //selects active row
             if (selectedid != undefined) t.find("tr[data-entity-id='" + selectedid + "'").addClass("active");        
         }, 
-        function() { if (callback != undefined) callback(selectedid); }); //sends result
+        function() { if (callback != undefined) callback(selectedid); }).translate(); //sends result
     });
 }

@@ -27,9 +27,9 @@ var link = params['link'];
 var linkid = params['linkid'];
 var action = params['action'];
 
-//logout button
-$("#logout").click(function () { sessionStorage.clear(); //erases session data
-    ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); });
+// logout function, erases session data (and redirects)
+function logout() { sessionStorage.clear(); ajax("./apis/auth/logout.php", null, function () { window.location = "./login.php" }); }
+$("#logout").click(logout); //logout button
 
 //sets requiredata options
 requiredata.options('userdata', { useSessionStorage: true });
