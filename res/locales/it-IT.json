@@ -3,24 +3,29 @@
     "Password:" : "Password:",
     "Login" : "Accedi",
     "Logout": "Esci",
+    "Login again": "Rieffettua l'accesso",
+
     "Error": "Errore",
-    "An error occurred" : "Si e' verificato un errore",
+    "An error occurred" : "Si è verificato un errore",
     "Probably something went wrong.": "Probabilmente qualcosa è andato storto.",
     "Wrong username or password" : "Nome utente o password non corretti",
-    "If the problem persists try logging in again": "Se il problema persiste provare ad effettuare nuovamente l'accesso",
-    "Close": "Chiudi",
-    "Login again": "Rieffettua l'accesso",
-    "Continue": "Continua",
+    "If the problem persists try logging in again": "Se il problema persiste provare ad effettuare nuovamente l'accesso",  
     "If you choose to continue anyway you could loose your data.": "Se si sceglie di continuare alcuni dati potrebbero essere danneggiati o eliminati.",
+    
     "Edit" : "Modifica",
     "Delete" : "Elimina",
-    "Dashboard" : "Panoramica",
     "Save" : "Salva",
-    "Saving..." : "Salvataggio...",
     "Cancel" : "Annulla",
+    "Close": "Chiudi",
+    "Continue": "Continua",
+
+    "Saving..." : "Salvataggio...",
+    "Loading data...": "Caricamento dati...",
+
+    "Dashboard" : "Panoramica",   
+
     "Are you sure you really want to delete": "Sei veramente sicuro di voler eliminare",
     "from": "da",
     "Warning!": "Attenzione!",
-    "Yes, delete": "Sì, elimina",
-    "Loading data...": "Caricamento dati..."
+    "Yes, delete": "Sì, elimina"
 }

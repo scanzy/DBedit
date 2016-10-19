@@ -31,14 +31,16 @@ $landpage = (isset($conf['global']['landpage'])) ? $conf['global']['landpage'] :
     </head>
     <body>
 
-        <div style="height: 6em;"></div>
+        <div style="height: 6em;"></div>        
 
         <div id="header" class="center container noselect">
             <h1 class="inline"><?php echo $appname; ?></h1>
         </div>
 
-        <div class="container">
-            <div class="row noselect">
+        <?php noScript(); ?>
+
+        <div class="container">            
+            <div class="row noselect hidden" id="login-container">
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
                     <form id="login" class="box" role="form">
                         <div class="form-group">
@@ -52,14 +54,18 @@ $landpage = (isset($conf['global']['landpage'])) ? $conf['global']['landpage'] :
                         <p class="center"><span id="wrongpassword" class="label label-danger hidden">Wrong username or password</span></p>
                         <button id="submit" type="submit" class="btn btn-info btn-block disabled">Login</button>
                     </form>
-                </div>
-            </div>
+                </div>                
+            </div>            
         </div>
 
         <div id="landpage-url" class="hidden"><?php echo $landpage; ?></div>
 
         <script src="res/libs/messages.js"></script>
         <script>
+
+            //shows form 
+            $(document).ready(function() { $("#login-container").removeClass('hidden'); });
+
             //disables login button if empty fields
             function checkEmptyFields() {
                 $("#submit").toggleClass('disabled', ($("#username").val().trim() == "" || $("#password").val().trim() == ""));

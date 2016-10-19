@@ -76,7 +76,7 @@ $appname = $conf['global']['appname'];
         <script src="res/libs/scanzyload.js"></script>
         <script src="res/libs/scanzytable.js"></script>        
     </head>
-    <body>
+    <body>        
 
         <nav id="topbar" class="navbar-default noselect">
             <div class="navbar-header">
@@ -104,8 +104,10 @@ $appname = $conf['global']['appname'];
 
         <div id="header" class="center container noselect">
             <h1 class="inline"><?php echo $appname; ?></h1>
-            <h2 class="inline"></h2>
+            <h2 class="inline"></h2>            
         </div>
+
+        <?php noScript(); ?>
 
         <div class="container page noselect">
 
