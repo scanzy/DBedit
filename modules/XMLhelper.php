@@ -6,6 +6,7 @@ class XMLhelper
 {
     public static $XML_FILE = ""; //__DIR__."/path/to/file.xml";
     public static $VAR_NAME = "";
+    public static $USE_SESSION_CACHE = FALSE;
 
     //loads configuration in $_SESSION[$VAR_NAME] reading from xml file
     public static function load()
@@ -22,7 +23,7 @@ class XMLhelper
     public static function get()
     {
         //loads config if needed
-        if (!isset($_SESSION[static::$VAR_NAME])) static::load();
+        if (!isset($_SESSION[static::$VAR_NAME]) || !static::$USE_SESSION_CACHE) static::load();
         return $_SESSION[static::$VAR_NAME];
     }
 
