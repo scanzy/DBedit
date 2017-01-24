@@ -25,7 +25,7 @@ $("#logout").click(logout); //logout button
 
 //sets requiredata options
 requiredata.options('userdata', { useSessionStorage: true });
-requiredata.options('typesdata', { useSessionStorage: true });
+//requiredata.options('typesdata', { useSessionStorage: true });
 
 //and loads data if needed
 requiredata.loadAjax('userdata', { url: "./apis/auth/info.php" }); //gets data about users

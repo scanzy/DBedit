@@ -32,7 +32,7 @@ window.onerror = function(msg, source, lineno, colno, obj) {
 }
 
 //checks entity not found
-if (id != undefined) requiredata.request('entitydata', function (data) { if (data == false) err("Entity not found (id '" + id + "')"); });
+if (id != undefined) requiredata.request('entitydata', function (data) { if (data == false) throw ("Entity not found (id '" + id + "')"); });
 
 //checks link not found
-if (linkid != undefined) requiredata.request('linkdata', function (data) { if (data == false) err("Link not found (linkid '" + linkid + "')"); });
+if (linkid != undefined) requiredata.request('linkdata', function (data) { if (data == false) throw ("Link not found (linkid '" + linkid + "')"); });
