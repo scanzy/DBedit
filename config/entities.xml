@@ -39,6 +39,7 @@
             </gender>
             <cardnumber>
                 <displayname>Card number</displayname>
+                <shortname>Card no.</shortname>
                 <type>int</type>
                 <length>20</length>
                 <allowempty>false</allowempty>

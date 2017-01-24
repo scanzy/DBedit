@@ -24,7 +24,8 @@ requiredata.request('entityalias', function(alias) {
             var columns = { }; //gets columns
             var linkedcol = (linktypedata.link1 == type) ? "id2" : "id1";
             columns[linkedcol] = typesdata[link].displayone;
-            for (var col in linktypedata.columns) columns[col] = linktypedata.columns[col].displayname;   
+            for (var col in linktypedata.columns) 
+                columns[col] = ('shortname' in linktypedata.columns[col]) ? linktypedata.columns[col].shortname : linktypedata.columns[col].displayname;   
 
             //orderby object
             var orderby = ('orderby' in linktypedata) ? ((type in linktypedata.orderby) ? linktypedata.orderby[type] : undefined) : undefined; 

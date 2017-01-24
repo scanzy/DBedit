@@ -6,7 +6,7 @@ requiredata.request('typesdata', function (typesdata) {
 
     var columns = []; //gets columns (only columns to show)
     for (var col in typedata.columns) if (typedata.columns[col].showinlist) 
-        columns[col] = typedata.columns[col].displayname;
+        columns[col] = ('shortname' in typedata.columns[col]) ? typedata.columns[col].shortname : typedata.columns[col].displayname;
 
     //requires userlevel to show/hide new entity button
     requiredata.request('userdata', function(userdata) {
