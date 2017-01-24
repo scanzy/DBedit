@@ -5,45 +5,42 @@ body:after { content: ''; display: block; height: 3.5em; }
 
 body { font-family: Verdana; }
 
-.box { margin-bottom: 1.5em; }
-.box:not(:last-child) { border-bottom:solid 1px #ccc; padding: 1.5em 0; }
-.box > h1, .box > h2, .box > h3, .box > h4 { margin:0; }
+.box { padding: 1.5em 0; margin:0; }
+.box > :first-child { margin-top:0; }
+.box > :last-child { margin-bottom:0; }
 .box > .row:not(.form-horizontal) { margin:0 -15px; min-height: 30px; }
 
-.line { margin:1em 0; border-top:solid 1px #ddd; }
+.line { margin: 1em 0; } 
+#footer { margin-top: .8em; }
+#topbar, #header { margin-bottom: 1em; }
 
-.page > .box:first-child { border-top:solid 1px #ccc;}
-.title { color: #4ad; }
-.txt-grey { color: #aaa; }
+#header h1 { font-size:3em; margin-top: .2em;}
 
-.center, .title, .center-p p { text-align:center; }
+.line, .box { border-top: solid 1px #ccc; }
+#topbar, #footer { box-shadow: 0 0 .8em #BBB; }
+
+#header { color:#058; }
+.title, .subtitle { color: #4ad; }
+#footer, .box { background-color: #fff; }
+
+.grey { color:#aaa; }
+.grey a { color:#777; }
+.grey a:hover { text-decoration: underline; color: #0d8; }
+
+.center, .title, .center-p p, #topbar, #footer { text-align:center; }
 .inline { vertical-align:middle; display:inline-block; }
 
 td.right, div.right { text-align: right; }
 button.right, span.right { float: right; }
 button.left, span.left { float: left; }
 
-.grey { color:#bbb; }
-.grey a { color:#777; }
-.grey a:hover { text-decoration: underline; color: #0d8; }
-
-#topbar, #footer { box-shadow:0 0 .8em #BBB; text-align:center; }
-#topbar, #header { margin-bottom: 1em; }
-#footer { margin-top: .8em; }
-
-#header h1 { font-size:3em; margin-top: .2em;}
-
-#header  { color:#058; }
-#footer { background-color: #fff; }
-
 @media screen and (min-width: 786px) {
-    #topbar .navbar-back { display:none; }
-    #topbar li { float:left; display:inline-block; }
+    #topbar .navbar-back { display: none; }
+    #topbar li { float: left; display: inline-block; }
     #topbar li.right { float: right; }
     body { background-color: #eee; }
 
-    .box, .box.title { padding: 1.5em; background-color:#fff; border-radius: 0.5em; box-shadow: 0px 0px 1em #ccc; border: none; }
-    .box > :last-child { margin-bottom: 0; }
+    .box { margin-bottom: 1.5em; padding: 1.5em; border-radius: 0.5em; box-shadow: 0px 0px 1em #ccc; border: none; }
     .box .table-responsive { margin:0; }
     .link-box > div { border-radius: .8em; }
 }

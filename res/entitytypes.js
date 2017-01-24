@@ -18,7 +18,7 @@ var entitytypes = $("#entitytypes").scanzyload({
         
         //description
         if (data.description != undefined && data.description != "")
-            html += '<div class="line"></div><p class="txt-grey">' + data.description + '</p>';
+            html += '<div class="line"></div><p class="grey">' + data.description + '</p>';
 
         //random entities
         for (var i in data.somerandom) 
