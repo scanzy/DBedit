@@ -2,8 +2,8 @@
 <root>
     <DB>
         <host>localhost</host>
-        <name>my_dbedit</name>
-        <user>dbedit</user>
+        <name>dbedit</name>
+        <user>user</user>
         <pwd></pwd>
     </DB>
     <global>

@@ -82,7 +82,7 @@ $.fn.extend({
         function sortData(data, sortcol, reverse) { 
             if (sortcol in options.sort.func.columns) //manipulates data
                 data.sort(function(a, b) { return options.sort.func.columns[sortcol](a[sortcol], b[sortcol]); });
-            else data.sort(function(a, b) { return a[sortcol].localeCompare(b[sortcol]) * (reverse ? -1: 1); });
+            else data.sort(function(a, b) { return a[sortcol].split('_').pop().localeCompare(b[sortcol].split('_').pop()) * (reverse ? -1: 1); });
 
             //saves this sorting mode
             t.options.sort.column = sortcol;

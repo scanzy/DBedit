@@ -54,6 +54,30 @@
                 <unique>false</unique>
                 <showinlist>true</showinlist>
             </birth>
+            <role>
+                <displayname>Role</displayname>
+                <type>select</type>
+                <options>
+                    <manager_1>
+                        <text>Manager</text>
+                    </manager_1>
+                    <submanager_2>
+                        <text>Submanager</text>
+                    </submanager_2>
+                    <employee_3>
+                        <text>Employee</text>
+                    </employee_3>
+                    <customer_4>
+                        <text>Customer</text>
+                    </customer_4>
+                    <homeless_5>
+                        <text>Homeless</text>
+                    </homeless_5>
+                </options>
+                <allowempty>false</allowempty>
+                <unique>false</unique>
+                <showinlist>true</showinlist>
+            </role>
             <goodboy>
                 <displayname>Is good boy</displayname>
                 <type>bool</type>
