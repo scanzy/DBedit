@@ -8,4 +8,4 @@ Errors::setModeAjax();
 Auth::requireLevel(Auth::VIEWER);
 
 //logs message
-error_log(" user: '".$_SESSION['username']."' ".Params::requiredString("err"));
+Logs::Error(Params::requiredString("err"), FALSE);

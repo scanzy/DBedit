@@ -4,8 +4,10 @@
 
 class Config extends XMLhelper
 {
-    public static $XML_FILE = __DIR__."/../config/config.xml";
     public static $VAR_NAME = "DBedit-config";
+
+    //called on load
+    public static function init() { self::$XML_FILE = __DIR__."/../config/config.xml"; }
 
     //ini data prototype
     public static $proto = array('DB' => array('host', 'name', 'user', 'pwd'), array('global' => array('appname')));

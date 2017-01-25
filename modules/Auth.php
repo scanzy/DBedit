@@ -57,5 +57,5 @@ class Auth
     }
 
     //gets data about current user
-    public static function username() { return $_SESSION['username']; }
+    public static function username() { return isset($_SESSION['username']) ? $_SESSION['username'] : ""; }
 }

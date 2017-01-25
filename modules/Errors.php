@@ -28,37 +28,25 @@ class Errors
 
     //error handler
     public static function errorHandlerHtml($code, $msg, $file, $line)
-    {
-        error_log("ERROR $code in file '$file' at line $line: $msg"); //logs error
-        self::page500(); //sends page
-    }
+    { self::HandleError("ERROR $code in file '$file' at line $line: $msg"); }
  
     //exception handler
     public static function exceptionHandlerHtml($ex)
-    {
-        error_log("EXCEPTION ".$ex->GetCode()." in file '".$ex->GetFile()."' at line ".$ex->GetLine().": ".$ex->GetMessage()); //logs exception
-        self::page500(); //sends page
-    } 
+    { self::HandleError("EXCEPTION ".$ex->GetCode()." in file '".$ex->GetFile()."' at line ".$ex->GetLine().": ".$ex->GetMessage()); } 
 
     //---------------------------------------------------------------------------------------------
     //AJAX MODE
     
     //error handler
     public static function errorHandlerAjax($code, $msg, $file, $line)
-    { 
-        error_log("ERROR $code in file '$file' at line $line: $msg");
-        self::send(500, $msg);
-    }
+    { self::HandleError("ERROR $code in file '$file' at line $line: $msg", $msg); }
  
     //exception handler
     public static function exceptionHandlerAjax($ex)
-    { 
-        error_log("EXCEPTION ".$ex->GetCode()." in file '".$ex->GetFile()."' at line ".$ex->GetLine().": ".$ex->GetMessage());
-        self::send(500, $ex->GetMessage());
-    } 
+    { self::HandleError("EXCEPTION ".$ex->GetCode()." in file '".$ex->GetFile()."' at line ".$ex->GetLine().": ".$ex->GetMessage(), $ex->GetMessage()); } 
 
     //ajax mode
-    public static function send($code, $msg = "", $showmsg = FALSE)
+    public static function send($code, $msg = "")
     { 
         self::sendHeader($code);
         if ($msg != "") echo $msg; //shows message if any
@@ -92,5 +80,13 @@ class Errors
         //sends header with error code
         header($_SERVER['SERVER_PROTOCOL']." ".$code." ".$codenames[$code], TRUE, $code); 
     }   
+
+    //shared error handler
+    static function HandleError($log, $display = "")
+    {
+        error_log($log);
+        Logs::Error($log);
+        self::send(500, $msg);
+    }
 }
 ?>

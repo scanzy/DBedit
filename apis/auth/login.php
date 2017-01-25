@@ -9,7 +9,9 @@ Errors::setModeAjax();
 //check parameters
 $user = Params::requiredString('username');
 $pwd = Params::requiredString('password');
-        
-if (Auth::login($user, $pwd) == FALSE) exit(); //login failed
+ 
+$ok = Auth::login($user, $pwd); //tries login
+Logs::Login($user, $ok); //logs access
 
+if ($ok == FALSE) exit(); //login failed
 Shared::sendJSON(Users::info($user)); //sends user data
