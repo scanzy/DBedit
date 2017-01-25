@@ -135,10 +135,10 @@ $appname = $conf['global']['appname'];
             <div class="box title"><h1></h1></div>
 
             <div class="row">
-                <div class="col-lg-4 col-md-8">
+                <div class="col-lg-4">
                     <div class="box" id="details-box"></div>
                 </div>
-                <div class="col-lg-8 col-md-4">
+                <div class="col-lg-8">
                     <div class="box noselect">
                         <div id="linktypes-loading" class="center"><p class="grey">Loading links...</p></div>
                         <div id="linktypes-load-error" class="center" style="display:none">
@@ -147,8 +147,8 @@ $appname = $conf['global']['appname'];
                                 <span class="glyphicon glyphicon-repeat"></span> <span>Retry</span>
                             </button>                 
                         </div>
-                        <div id="linktypes" class="row center"></div>
                         <div id="linktypes-empty" class="center"><p class="grey">No links for this type</p></div>
+                        <div id="linktypes"></div>
                     </div>
                 </div>
             </div>
@@ -209,6 +209,7 @@ $appname = $conf['global']['appname'];
         }
 
         switch($page) {
+            case "entitydetails" : case "links": Shared::loadJS("res/linkstable.js"); break;
             case "newlink": case "editlink": Shared::loadJS("res/linkableentitiespopup.js"); break;
         }
 

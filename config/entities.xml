@@ -109,6 +109,7 @@
         <add>Add person</add>
         <new>New person</new>
         <edit>Edit person</edit>
+        <hidelinkboxes>true</hidelinkboxes>
     </people>
     <payments>
         <displayname>Payments</displayname>

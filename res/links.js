@@ -19,66 +19,11 @@ requiredata.request('entityalias', function(alias) {
 
         //inits table
         requiredata.request('linktypedata', function(linktypedata) {
-            requiredata.set('title', getAlias({ alias: alias }, { alias: alias }, linktypedata.description[type])); //sets title with linktype description
-            
-            var columns = { }; //gets columns
-            var linkedcol = (linktypedata.link1 == type) ? "id2" : "id1";
-            columns[linkedcol] = typesdata[link].displayone;
-            for (var col in linktypedata.columns) 
-                columns[col] = ('shortname' in linktypedata.columns[col]) ? linktypedata.columns[col].shortname : linktypedata.columns[col].displayname;   
-
-            //orderby object
-            var orderby = ('orderby' in linktypedata) ? ((type in linktypedata.orderby) ? linktypedata.orderby[type] : undefined) : undefined; 
-
-            var linkstable = $("#links-table").scanzytable({
-                request: { url: "./apis/links/filter.php", data: { type: type, id: id, link: link } }, 
-                requiredata: { name: 'linksfitered' }, columns: columns,
-                button: { 
-                    show: true, text: getAlias({ alias: alias }, { alias: alias }, linktypedata.add[type]),
-                    click: function() { changeUrl({ type: type, id: id, link: link, action: "edit" }); } 
-                }, 
-                sort: {  
-                    enabled: (orderby != undefined), //sort options on data load
-                    column: (orderby != undefined) ? orderby.column : undefined,
-                    reverse: (orderby != undefined) ? orderby.reverse : false,
-                    click: true //enables sort on th click
-                },    
-                search: { show: true, minRows: linktypedata.searchminrows },
-                fetch: {
-                    rows: { 
-                        start: function(x, data) { return '<tr data-link-id="' + data.id +'">'; },
-                        click: function() { changeUrl({ type: type, id: id, link: link, linkid: $(this).attr('data-link-id'), action: "edit" }); },
-                        hoverClass : 'hover' 
-                    },
-                    contents: function(col, data) { return raw2display(data, linktypedata.columns[col]); }
-                },
-                empty: getAlias({ alias: alias }, { alias: alias }, linktypedata.emptysethint[type])          
-            });
-
-            linkstable.loader.options.loading.show(); //shows loading hint
-            
-            //fetches table
-            requiredata.request('linkedaliases', function(linkedaliases) { 
-
-                //gets aliases
-                function aliasPlaceholder(x, id) { 
-                    if (x != linkedcol) return ""; //skips if not right col
-                    for (var i in linkedaliases) //finds alias
-                        if (linkedaliases[i].id == id) return linkedaliases[i].alias;
-                    return "Unknown"; //fallback
-                }
-
-                //sets alias funcs and loads items
-                linkstable.options.fetch.content.id1 = aliasPlaceholder;
-                linkstable.options.fetch.content.id2 = aliasPlaceholder;
-                linkstable.loadItems();    
-            });        
-        });
+            requiredata.set('title', getAlias({ alias: alias }, { alias: alias }, linktypedata.description[type])); //sets title with linktype description            
+            $("#links-table").loadLinksTable(link, linktypedata); //loads table
+        });        
     });
-});
-
-//requests aliases (for table) and gets current (to set topbar and title)
-requiredata.loadAjax('linkedaliases', { url: "./apis/entities/aliases.php", data: { type: link } });     
+}); 
 
 //sets links count in title
-requiredata.request('linksfitered', function(data) { $(".box.title h1").append(' <span class="badge badge-light">' + data.length + '</span>'); });
+requiredata.request('linksfitered-' + link, function(data) { $(".box.title h1").append(' <span class="badge badge-light">' + data.length + '</span>'); });

@@ -91,32 +91,41 @@ else if (id == undefined)   $("#topbar-type").addClass('active');   //selects en
 else if (link == undefined) $("#topbar-entity").addClass('active'); //selects entity alias in topbar
 else                        $("#topbar-link").addClass('active');   //selects link type in topbar  
 
-//back button setup (for mobile)
-if (type == undefined) $("#topbar .navbar-brand").remove(); else {
+//back button setup (for mobile devices)
+if (type == undefined) $("#topbar .navbar-brand").remove(); else 
+    requiredata.request('backpage', function(backparams) {
+        $("#topbar .navbar-back").attr('href', './' + urlParams(backparams)); //sets page
+        requiredata.request('backtext', function(backtext) { $(".back-text").text(backtext).translate(); //sets text (translated)
+            $("#topbar .navbar-back-container").removeClass('hidden').hide().fadeIn("slow"); //shows back button with fade
+        });
+    });
 
-    if (id == undefined && action != "edit") { //page entities
-        $("#topbar .navbar-back").attr('href', './'); // goes to dashboard
-        $(".back-text").text("Dashboard").translate(); // shows "Dashboard"
-    } 
-    else if (link == undefined && action != "edit" || id == undefined && action == "edit") { //page entity details or new entity
-        $("#topbar .navbar-back").attr('href', './' + urlParams({ type: type })); // goes to entities
-        requiredata.request('typesdata', function(data) { $(".back-text").text(data[type].displayname); }); //shows entity type name
-    }
-    else if (linkid == undefined && action != "edit" || link == undefined && action == "edit") { //page links or edit entity
-         $("#topbar .navbar-back").attr('href', './' + urlParams({ type: type, id: id })); //goes to entity details
-         requiredata.request('entityalias', function(alias) { $(".back-text").text(alias); }); //shows entity alias
-    }
-    else { //page link details
-        $("#topbar .navbar-back").attr('href', './' + urlParams({ type: type, id: id, link: link })); //goes to links
-        requiredata.request('entityalias', function(alias) {  
+//back page setup and back button name
+if (id == undefined && action != "edit") { //page entities
+    requiredata.set('backpage', {}); // goes to dashboard
+    requiredata.set('backtext', "Dashboard"); // shows "Dashboard"
+} 
+else if (link == undefined && action != "edit" || id == undefined && action == "edit") { //page entity details or new entity
+    requiredata.set('backpage', { type: type }); // goes to entities
+    requiredata.request('typesdata', function(data) { requiredata.set('backtext', data[type].displayname); }); //shows entity type name
+}
+else if (linkid == undefined && action != "edit" || link == undefined && action == "edit") { //page links or edit entity
+    requiredata.set('backpage', { type: type, id: id }); //goes to entity details
+    requiredata.request('entityalias', function(alias) { requiredata.set('backtext', alias); }); //shows entity alias
+}
+else { //page edit link   
+    requiredata.request('typesdata', function(data) {            
+
+        var hidelinkboxes = (('hidelinkboxes' in data[type]) ? data[type].hidelinkboxes : false); //back page  
+        requiredata.set('backpage', hidelinkboxes ? { type: type, id: id } : { type: type, id: id, link: link }); //goes entity details or links 
+                  
+        requiredata.request('entityalias', function(alias) { //back text
+            if (hidelinkboxes) requiredata.set('backtext', alias); else //shows entity alias
             requiredata.request('linktypedata', function(data) { //shows link display name
-                $(".back-text").text(getAlias({ alias: alias }, { alias: alias }, data.description[type])); 
+                requiredata.set('backtext', getAlias({ alias: alias }, { alias: alias }, data.description[type])); 
             });
         });
-    }
-
-    //shows back button with fade
-    $("#topbar .navbar-back-container").removeClass('hidden').hide().fadeIn("slow"); 
+    });
 }
 
 //shows tobar links with animation

@@ -38,26 +38,54 @@ requiredata.request('typesdata', function (typesdata) {
             }).hide().fadeIn("slow"); 
         });    
 
-        //links info
-        var linksloader = $("#linktypes").scanzyload({
-            request: { url: "./apis/linktypes/info.php", data: { type: type, id: id } },
-            fetch: function (name, data) {
+        //switches linkboxes/tables modes
+        if (('hidelinkboxes' in typedata) ? typedata.hidelinkboxes : false)
+        {
+            //tables
+            var linksloader = $("#linktypes").unwrap().scanzyload({
+                requiredata: { name: 'linktypesdata' },
+                request: { url: "./apis/linktypes/get.php", data: { type: type } },
+                fetch: function (name, data) {
 
-                //basic container with title and description
-                var html = '<div class="link-box col-lg-6 col-md-12 col-sm-6 col-xs-12 center" href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
-                    <div><h2>' + data.displayname + ' <span class="badge badge-light">' + data.itemscount + '</span></h2>\
-                    <div class="line"></div><p class="txt-grey">' + getAlias({ alias: alias }, { alias: alias }, data.description[type]) + '</p>';
-                    
-                //random entities
-                for (var i in data.somerandom) 
-                    html += '<button class="btn btn-xs btn-info alias" href="./' + 
-                        urlParams({ type: type, id : id, link: data.link, linkid: data.somerandom[i].id }) + '" \
-                        data-entity-type="' + data.link + '" data-entity-id="' + data.somerandom[i][data.linkedidcol] + '"></button> ';
+                    //creates table with title
+                    var html = '<div class="box"><h3 class="subtitle">' + getAlias({ alias: alias }, { alias: alias }, data.description[type]) + '</h3>';
+                    html += '<div class="links-table" data-linktype="' + name + '"></div>'; 
+                    return html + '</div>';
+                },
+                error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
+                done: function () {                     
+                    requiredata.request('linktypesdata', function(linktypes) { //gets link types info
+                        $(".links-table").each(function() { 
+                            var linktypedata = linktypes[$(this).attr('data-linktype')]; //gets data about this linktype
+                            $(this).loadLinksTable((linktypedata.link1 == type) ? linktypedata.link2 : linktypedata.link1 , linktypedata); //load table
+                        });
+                    });
+                } 
+            }).loadItems();
+        }
+        else
+        {     
+            //links boxes
+            var linksloader = $("#linktypes").addClass('center row').scanzyload({
+                request: { url: "./apis/linktypes/info.php", data: { type: type, id: id } },
+                fetch: function (name, data) {
 
-                return html + '</div></div>';
-            },
-            error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
-            always: function () { $("#linktypes").translate(); setLinkBoxHandlers(); loadAliases(); } //translates
-        }).loadItems();
+                    //basic container with title and description
+                    var html = '<div class="link-box col-lg-6 col-md-12 col-sm-6 col-xs-12 center" href="./' + urlParams({ type: type, id: id, link: data.link }) + '">\
+                        <div><h2>' + data.displayname + ' <span class="badge badge-light">' + data.itemscount + '</span></h2>\
+                        <div class="line"></div><p class="grey">' + getAlias({ alias: alias }, { alias: alias }, data.description[type]) + '</p>';
+                        
+                    //random entities
+                    for (var i in data.somerandom) 
+                        html += '<button class="btn btn-xs btn-info alias" href="./' + 
+                            urlParams({ type: type, id : id, link: data.link, linkid: data.somerandom[i].id }) + '" \
+                            data-entity-type="' + data.link + '" data-entity-id="' + data.somerandom[i][data.linkedidcol] + '"></button> ';
+
+                    return html + '</div></div>';
+                },
+                error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
+                always: function () { $("#linktypes").translate(); setLinkBoxHandlers(); loadAliases(); } //translates
+            }).loadItems();
+        }
     });
 });

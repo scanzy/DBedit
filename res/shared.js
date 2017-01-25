@@ -35,7 +35,10 @@ function urlParams(params)
 }
 
 //redirects changing get params
-function changeUrl(params){ window.location.href = "./" + urlParams(params); }
+function changeUrl(backparams){ window.location.href = "./" + urlParams(backparams); }
+
+//goes back
+function goBack() { requiredata.request('backpage', function(params) { changeUrl(params); }); }
 
 //shows error popup (using messages.js)
 function errorPopup(xhr, text, error) { showError("<strong>" + xhr.status + " " + error + ":</strong> " + xhr.responseText); }
