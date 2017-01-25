@@ -9,10 +9,10 @@ Errors::setModeHtml();
 if (!Auth::isLogged()) Shared::redirect("./login.php");
 
 //gets data from page url
-$type = Params::optionalString('type', NULL);
-$id = Params::optionalInt('id', NULL); 
+$type   = Params::optionalString('type', NULL);
+$id     = Params::optionalInt('id', NULL); 
 $action = Params::optionalString('action', NULL); 
-$link = Params::optionalString('link', NULL);
+$link   = Params::optionalString('link', NULL);
 $linkid = Params::optionalString('linkid', NULL);
 
 //selects page
@@ -93,10 +93,10 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
             </div>
             <div class="collapse navbar-collapse" id="topbarcontent">
                 <ul class="nav">
-                    <li><a id="topbar-title" href="./" class="hidden">Dashboard</a></li>
-                    <li><a id="topbar-type" class="hidden"></a></li>
-                    <li><a id="topbar-entity" class="hidden"></a></li>
-                    <li><a id="topbar-link" class="hidden"></a>
+                    <li><a id="topbar-title"    class="hidden" href="./">Dashboard</a></li>
+                    <li><a id="topbar-type"     class="hidden"></a></li>
+                    <li><a id="topbar-entity"   class="hidden"></a></li>
+                    <li><a id="topbar-link"     class="hidden"></a>
                     </li><li class="right"><a href="#" id="logout">Logout</a>
                     </li><li class="right"><a id="topbar-user" href="./?action=user"></a>
                     </li>
@@ -112,11 +112,11 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
         <?php noScript(); ?>
 
         <div class="container page noselect">
+            <div class="box title"><h1></h1></div>
 
         <?php switch($page) { case "entitytypes": ?>
         
-            <div class="box title"><h1></h1></div>
-            <div class="box">
+           <div class="box">
                 <div id="entitytypes" class="row center"></div>
                 <div id="entities-loading" class="center"><p class="grey">Loading...</p></div>
                 <div id="entities-load-error" style="display:none" class="center">
@@ -125,16 +125,9 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
                         <span class="glyphicon glyphicon-repeat"></span> <span>Retry</span>
                     </button>
                 </div>
-            </div>
-
-        <?php break; case "entities": ?>
-
-            <div class="box title"><h1></h1></div>
-            <div class="box" id="entities-table"></div>
+            </div>        
 
         <?php break; case "entitydetails": ?>
-
-            <div class="box title"><h1></h1></div>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -155,33 +148,16 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
                 </div>
             </div>
 
-        <?php break; case "links": ?>
-
-            <div class="box title"><h1>Links</h1></div>
-            <div class="box"><div id="links-table"></div></div>
-
-        <?php break; case "editentity": case "newentity": ?>
-
-            <div class="box title"><h1></h1></div>
-            <div class="box" id="entity-details"></div>
-
-        <?php break; case "editlink": case "newlink": ?>
-
-            <div class="box title"><h1></h1></div>
-            <div class="box" id="link-details"></div>            
-
-        <?php break; case "user": ?>
-
-            <div class="box title"><h1>User</h1></div>
-            <div class="box"></div>
-
+        <?php break; case "entities": ?>                        <div class="box" id="entities-table"></div>
+        <?php break; case "links": ?>                           <div class="box" id="links-table"></div>
+        <?php break; case "editentity": case "newentity": ?>    <div class="box" id="entity-details"></div>
+        <?php break; case "editlink": case "newlink": ?>        <div class="box" id="link-details"></div>  
+        <?php break; case "user": ?>                            <div class="box"></div>
         <?php break; } ?>
 
         </div>
 
-        <div id="footer">
-            <span>Powered by <b>ScanzySoftware</b></span>
-        </div>  
+        <div id="footer"><span>Powered by <b>ScanzySoftware</b></span></div>  
 
         <script src="res/libs/messages.js"></script>
         <script src="res/libs/modal.js"></script>
@@ -192,29 +168,29 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
         <?php 
 
         switch($page) {
+            case "links": Shared::loadJS("res/libs/navload.js"); break;
             case "editentity": case "newentity": case "editlink": case "newlink":
                 Shared::loadJS("res/libs/scanzyform.js"); 
                 Shared::loadJS("res/libs/formbuilder.js"); 
                 Shared::loadJS("res/libs/fieldconverter.js");
-                break;
-            case "links": Shared::loadJS("res/libs/navload.js"); break;
+                break;            
         }
 
         switch($page) {
-            case "entitydetails" : case "links": Shared::loadJS("res/linkstable.js"); break;
-            case "newlink": case "editlink": Shared::loadJS("res/linkableentitiespopup.js"); break;
+            case "entitydetails" : case "links":    Shared::loadJS("res/linkstable.js"); break;
+            case "newlink": case "editlink":        Shared::loadJS("res/linkableentitiespopup.js"); break;
         }
 
         switch($page) { 
-            case "entitytypes": Shared::loadJS("res/entitytypes.js"); break; 
-            case "entities": Shared::loadJS("res/entities.js"); break; 
-            case "entitydetails": Shared::loadJS("res/entitydetails.js"); break;
-            case "links": Shared::loadJS("res/links.js"); break;
-            case "newentity": Shared::loadJS("res/newentity.js"); break;
-            case "editentity": Shared::loadJS("res/editentity.js"); break;
-            case "newlink": Shared::loadJS("res/newlink.js"); break;
-            case "editlink": Shared::loadJS("res/editlink.js"); break;
-            case "user": Shared::loadJS("res/user.js"); break;                                       
+            case "entitytypes":     Shared::loadJS("res/entitytypes.js"); break; 
+            case "entities":        Shared::loadJS("res/entities.js"); break; 
+            case "entitydetails":   Shared::loadJS("res/entitydetails.js"); break;
+            case "links":           Shared::loadJS("res/links.js"); break;
+            case "newentity":       Shared::loadJS("res/newentity.js"); break;
+            case "editentity":      Shared::loadJS("res/editentity.js"); break;
+            case "newlink":         Shared::loadJS("res/newlink.js"); break;
+            case "editlink":        Shared::loadJS("res/editlink.js"); break;
+            case "user":            Shared::loadJS("res/user.js"); break;                                       
         } ?>
     </body>
 </html>
