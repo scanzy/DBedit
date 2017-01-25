@@ -9,5 +9,6 @@
     <global>
         <appname>Super cool DB!</appname>
         <landpage>people</landpage>
+        <lang>it-IT</lang>
     </global>
 </root>

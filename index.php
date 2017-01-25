@@ -41,7 +41,7 @@ switch($action) {
 //gets configuration
 $conf = Config::get();
 $appname = $conf['global']['appname'];
-
+$lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +69,8 @@ $appname = $conf['global']['appname'];
 
         <link rel="stylesheet" type="text/css" href="res/bootstrap-ex.css" />
         <link rel="stylesheet" type="text/css" href="res/style.css" />
+
+        <?php if ($lang != NULL) echo("<script>var lang = '$lang';</script>"); ?>
 
         <script src="res/libs/shake.js"></script>
         <script src="res/libs/requiredata.js"></script>

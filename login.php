@@ -8,6 +8,7 @@ Errors::setModeHtml();
 //gets configuration
 $conf = Config::get();
 $appname = $conf['global']['appname'];
+$lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
 $landpage = (isset($conf['global']['landpage'])) ? $conf['global']['landpage'] : "";
 ?>
 
@@ -24,6 +25,8 @@ $landpage = (isset($conf['global']['landpage'])) ? $conf['global']['landpage'] :
 
         <link rel="stylesheet" type="text/css" href="res/bootstrap-ex.css" />
         <link rel="stylesheet" type="text/css" href="res/style.css" />
+
+        <?php if ($lang != NULL) echo("<script>var lang = '$lang';</script>"); ?>
 
         <script src="res/libs/requiredata.js"></script>
         <script src="res/libs/translate.js"></script>
