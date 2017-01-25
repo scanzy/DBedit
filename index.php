@@ -157,18 +157,7 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
 
         <?php break; case "links": ?>
 
-            <div class="box title">
-                <h1>Links</h1>
-                <div class="line"></div>
-                <div id="links-nav" class="center btn-multiline"></div>
-                <div class="center">
-                    <p id="links-nav-loading" class="grey">Loading...</p>
-                    <div id="links-nav-load-error" style="display:none">
-                        <p class="grey">Error while loading links</p><br/>
-                        <button id="links-nav-load-retry" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-repeat"></span> <span>Retry</span></button>
-                    </div>
-                </div>
-            </div>
+            <div class="box title"><h1>Links</h1></div>
             <div class="box"><div id="links-table"></div></div>
 
         <?php break; case "editentity": case "newentity": ?>
@@ -207,7 +196,8 @@ $lang = isset($conf['global']['lang']) ? $conf['global']['lang'] : NULL;
                 Shared::loadJS("res/libs/scanzyform.js"); 
                 Shared::loadJS("res/libs/formbuilder.js"); 
                 Shared::loadJS("res/libs/fieldconverter.js");
-            break;
+                break;
+            case "links": Shared::loadJS("res/libs/navload.js"); break;
         }
 
         switch($page) {

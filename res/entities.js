@@ -12,7 +12,7 @@ requiredata.request('typesdata', function (typesdata) {
     requiredata.request('userdata', function(userdata) {
 
         //setups table
-        entitiestable = $("#entities-table").scanzytable({ columns: columns,
+        $("#entities-table").scanzytable({ columns: columns, loadnow: { enabled: true },
             request: { url: undefined }, requiredata: { name: 'entitiesdata' }, //passive mode 
             sort: {  
                 enabled: ('orderby' in typedata), //sort options on data load
@@ -31,8 +31,8 @@ requiredata.request('typesdata', function (typesdata) {
             empty: typedata.emptysethint,
             search: { show: true, text: typedata.searchhint, minRows: typedata.searchminrows }, 
             button: { show: (userdata.userlevel < 2), text: typedata.add, click: function () { changeUrl({ type: type, action: "edit"}); } },
-            done: function(t) { t.root.translate(); } //translates table 
-        }).loadItems();        
+            always: function() { $("#entities-table").translate(); } //translates table 
+        });        
     });
 
     //sets entities count in title

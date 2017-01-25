@@ -3,6 +3,7 @@ $.fn.extend({
 
         //options default setup
         var options = defaultValues(options, {
+            loadnow: { enabled: false, data: undefined },
             requiredata: { options: { }, name: 'scanzytable-' + this.attr('id') },
             request: { url:'', data: {} }, columns: {},
             sort: { 
@@ -101,7 +102,7 @@ $.fn.extend({
         };
 
         //inits loader
-        t.loader = this.find("tbody").scanzyload({ request: options.request, requiredata: options.requiredata,            
+        t.loader = this.find("tbody").scanzyload({ request: options.request, requiredata: options.requiredata, loadnow: options.loadnow,           
             processResponse: function(data) {                 
                 var rowcount = (data != null && data != "") ? data.length : 0; //calculates row count
 
@@ -167,7 +168,8 @@ $.fn.extend({
             loading: t.root.find(".loading-items"),
             error: t.root.find(".loading-items-error"),
             empty: t.root.find(".no-items"), 
-            retry: t.root.find(".items-load-retry")
+            retry: t.root.find(".items-load-retry"),
+            done: options.done, always: options.always, fail: options.fail
         });
 
         //handlers for new button, reset search
@@ -221,7 +223,6 @@ $.fn.extend({
             t.root.on("mouseleave", "tbody tr", function () { $(this).removeClass(options.fetch.rows.hoverClass); });
         }       
 
-        if (options.done != undefined) options.done(t); //done custom callback
         return t; //returns table object ref
     }
 });

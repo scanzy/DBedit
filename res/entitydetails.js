@@ -3,7 +3,7 @@ requiredata.request('typesdata', function (typesdata) {
 
     //details table
     var detailstable = $("#details-box").scanzytable({
-        request: { url: undefined }, requiredata: { name: 'entitydata' }, //passive mode
+        request: { url: undefined }, loadnow: { enabled: true }, requiredata: { name: 'entitydata' }, //passive mode
         fetch: {
             rows: {
                 start: function (col, data) {
@@ -13,7 +13,7 @@ requiredata.request('typesdata', function (typesdata) {
                 }
             }
         }
-    }).loadItems();
+    });
 
     //when entity alias loaded
     requiredata.request('entityalias', function (alias) {
@@ -43,7 +43,7 @@ requiredata.request('typesdata', function (typesdata) {
         {
             //tables
             var linksloader = $("#linktypes").unwrap().scanzyload({
-                requiredata: { name: 'linktypesdata' },
+                requiredata: { name: 'linktypesdata' }, loadnow: { enabled: true },
                 request: { url: "./apis/linktypes/get.php", data: { type: type } },
                 fetch: function (name, data) {
 
@@ -61,13 +61,13 @@ requiredata.request('typesdata', function (typesdata) {
                         });
                     });
                 } 
-            }).loadItems();
+            });
         }
         else
         {     
             //links boxes
             var linksloader = $("#linktypes").addClass('center row').scanzyload({
-                request: { url: "./apis/linktypes/info.php", data: { type: type, id: id } },
+                request: { url: "./apis/linktypes/info.php", data: { type: type, id: id } }, loadnow: { enabled: true },
                 fetch: function (name, data) {
 
                     //basic container with title and description
@@ -85,7 +85,7 @@ requiredata.request('typesdata', function (typesdata) {
                 },
                 error: $("#linktypes-load-error"), empty: $("#linktypes-empty"), loading: $("#linktypes-loading"), retry: $("#linktypes-load-retry"),
                 always: function () { $("#linktypes").translate(); setLinkBoxHandlers(); loadAliases(); } //translates
-            }).loadItems();
+            });
         }
     });
 });

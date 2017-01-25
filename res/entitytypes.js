@@ -2,7 +2,7 @@ requiredata.set('title', "Dashboard"); //sets title
 
 //setups load
 var entitytypes = $("#entitytypes").scanzyload({
-    request: { url: "./apis/entitytypes/info.php" },
+    request: { url: "./apis/entitytypes/info.php" }, loadnow: { enabled: true },
     fetch: function(name, data) {   
         
         var sizeclasses = ""; //sets classes for linkbox size
@@ -29,4 +29,4 @@ var entitytypes = $("#entitytypes").scanzyload({
     },
     error: $("#entities-load-error"), loading: $("#entities-loading"), retry: $("#entities-load-retry"),
     always: function () { $("#entitytypes").translate(); setLinkBoxHandlers(); } //translates
-}).loadItems();
+});

@@ -10,7 +10,7 @@ function linkableEntitiesPopup(title, selectedid, callback) {
             for (var col in typedata.columns) if (typedata.columns[col].showinlist) 
                 columns[col] = typedata.columns[col].displayname;
 
-            var t = root.find("#entities").scanzytable({ columns: columns,
+            var t = root.find("#entities").scanzytable({ columns: columns, loadnow: { enabled: true },
                 request: { url: "./apis/entities/linkable.php", data: { type: type, id: id, link: link } }, requiredata: { name: "linkabledata" },
                 sort: {  
                         enabled: ('orderby' in typedata), //sort options on data load
@@ -28,8 +28,8 @@ function linkableEntitiesPopup(title, selectedid, callback) {
                     }, 
                     empty: typedata.emptysethint,
                     search: { show: true, text: typedata.searchhint, minRows: typedata.searchminrows }, 
-                    done: function(t) { t.root.translate(); } //translates table 
-            }).loadItems();
+                    always: function(t) { t.root.translate(); } //translates table 
+            });
             
             //selects active row
             if (selectedid != undefined) t.find("tr[data-entity-id='" + selectedid + "'").addClass("active");        

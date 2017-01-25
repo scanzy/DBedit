@@ -16,6 +16,7 @@ $.fn.extend({ //extends jquery
 
         //options default setup
         var options = defaultValues(options, {
+            loadnow: { enabled: false, data: undefined },
             request: { url: undefined, data: { } }, processResponse: undefined, fetch: function() { }, 
             requiredata: { options: { }, name: 'scanzyload-' + this.attr('id') },
             loading: { show: function() { }, hide: function() { } },
@@ -91,7 +92,8 @@ $.fn.extend({ //extends jquery
 
         //binds retry button
         options.retry.click(function(){ x.loadItems(); }); 
-
+       
+        if (options.loadnow.enabled) x.loadItems(options.loadnow.data);  //load now if needed
         return x; //returns scanzyload object ref
     }
 });
