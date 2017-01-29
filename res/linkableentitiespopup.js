@@ -28,7 +28,7 @@ function linkableEntitiesPopup(title, selectedid, callback) {
                     }, 
                     empty: typedata.emptysethint,
                     search: { show: true, text: typedata.searchhint, minRows: typedata.searchminrows }, 
-                    always: function(t) { t.root.translate(); } //translates table 
+                    always: function() { $("#entities").translate(); } //translates table 
             });
             
             //selects active row
