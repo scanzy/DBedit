@@ -82,10 +82,10 @@ class Errors
     }   
 
     //shared error handler
-    static function HandleError($log, $display = "")
+    static function HandleError($msg, $display = "")
     {
-        error_log($log);
-        Logs::Error($log);
+        error_log($msg);
+        Logs::Error($msg);
         self::send(500, $msg);
     }
 }

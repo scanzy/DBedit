@@ -50,13 +50,25 @@ class SQLhelper
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    //gets random function for current db driver
+    function getRandomFunc()
+    {
+        switch(Config::get()['DB']['driver']) {
+            case 'mysql':  return 'RAND()';   break;
+            case 'sqlite': return 'RANDOM()'; break;
+        }
+        Errors::send(500, "DB driver does not support random");
+    }
+
     //gets random elements in table
     public function getRandom($count = 3)
     {
         //uses count from typedata if specified
         if (isset($this->typedata['random'])) $count = $this->typedata['random'];
 
-        $stmt = Shared::connect()->query("SELECT * FROM \x60".$this->table."\x60 ORDER BY RAND() LIMIT $count;");
+        
+
+        $stmt = Shared::connect()->query("SELECT * FROM \x60".$this->table."\x60 ORDER BY ".$this->getRandomFunc()." LIMIT $count;");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -66,7 +78,8 @@ class SQLhelper
         //uses count from typedata if specified
         if (isset($this->typedata['random'])) $count = $this->typedata['random'];
 
-        $stmt = Shared::connect()->prepare("SELECT * FROM \x60".$this->table."\x60 WHERE \x60".$this->mainFiltCol."\x60=:x ORDER BY RAND() LIMIT $count;");
+        $stmt = Shared::connect()->prepare("SELECT * FROM \x60".$this->table."\x60 
+            WHERE \x60".$this->mainFiltCol."\x60=:x ORDER BY ".$this->getRandomFunc()." LIMIT $count;");
         $stmt->execute(array(":x" => $val));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

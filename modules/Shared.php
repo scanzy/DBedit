@@ -17,14 +17,29 @@ class Shared
         //reads configuration from config.xml if needed
         $conf = Config::get()['DB'];
 
-        //connects to database
-        return $GLOBALS[self::VAR_NAME] = new PDO("mysql:". 
-            "host=" . $conf['host'] . (isset($conf['port']) ? $conf['port'] : "")
-            .";dbname=". $conf['name'] . ";charset=utf8", 
-            $conf['user'], $conf['pwd'],
+        //connection parameters
+        switch ($conf['driver']) {
+            case 'mysql':
+                $dsn = "mysql:". 
+                "host=" . $conf['host'] . (isset($conf['port']) ? $conf['port'] : "")
+                .";dbname=". $conf['name'] . ";charset=utf8";
+                $user = $conf['user'];
+                $pwd = $conf['pwd'];
+                break;
+            
+            case 'sqlite':
+                $dsn = "sqlite:".__DIR__."/../".$conf['file'];
+                $user = null;
+                $pwd = null;
+                break; 
 
-            array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
-        );    
+            default:
+                Errors::send(500, "DB driver not supported"); 
+                break;
+        }
+
+        //connects to database
+        return $GLOBALS[self::VAR_NAME] = new PDO($dsn, $user, $pwd, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
 
     //OUTPUT

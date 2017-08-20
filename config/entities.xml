@@ -95,7 +95,7 @@
                 <showinlist>false</showinlist>
             </goodboy>
         </columns>
-        <description>People bla bla bla bla bla bla bla bla bla bla bla bla</description>
+        <description>Here you can find all the people of the club</description>
         <badgesize>3</badgesize>
         <showcount>true</showcount>
         <orderby>
@@ -126,8 +126,8 @@
                 <showinlist>true</showinlist>
             </subject>
         </columns>
-        <description>Payments bla bla bla bla bla bla bla bla bla bla bla bla</description>
-        <badgesize>1</badgesize>
+        <description>Here there are all the payments for subscriptions, events, camps</description>
+        <badgesize>2</badgesize>
         <showcount>false</showcount>
         <searchminrows>5</searchminrows>
         <searchhint>Search payments...</searchhint>
@@ -152,8 +152,8 @@
                 <showinlist>true</showinlist>
             </name>
         </columns>
-        <description>Certificates bla bla bla bla bla bla bla bla bla bla bla bla</description>
-        <badgesize>2</badgesize>
+        <description>All documents and certificates are here</description>
+        <badgesize>1</badgesize>
         <showcount>false</showcount>
         <searchminrows>5</searchminrows>
         <searchhint>Search certificates...</searchhint>

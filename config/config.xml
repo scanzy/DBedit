@@ -1,11 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
+    <!--  SQLite database:   
     <DB>
-        <host>localhost</host>
-        <name>dbedit</name>
-        <user>user</user>
-        <pwd></pwd>
+        <driver>sqlite</driver>
+        <file>path/to/database.sqlite</file>
+    </DB> 
+    
+    The path is relative to the document root 
+    -->
+
+    <DB>
+        <driver>sqlite</driver>
+        <file>database.sqlite</file>
     </DB>
+
+    <!-- MySQL database	
+
+    <DB>
+        <host>123.122.202.23</host>
+        <name>database_name</name>
+        <user>username</user>
+        <pwd>password</pwd>
+    </DB>
+
+    you can also set <port>
+    -->
+
     <global>
         <appname>Super cool DB!</appname>
         <landpage>people</landpage>
