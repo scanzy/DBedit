@@ -1,9 +1,9 @@
 # DBedit
 User friendly database editor not only for developers
+Supported databases: MySQL, SQLite
 
 ## Requirements
-- PHP 5.4 or higher
-- MySql database
+- PHP 5.4 or higher (with pdo_mysql or pdo_sqlite extension enabled)
 - Apache server with .htaccess enabled (to deny access to config folder)
 
 ## Concept and documentation
