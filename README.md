@@ -1,5 +1,6 @@
 # DBedit
 User friendly database editor not only for developers
+
 Supported databases: MySQL, SQLite
 
 ## Requirements
