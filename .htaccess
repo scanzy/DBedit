@@ -1,4 +1,9 @@
-<Files "autoload.php">
-    Order allow,deny
-    Deny from all
-</Files>
+# Denies access to all
+Order allow,deny
+Deny from all
+
+# Allows access to index and login
+<FilesMatch "^(|index.php|login.php)$">    
+    Order deny,allow
+    Allow from all
+</FilesMatch>
